@@ -8,7 +8,7 @@ namespace GroupBMidtermPOS
         {
             //Bernard test
             //Jason test
-            //sandy test
+            //sandy test change
         }
     }
 }
