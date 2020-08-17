@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sjurek\\Source\\Repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj": {}
+    "C:\\Users\\sjurek\\source\\repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sjurek\\Source\\Repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj": {
+    "C:\\Users\\sjurek\\source\\repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sjurek\\Source\\Repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj",
+        "projectUniqueName": "C:\\Users\\sjurek\\source\\repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj",
         "projectName": "GroupBMidtermPOS",
-        "projectPath": "C:\\Users\\sjurek\\Source\\Repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj",
+        "projectPath": "C:\\Users\\sjurek\\source\\repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj",
         "packagesPath": "C:\\Users\\sjurek\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sjurek\\Source\\Repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\obj\\",
+        "outputPath": "C:\\Users\\sjurek\\source\\repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\sjurek\\AppData\\Roaming\\NuGet\\NuGet.Config",
