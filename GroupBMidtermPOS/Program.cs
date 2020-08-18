@@ -16,9 +16,10 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Menu: Choose an Item");
 
             Register register = new Register(); //open a new Register
-            foreach (var product in register.createTemporaryListOfProductsForDemoOnly())
+            
+            foreach (var product in register.listOfProducts)
             {
-                Console.WriteLine($"{product} "); //write out the list of products 1 thru end of list
+                Console.WriteLine($"{product.ProductNumber} {product.Name} "); //write out the list of products 1 thru end of list
             }
             var userItem = Console.ReadLine();
 
@@ -38,7 +39,7 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Are you ready to check out? (Y/N) ");
             var checkOutYesNo = Console.ReadLine().ToLower();
 
-            Console.WriteLine("Order Summary: ");
+            /*Console.WriteLine("Order Summary: ");
             Console.WriteLine($"Quantity {quantity} Item{item}Price {price}");//quantity-item-price for each item. may need for each statement
             Console.WriteLine($"Subtotal ${subtotal}");//subtotal
             Console.WriteLine($"Tax ${tax}");//tax
@@ -52,12 +53,13 @@ namespace GroupBMidtermPOS
 
             Console.WriteLine("Cash: ");
             Console.WriteLine("Please enter amount tentered");
-            double userAmountTendered = double.Parse(Console.ReadLine());
-            if (userAmountTendered < total)
+            double userAmountTendered = double.Parse(Console.ReadLine());*/
+            /*if (userAmountTendered < total)
             {
                 var amountOwed = total - userAmountTendered;
                 Console.WriteLine($"You still owe {amountOwed} ");
-            }
+            }*/
+         //   register.TakePaymentCash(userAmountTendered, total);
 
         }
     }
