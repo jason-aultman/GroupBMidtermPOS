@@ -2,11 +2,15 @@
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace GroupBMidtermPOS
 {
     public class FileHandler
     {
+        private static object reader;
+        private static Stream productAddItem;
+
         //check if files exists, if not, create it
         public static void CreateFile(string productListFile)
         {
@@ -28,9 +32,8 @@ namespace GroupBMidtermPOS
                     foreach (var line in linesOfInput)
                     {
                         List<string> fileLines = File.ReadAllLines("products.txt").ToList();
-                        var line = reader.ReadLine();
-                        Console.WriteLine(line);
-                        writer.WriteLine(line);
+                        Console.WriteLine(reader.ReadLine());
+                        writer.WriteLine(reader.ReadLine());
                     }
                 }
             }
@@ -39,20 +42,18 @@ namespace GroupBMidtermPOS
         //Reading from file
         public static void ReadFromFile(string productAddName)
         {
-            using (StreamReader reader = new StreamReader(productAddItem))
-            {
-                List<string> fileLines = File.ReadAllLines("products.txt").ToList();
-                var line = reader.ReadLine();
-                Console.WriteLine(line);
-            }
+            using StreamReader reader = new StreamReader(productAddItem);
+            List<string> fileLines = File.ReadAllLines("products.txt").ToList();
+            var line = reader.ReadLine();
+            Console.WriteLine(line);
         }
-                //        using (StreamReader reader = new StreamReader(productAddItem))
-                //        {
-                //            List<string> fileLines = File.ReadAllLines("products.txt").ToList();
-                //            var line = reader.ReadLine();
-                //            Console.WriteLine(line);
-                //        }
-            
+        //        using (StreamReader reader = new StreamReader(productAddItem))
+        //        {
+        //            List<string> fileLines = File.ReadAllLines("products.txt").ToList();
+        //            var line = reader.ReadLine();
+        //            Console.WriteLine(line);
+        //        }
+
 
         //Deleting from file
         public static void DeleteFile(string fileName)
