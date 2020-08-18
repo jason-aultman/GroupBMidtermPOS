@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GroupBMidtermPOS
 {
@@ -31,6 +32,10 @@ namespace GroupBMidtermPOS
 
         }
 
+        public double GetTotalSalesTax(double subTotal)
+        {
+            return Math.Round((subTotal * Taxrate), 2, MidpointRounding.AwayFromZero);
+        }
         public double GetSubtotalNoTax()
         {
           //write subtotal work here
