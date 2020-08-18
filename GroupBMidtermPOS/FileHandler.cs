@@ -11,7 +11,7 @@ namespace GroupBMidtermPOS
 
         public static string currentDirectory = Directory.GetCurrentDirectory();
         public static DirectoryInfo directory = new DirectoryInfo(currentDirectory);
-        public static string fileName = Path.Combine(directory.FullName, "Inventory.txt");
+        public static string fileName = Path.Combine(directory.FullName, "Inventory.csv");
         public static List<Product> fileContents = ReadInventoryData(fileName);
 
 
