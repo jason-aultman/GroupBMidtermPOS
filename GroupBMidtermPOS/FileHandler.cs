@@ -29,9 +29,9 @@ namespace GroupBMidtermPOS
         {
             List<Product> InventoryData = new List<Product>();
 
-            StreamReader streamReader = new StreamReader(fileName);
-            using StreamReader reader = streamReader;
-        {
+            //   StreamReader streamReader = new StreamReader(fileName);
+            using (StreamReader reader = new StreamReader(fileName))
+            {
                 string line = "";
                 while ((line = reader.ReadLine()) != null)
                 {
@@ -65,20 +65,18 @@ namespace GroupBMidtermPOS
 
 
                     //price
-                    decimal parseDbl;
-                    if (decimal.TryParse(values[4], out parseDbl))
+                   
+                    if (double.TryParse(values[4], out double parseDbl))
 
                     {
-                        product.Price = (double)parseDbl;
+                        product.Price = parseDbl;
                     }
-
 
                     InventoryData.Add(product);
                 }
+
+                return InventoryData;
             }
-            return InventoryData;
         }
-
     }
-
 }
