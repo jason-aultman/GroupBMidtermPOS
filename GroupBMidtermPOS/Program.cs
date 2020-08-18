@@ -15,7 +15,7 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Menu: Choose an Item");
 
             Register register = new Register(); //open a new Register
-            foreach (var product in register.createTemporaryListOfProductsForDemoOnly)
+            foreach (var product in register.createTemporaryListOfProductsForDemoOnly())
             {
                 Console.WriteLine($"{product} "); //write out the list of products 1 thru end of list
             }
