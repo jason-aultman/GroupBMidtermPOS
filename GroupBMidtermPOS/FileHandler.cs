@@ -31,9 +31,11 @@ namespace GroupBMidtermPOS
                 {
                     foreach (var line in linesOfInput)
                     {
-                        List<string> fileLines = File.ReadAllLines("products.txt").ToList();
+                        List<string> lists = File.ReadAllLines("products.txt").ToList();
+                        List<string> fileLines = lists;
                         Console.WriteLine(reader.ReadLine());
-                        writer.WriteLine(reader.ReadLine());
+                        //wants me to do a NewMethod() here?
+                        //writer.WriteLine(reader.ReadLine());
                     }
                 }
             }
