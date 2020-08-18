@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Schema;
 
 namespace GroupBMidtermPOS
 {
@@ -41,7 +42,7 @@ namespace GroupBMidtermPOS
             Console.WriteLine($"Quantity {quantity} Item{item}Price {price}");//quantity-item-price for each item. may need for each statement
             Console.WriteLine($"Subtotal ${subtotal}");//subtotal
             Console.WriteLine($"Tax ${tax}");//tax
-            //total
+            Console.WriteLine($"Total {total} ");//total
 
             Console.WriteLine("Enter Payment Type: ");// working with the enums
             Console.WriteLine("1. Cash");
@@ -49,6 +50,14 @@ namespace GroupBMidtermPOS
             Console.WriteLine("3. Check");
             var paymentType = Console.ReadLine();
 
+            Console.WriteLine("Cash: ");
+            Console.WriteLine("Please enter amount tentered");
+            double userAmountTendered = double.Parse(Console.ReadLine());
+            if (userAmountTendered < total)
+            {
+                var amountOwed = total - userAmountTendered;
+                Console.WriteLine($"You still owe {amountOwed} ");
+            }
 
         }
     }
