@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace GroupBMidtermPOS
 {
-    public class Product
+    class Product
     {
-        string List<stuff>(string product)
-            new List 
+
     }
 }
