@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Enumeration;
-using System.Linq;
 
 namespace GroupBMidtermPOS
 {
@@ -41,6 +38,8 @@ namespace GroupBMidtermPOS
                     Product product = new Product();
                     string[] values = line.Split(',');
 
+
+                    //product number (I don't have an actual value in the .txt file, just the order they appear in)
                     int parseInt;
                     if (int.TryParse(values[0], out parseInt))
                     {
@@ -60,8 +59,10 @@ namespace GroupBMidtermPOS
                         product.ProductCategory = category;
                     }
 
+
                     //desc
                     product.Description = values[3];
+
 
                     //price
                     decimal parseDbl;
@@ -70,6 +71,7 @@ namespace GroupBMidtermPOS
                     {
                         product.Price = (double)parseDbl;
                     }
+
 
                     InventoryData.Add(product);
                 }
