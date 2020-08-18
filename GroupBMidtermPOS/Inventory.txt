@@ -10,5 +10,3 @@ Chucky,Dolls,29.99,The classic Chucky is available here to haunt your days and n
 Bloody Molly Hatchet,Accessories,12.99,What playroom is complete without the Bloody Knife Hatchet?  This realistic hatchet is carved of Amazonian Rainforest trees and splattered with blood of nightmares will scare the little ones into eating all their spinach!
 The Third Eye Glasses,Accessories,9.99,Make your friends believe you can put these on and see into the future. These 55mm frames project a multi-dimensional portal that you can enter. Warning: Safety harness sold separately. Currently unavailable.
 Gloom and Doom,Games,24.99,Are you on the side of Doom or on the side of Gloom. One goal - one outcome - one battle to the finish.
-
-
