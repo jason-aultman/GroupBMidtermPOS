@@ -4,7 +4,13 @@ namespace GroupBMidtermPOS
 {
     public class Product
     {
-        string List<stuff>(string product)
-            new List 
+        public string ProductClass { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public double Price { get; set; }
+        
+        
+        
     }
+    
 }
