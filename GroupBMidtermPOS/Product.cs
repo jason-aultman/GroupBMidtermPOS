@@ -10,10 +10,7 @@ namespace GroupBMidtermPOS
         public string Description { get; set; }
         public double Price { get; set; }
 
-        public Product()
-        {
-            
-        }
+       
         public Product(string name, string productClass, double price, string description)
         {
             Name = name;
