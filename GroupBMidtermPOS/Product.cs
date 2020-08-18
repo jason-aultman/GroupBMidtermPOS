@@ -5,20 +5,24 @@ namespace GroupBMidtermPOS
 {
     public class Product
     {
-        public string ProductClass { get; set; }
+        public int ProductNumber { get; set; }
         public string Name { get; set; }
+        public ProductCategoryEnum ProductCategory { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
 
        
-        public Product(string name, string productClass, double price, string description)
+        public Product()
+        {
+
+        }
+
+        public Product(int productNumber, string name, double price, string description)
         {
             Name = name;
-            ProductClass = productClass;
             Description = description;
             Price = price;
+            ProductNumber = productNumber;
         }
-        
     }
-    
 }

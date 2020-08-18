@@ -8,6 +8,6 @@ namespace GroupBMidtermPOS
     {
         Cash,
         Check,
-        Credit_Card,
+        Credit_Card
     }
 }

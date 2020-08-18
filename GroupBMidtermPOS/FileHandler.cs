@@ -2,65 +2,81 @@
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Enumeration;
 using System.Linq;
 
 namespace GroupBMidtermPOS
 {
     public class FileHandler
     {
-        private static object reader;
-        private static Stream productAddItem;
+        //private static Stream productAddItem;
+        //public static List<Product> ShoppingCart = new List<Product> { };
 
-        //check if files exists, if not, create it
-        public static void CreateFile(string productListFile)
-        {
-            if (!File.Exists(productListFile))
-                File.Create(productListFile);
-        }
+        public static string currentDirectory = Directory.GetCurrentDirectory();
+        public static DirectoryInfo directory = new DirectoryInfo(currentDirectory);
+        public static string fileName = Path.Combine(directory.FullName, "Inventory.txt");
+        public static List<Product> fileContents = ReadInventoryData(fileName);
 
-        //Modifying, or writing, to file
-        public static void WriteToFile(string productListFile, bool canAppend, List<string> linesOfInput = null)
+
+        public static string ReadFile(string fileName)
         {
-            using (StreamWriter writer = new StreamWriter(productListFile, canAppend))
+            using (var reader = new StreamReader(fileName))
             {
-                if (linesOfInput == null)
-                {
-                    writer.WriteLine(" the list goes in here somehow");
-                }
-                else
-                {
-                    foreach (var line in linesOfInput)
-                    {
-                        List<string> lists = File.ReadAllLines("products.txt").ToList();
-                        List<string> fileLines = lists;
-                        Console.WriteLine(reader.ReadLine());
-                        //wants me to do a NewMethod() here?
-                        //writer.WriteLine(reader.ReadLine());
-                    }
-                }
+                return reader.ReadToEnd();
             }
         }
 
-        //Reading from file
-        public static void ReadFromFile(string productAddName)
-        {
-            using StreamReader reader = new StreamReader(productAddItem);
-            List<string> fileLines = File.ReadAllLines("products.txt").ToList();
-            var line = reader.ReadLine();
-            Console.WriteLine(line);
-        }
-        //        using (StreamReader reader = new StreamReader(productAddItem))
-        //        {
-        //            List<string> fileLines = File.ReadAllLines("products.txt").ToList();
-        //            var line = reader.ReadLine();
-        //            Console.WriteLine(line);
-        //        }
 
 
-        //Deleting from file
-        public static void DeleteFile(string fileName)
+        public static List<Product> ReadInventoryData(string fileName)
         {
-            File.Delete(fileName);
+            List<Product> InventoryData = new List<Product>();
+
+            StreamReader streamReader = new StreamReader(fileName);
+            using StreamReader reader = streamReader;
+        {
+                string line = "";
+                while ((line = reader.ReadLine()) != null)
+                {
+                    Product product = new Product();
+                    string[] values = line.Split(',');
+
+                    int parseInt;
+                    if (int.TryParse(values[0], out parseInt))
+                    {
+                        product.ProductNumber = parseInt;
+                    }
+
+
+                    //name
+                    product.Name = values[1];
+
+
+                    //category
+                    ProductCategoryEnum category;
+
+                    if (Enum.TryParse(values[2], out category))
+                    {
+                        product.ProductCategory = category;
+                    }
+
+                    //desc
+                    product.Description = values[3];
+
+                    //price
+                    decimal parseDbl;
+                    if (decimal.TryParse(values[4], out parseDbl))
+
+                    {
+                        product.Price = (double)parseDbl;
+                    }
+
+                    InventoryData.Add(product);
+                }
+            }
+            return InventoryData;
         }
+
     }
+
 }
