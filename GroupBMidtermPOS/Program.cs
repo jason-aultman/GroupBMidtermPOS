@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Xml.Schema;
+//using System.Xml.Schema;
 
 namespace GroupBMidtermPOS
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
