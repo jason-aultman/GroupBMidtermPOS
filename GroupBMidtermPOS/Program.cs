@@ -1,5 +1,5 @@
 ﻿using System;
-//using System.Xml.Schema;
+
 
 namespace GroupBMidtermPOS
 {
@@ -52,7 +52,7 @@ namespace GroupBMidtermPOS
             var paymentType = Console.ReadLine();
 
             Console.WriteLine("Cash: ");
-            Console.WriteLine("Please enter amount tentered");
+            Console.WriteLine("Please enter amount tendered");
             double userAmountTendered = double.Parse(Console.ReadLine());*/
             /*if (userAmountTendered < total)
             {
