@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace GroupBMidtermPOS
 {
@@ -14,7 +12,7 @@ namespace GroupBMidtermPOS
 
         }
 
-        public CalculateTotal(decimal finalTotal, decimal subtotal, decimal tax) : base(subtotal, tax)
+        public CalculateTotal(decimal finalTotal, decimal subtotal) : base(subtotal)
         {
             FinalTotal = finalTotal;
         }

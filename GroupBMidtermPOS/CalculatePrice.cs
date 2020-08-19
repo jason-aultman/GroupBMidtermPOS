@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GroupBMidtermPOS
 {
@@ -22,15 +18,14 @@ namespace GroupBMidtermPOS
 
         }
 
-        public CalculatePrice(decimal subtotal, decimal tax)
+        public CalculatePrice(decimal subtotal)
         {
             Subtotal = subtotal;
-            Tax = tax;
         }
 
         public decimal GetTax(decimal subtotal)
         {
-            return Math.Round(subtotal * Tax, 2);
+            return Math.Round(subtotal * Tax, 2, MidpointRounding.AwayFromZero);
         }
     }
 }
