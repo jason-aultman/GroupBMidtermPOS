@@ -20,9 +20,11 @@ namespace GroupBMidtermPOS
 
         }
 
-        public Product(int productNumber, string name, double price, string description)
+        //not sure how to handle the enum for ProductCategory here
+        public Product(int productNumber, string name, string productCategory, double price, string description)
         {
             Name = name;
+            //ProductCategory = productCategory;
             Description = description;
             Price = price;
             ProductNumber = productNumber;
