@@ -1,26 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jason\\RiderProjects\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj": {}
+    "C:\\Users\\bepol\\Source\\Repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jason\\RiderProjects\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj": {
+    "C:\\Users\\bepol\\Source\\Repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jason\\RiderProjects\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj",
+        "projectUniqueName": "C:\\Users\\bepol\\Source\\Repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj",
         "projectName": "GroupBMidtermPOS",
-        "projectPath": "C:\\Users\\jason\\RiderProjects\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj",
-        "packagesPath": "C:\\Users\\jason\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jason\\RiderProjects\\GroupBMidtermPOS\\GroupBMidtermPOS\\obj\\",
+        "projectPath": "C:\\Users\\bepol\\Source\\Repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj",
+        "packagesPath": "C:\\Users\\bepol\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\bepol\\Source\\Repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\jason\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\bepol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -63,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
