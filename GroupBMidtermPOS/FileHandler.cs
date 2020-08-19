@@ -24,7 +24,6 @@ namespace GroupBMidtermPOS
         }
 
 
-
         public static List<Product> ReadInventoryData(string fileName)
         {
             List<Product> InventoryData = new List<Product>();
@@ -39,9 +38,14 @@ namespace GroupBMidtermPOS
                     string[] values = line.Split(',');
 
 
-                    //product number (I don't have an actual value in the .txt file, just the order they appear in)
+                    //product number (I don't have an actual value in the .csv file, just the order they appear in, 
+                    //but I'm hoping there's an inherent number to select from the menu with)
+                    //it is included in Product.cs and ProductNumber property -- not sure if this is right or needed
+
                     int parseInt;
+
                     if (int.TryParse(values[0], out parseInt))
+
                     {
                         product.ProductNumber = parseInt;
                     }
@@ -55,6 +59,7 @@ namespace GroupBMidtermPOS
                     ProductCategoryEnum category;
 
                     if (Enum.TryParse(values[2], out category))
+
                     {
                         product.ProductCategory = category;
                     }
