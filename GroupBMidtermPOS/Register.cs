@@ -11,10 +11,10 @@ namespace GroupBMidtermPOS
         public List<Product> listOfProducts = new List<Product>();
         public List<Product> CurrentOrder= new List<Product>();
 
-        /*public Register()
-        {
-            listOfProducts = FileHandler.ReadInventoryData("/Inventory.csv");
-        }*/
+         public Register()
+         {
+             listOfProducts = FileHandler.ReadInventoryData(@"GroupBMidtermPOS\Inventory.csv");
+         }
 
         public List<Product> createTemporaryListOfProductsForDemoOnly()
         {

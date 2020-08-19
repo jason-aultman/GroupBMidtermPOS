@@ -16,11 +16,15 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Menu: Choose an Item");
 
             Register register = new Register(); //open a new Register
-            
+           // register.createTemporaryListOfProductsForDemoOnly(); //delete whence Filehandler passes all tests
+           var count = 1;
             foreach (var product in register.listOfProducts)
             {
-                Console.WriteLine($"{product.ProductNumber} {product.Name} "); //write out the list of products 1 thru end of list
+                Console.WriteLine($"[{product.ProductNumber}] {product.Name} "); //write out the list of products 1 thru end of list
+                count++;
             }
+
+            count = 1;
             var userItem = Console.ReadLine();
 
             Console.WriteLine("Enter Quantity:");
