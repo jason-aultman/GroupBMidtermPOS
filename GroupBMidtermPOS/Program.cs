@@ -7,7 +7,7 @@ namespace GroupBMidtermPOS
     {
         static void Main(string[] args)
         {
-            //Bernard test
+            //Bernard test2
             //Jason test
             //sandy test change
 
