@@ -24,42 +24,34 @@ namespace GroupBMidtermPOS
         }
 
 
+
         public static List<Product> ReadInventoryData(string fileName)
         {
             List<Product> InventoryData = new List<Product>();
 
-            StreamReader streamReader = new StreamReader(fileName);
-            using StreamReader reader = streamReader;
-        {
+            //   StreamReader streamReader = new StreamReader(fileName);
+            using (StreamReader reader = new StreamReader(fileName))
+            {
                 string line = "";
-                while ((line = reader.ReadLine()) != null)
+                while ((!reader.EndOfStream))
                 {
                     Product product = new Product();
-                    string[] values = line.Split(',');
-
-
-                    //product number (I don't have an actual value in the .csv file, just the order they appear in, 
-                    //but I'm hoping there's an inherent number to select from the menu with)
-                    //it is included in Product.cs and ProductNumber property -- not sure if this is right or needed
-
-                    int parseInt;
-
-                    if (int.TryParse(values[0], out parseInt))
-
-                    {
-                        product.ProductNumber = parseInt;
-                    }
-
-
+                    line = reader.ReadLine();
+                    string[] values = line.Split(',',5);
+                    
+                    //REMOVED BECAUSE AS YOU SAID SANDY, IS NOT USED
+                    //product number (I don't have an actual value in the .txt file, just the order they appear in) --Looks great Sandy, just what we need --Jason
+                    
+                    // if (int.TryParse(values[0], out int parseInt))
+                    // {
+                    //     product.ProductNumber = parseInt;
+                    // }
+                    
                     //name
-                    product.Name = values[1];
-
-
+                    product.Name = values[0];  //CHANGED THIS TO 0 INDEX
+                    
                     //category
-                    ProductCategoryEnum category;
-
-                    if (Enum.TryParse(values[2], out category))
-
+                    if (Enum.TryParse(values[1], out ProductCategoryEnum category))
                     {
                         product.ProductCategory = category;
                     }
@@ -70,20 +62,18 @@ namespace GroupBMidtermPOS
 
 
                     //price
-                    decimal parseDbl;
-                    if (decimal.TryParse(values[4], out parseDbl))
+                   
+                    if (double.TryParse(values[2], out double parseDbl))
 
                     {
-                        product.Price = (double)parseDbl;
+                        product.Price = parseDbl;
                     }
-
 
                     InventoryData.Add(product);
                 }
+
+                return InventoryData;
             }
-            return InventoryData;
         }
-
     }
-
 }

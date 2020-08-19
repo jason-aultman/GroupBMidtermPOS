@@ -9,11 +9,12 @@ namespace GroupBMidtermPOS
         public const double Taxrate = .06;
         public double NumberOrdered { get; set; }
         public List<Product> listOfProducts = new List<Product>();
+        public List<Product> CurrentOrder= new List<Product>();
 
-        /*public Register()
-        {
-            listOfProducts = FileHandler.ReadInventoryData("/Inventory.csv");
-        }*/
+         public Register()
+         {
+             listOfProducts = FileHandler.ReadInventoryData(@"GroupBMidtermPOS\Inventory.csv");
+         }
 
         public List<Product> createTemporaryListOfProductsForDemoOnly()
         {
