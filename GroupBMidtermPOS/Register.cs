@@ -31,7 +31,11 @@ namespace GroupBMidtermPOS
             {
                 subTotal += product.Price;
             }
+
+            var totalTax = Taxrate * subTotal;
+            return totalTax;
         }
+        
         public double GetSubtotalNoTax()
         {
           //write subtotal work here
