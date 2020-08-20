@@ -38,7 +38,7 @@ namespace GroupBMidtermPOS
                 string line = "";
                 while ((!reader.EndOfStream))
                 {
-                    Product product = new Product();
+                    Product product;
                     line = reader.ReadLine();
                     string[] values = line.Split(',',5);
                     
@@ -51,26 +51,26 @@ namespace GroupBMidtermPOS
                     // }
                     
                     //name
-                    product.Name = values[0];  //CHANGED THIS TO 0 INDEX
+                    var productName = values[0];  //CHANGED THIS TO 0 INDEX
                     
                     //category
-                    if (Enum.TryParse(values[1], out ProductCategoryEnum category))
-                    {
-                        product.ProductCategory = category;
-                    }
-
+                    
+                    
+                        var productCategoryEnum = values[1];
+                    
 
                     //desc
-                    product.Description = values[3];
+                    var productDescription = values[3];
 
 
                     //price
-                   
+                    var productPrice=0.0;
                     if (double.TryParse(values[2], out double parseDbl))
 
                     {
-                        product.Price = parseDbl;
+                        productPrice = parseDbl;
                     }
+                    product = new Product(productName, productCategoryEnum,productPrice, productDescription);
 
                     InventoryData.Add(product);
                 }

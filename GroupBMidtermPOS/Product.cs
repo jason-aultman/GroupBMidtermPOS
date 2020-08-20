@@ -15,19 +15,21 @@ namespace GroupBMidtermPOS
 
         public Product()
         {
-            NumberOfProducts++;
-            ProductNumber = NumberOfProducts;
+           // NumberOfProducts++;
+           // ProductNumber = NumberOfProducts;
 
         }
 
         
-        public Product(int productNumber, string name, string productCategory, double price, string description)
+        public Product(string name, string productCategory, double price, string description)
         {
             Name = name;
             ProductCategory = ProductCategoryEnum(productCategory);
             Description = description;
             Price = price;
-            ProductNumber = productNumber;
+            
+            NumberOfProducts++;
+            ProductNumber = NumberOfProducts;
 
         }
 
