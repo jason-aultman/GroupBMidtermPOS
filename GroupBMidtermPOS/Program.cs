@@ -43,11 +43,7 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Are you ready to check out? (Y/N) ");
             var checkOutYesNo = Console.ReadLine().ToLower();
 
-            Console.WriteLine("Order Summary: ");
-            Console.WriteLine($"Quantity {quantity} Item{item}Price {price}");//quantity-item-price for each item. may need for each statement
-            Console.WriteLine($"Subtotal ${subtotal}");//subtotal
-            Console.WriteLine($"Tax ${tax}");//tax
-            Console.WriteLine($"Total {total} ");//total
+           Menu.DisplayOrderSummary(shoppingCart, register);
 
             Console.WriteLine("Enter Payment Type: ");// working with the enums
             Console.WriteLine("1. Cash");
