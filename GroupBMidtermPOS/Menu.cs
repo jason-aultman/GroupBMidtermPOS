@@ -18,6 +18,7 @@ namespace GroupBMidtermPOS
         public static void DisplayReciept()
         {
             
+            
         }
 
         public static void DisplayAllProducts(List<Product> productList)
