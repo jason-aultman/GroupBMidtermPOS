@@ -37,7 +37,9 @@ namespace GroupBMidtermPOS
             {
                 Console.WriteLine("Something went wrong");
             }
-            Console.WriteLine("Subtotal: ");
+
+            var kvpUserSelection = new KeyValuePair<Product, int>(register.listOfProducts[1], userItemQuantity);
+            Console.WriteLine($"Subtotal: ");
             //items customer selected
             //price of items * quantity = total
 

@@ -35,6 +35,12 @@ namespace GroupBMidtermPOS
 
             return subTotal;
         }
+        public double GetSubtotal(KeyValuePair<Product, int> keyValuePair)
+        {
+            var subTotal = 0.0;
+            subTotal = keyValuePair.Key.Price * keyValuePair.Value;
+            return subTotal;
+        }
         public double GetSubtotal(List<KeyValuePair<Product, int>> shoppingCart)
         {
             var subTotal = 0.0;
