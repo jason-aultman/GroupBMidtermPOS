@@ -11,8 +11,8 @@ namespace GroupBMidtermPOS
             //Bernard test
             //Jason test
             //sandy test change
-            var saletransaction = new Dictionary<Product,int>();
-            var shoppingCart = new List<Product>();
+           
+            var shoppingCart = new List<KeyValuePair<Product, int>>();
             
             Console.WriteLine("WELCOME TO CHUCKY'S TOY KINGDOM!!!");
             Console.WriteLine("**********************************");
