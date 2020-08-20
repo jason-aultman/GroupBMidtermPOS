@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace GroupBMidtermPOS
 {
-    public class ValidatePayment : PaymentTypeEnum
+    public class ValidatePayment
     {
         //credit card
         public string CreditCard { get; set; }
@@ -52,7 +52,7 @@ namespace GroupBMidtermPOS
         public bool ValidateExpDate(string expDate)
         {
             expDate.Trim();
-            var isPaying = expDate.All(char.IsDigit);
+            var isPassing = expDate.All(char.IsDigit);
 
             if (Regex.IsMatch(expDate, @"([0-1]{1}[0-9]{1}[1-2]{1}[0-9]{1})")&& isPassing)
             {
