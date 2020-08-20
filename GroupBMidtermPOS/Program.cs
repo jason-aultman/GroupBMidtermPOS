@@ -85,7 +85,9 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Please enter your routing number: ");
             var userRoutingNumber = Console.ReadLine();
             Console.WriteLine("Please enter your checking account number: ");
-            var userCheckNumber = Console.ReadLine();
+            var userCheckingAccountNumber = Console.ReadLine();
+
+
 
 
 
