@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using MiNET.Blocks;
 
 namespace GroupBMidtermPOS
 {
@@ -35,7 +36,22 @@ namespace GroupBMidtermPOS
 
             return subTotal;
         }
+        public double GetSubtotal(KeyValuePair<Product, int> keyValuePair)
+        {
+            var subTotal = 0.0;
+            subTotal = keyValuePair.Key.Price * keyValuePair.Value;
+            return subTotal;
+        }
+        public double GetSubtotal(List<KeyValuePair<Product, int>> shoppingCart)
+        {
+            var subTotal = 0.0;
+            foreach (var product in shoppingCart)
+            {
+                subTotal += product.Key.Price * product.Value;
+            }
 
+            return subTotal;
+        }
         public double GetTotalSalesTax(double subTotal)
         {
             return subTotal * Taxrate;
@@ -53,7 +69,7 @@ namespace GroupBMidtermPOS
             return totalTax;
         }
 
-        public double GetTotalWithSalesTax(List<Product> shoppingCart)
+        public double GetTotalWithSalesTax(List<KeyValuePair<Product,int>> shoppingCart)
         {
             var subtotal = GetSubtotal(shoppingCart);
             var tax = GetTotalSalesTax(subtotal);
@@ -75,6 +91,16 @@ namespace GroupBMidtermPOS
         {
             //Menu.cs Ask user for check number
         }
+
+        public List<Product> ProductSearch(string searchString, List<Product> products)
+        {
+            var results = new List<Product>();
+            results=products.FindAll(thing => thing.Description.Contains(searchString));
+            
+            return results;
+        }
+        
+        
         
         
     }

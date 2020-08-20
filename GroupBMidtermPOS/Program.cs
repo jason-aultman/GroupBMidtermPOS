@@ -8,13 +8,11 @@ namespace GroupBMidtermPOS
     {
         static void Main(string[] args)
         {
-            //Bernard test2
+            //Bernard test
             //Jason test
             //sandy test change
-            var saletransaction = new Dictionary<Product,int>();
-            var shoppingCart = new List<Product>();
-
-
+           
+            var shoppingCart = new List<KeyValuePair<Product, int>>();
             
             Console.WriteLine("WELCOME TO CHUCKY'S TOY KINGDOM!!!");
             Console.WriteLine("**********************************");
@@ -39,7 +37,9 @@ namespace GroupBMidtermPOS
             {
                 Console.WriteLine("Something went wrong");
             }
-            Console.WriteLine("Subtotal: ");
+
+            var kvpUserSelection = new KeyValuePair<Product, int>(register.listOfProducts[1], userItemQuantity);
+            Console.WriteLine($"Subtotal: {register.GetSubtotal(kvpUserSelection)}");
             //items customer selected
             //price of items * quantity = total
 
@@ -49,7 +49,7 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Are you ready to check out? (Y/N) ");
             var checkOutYesNo = Console.ReadLine().ToLower();
 
-            Console.WriteLine("Order Summary: ");
+            /*Console.WriteLine("Order Summary: ");
             Console.WriteLine($"Quantity {quantity} Item{item}Price {price}");//quantity-item-price for each item. may need for each statement
             Console.WriteLine($"Subtotal ${subtotal}");//subtotal
             Console.WriteLine($"Tax ${tax}");//tax
@@ -63,12 +63,12 @@ namespace GroupBMidtermPOS
 
             Console.WriteLine("Cash: ");
             Console.WriteLine("Please enter amount tendered");
-            double userAmountTendered = double.Parse(Console.ReadLine());
-            if (userAmountTendered < total)
+            double userAmountTendered = double.Parse(Console.ReadLine());*/
+            /*if (userAmountTendered < total)
             {
                 var amountOwed = total - userAmountTendered;
                 Console.WriteLine($"You still owe {amountOwed} ");
-            }
+            }*/
          //   register.TakePaymentCash(userAmountTendered, total);
 
         }
