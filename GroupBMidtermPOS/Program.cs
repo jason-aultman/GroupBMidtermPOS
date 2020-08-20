@@ -52,6 +52,7 @@ namespace GroupBMidtermPOS
             var paymentType = Console.ReadLine();
 
             //cash payment
+            
             Console.WriteLine("Cash: ");
             Console.WriteLine("Please enter amount tendered");
             double userAmountTendered = double.Parse(Console.ReadLine());
@@ -82,6 +83,7 @@ namespace GroupBMidtermPOS
             var userRoutingNumber = Console.ReadLine();
             Console.WriteLine("Please enter your checking account number: ");
             var userCheckNumber = Console.ReadLine();
+            
 
 
 
