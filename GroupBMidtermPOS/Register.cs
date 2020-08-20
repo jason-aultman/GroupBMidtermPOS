@@ -92,6 +92,7 @@ namespace GroupBMidtermPOS
             //Menu.cs Ask user for check number
         }
 
+        //add this later
         public List<Product> ProductSearch(string searchString, List<Product> products)
         {
             var results = new List<Product>();
