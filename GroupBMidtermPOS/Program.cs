@@ -39,7 +39,7 @@ namespace GroupBMidtermPOS
             }
 
             var kvpUserSelection = new KeyValuePair<Product, int>(register.listOfProducts[1], userItemQuantity);
-            Console.WriteLine($"Subtotal: ");
+            Console.WriteLine($"Subtotal: {register.GetSubtotal(kvpUserSelection)}");
             //items customer selected
             //price of items * quantity = total
 
