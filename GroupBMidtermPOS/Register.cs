@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace GroupBMidtermPOS
 {
@@ -24,24 +25,46 @@ namespace GroupBMidtermPOS
 
         }
 
-        public double GetTotalSalesTax(List<Product> shoppingCart)
+        public double GetSubtotal(List<Product> shoppingCart)
         {
             var subTotal = 0.0;
             foreach (var product in shoppingCart)
             {
                 subTotal += product.Price;
             }
+
+            return subTotal;
         }
-        public double GetSubtotalNoTax()
+
+        public double GetTotalSalesTax(double subTotal)
         {
-          //write subtotal work here
-          return 0.0;
+            return subTotal * Taxrate;
+        }
+
+        public double GetTotalSalesTax(List<Product> shoppingCart)
+        {
+            var subTotal = 0.0;
+            foreach (var products in shoppingCart)
+            {
+                subTotal += products.Price;
+            }
+
+            var totalTax = Taxrate * subTotal;
+            return totalTax;
+        }
+
+        public double GetTotalWithSalesTax(List<Product> shoppingCart)
+        {
+            var subtotal = GetSubtotal(shoppingCart);
+            var tax = GetTotalSalesTax(subtotal);
+            return subtotal+tax;
         }
         
         public double TakePaymentCash(double cashAmount, double saleAmount)
         {
             return cashAmount - saleAmount;
         }
+    
 
         public void TakePaymentCreditCard()
         {
