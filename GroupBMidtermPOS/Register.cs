@@ -92,12 +92,15 @@ namespace GroupBMidtermPOS
             //Menu.cs Ask user for check number
         }
 
-        public List<Product> productSearch(string searchString, List<Product> products)
+        public List<Product> ProductSearch(string searchString, List<Product> products)
         {
             var results = new List<Product>();
             results=products.FindAll(thing => thing.Description.Contains(searchString));
+            
             return results;
         }
+        
+        
         
         
     }

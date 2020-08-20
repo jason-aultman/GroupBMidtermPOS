@@ -22,9 +22,16 @@ namespace GroupBMidtermPOS
 
         public static void DisplayAllProducts(List<Product> productList)
         {
-            foreach (var product in productList)
+            if (productList != null)
             {
-                Console.WriteLine($"[{product.ProductNumber}] {product.Name} - {product.Description}");
+                foreach (var product in productList)
+                {
+                    Console.WriteLine($"[{product.ProductNumber}] {product.Name} - {product.Description}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No results returned!");
             }
         }
             
