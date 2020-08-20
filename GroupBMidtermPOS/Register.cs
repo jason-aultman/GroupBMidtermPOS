@@ -24,6 +24,15 @@ namespace GroupBMidtermPOS
 
         }
 
+        public double GetSubtotal(List<Product> shoppingCart)
+        {
+            var subTotal = 0.0;
+            foreach (var product in shoppingCart)
+            {
+                subTotal += product.Price;
+            }
+        }
+
         public double GetTotalSalesTax(List<Product> shoppingCart)
         {
             var subTotal = 0.0;
@@ -34,12 +43,6 @@ namespace GroupBMidtermPOS
 
             var totalTax = Taxrate * subTotal;
             return totalTax;
-        }
-        
-        public double GetSubtotalNoTax()
-        {
-          //write subtotal work here
-          return 0.0;
         }
         
         public double TakePaymentCash(double cashAmount, double saleAmount)
