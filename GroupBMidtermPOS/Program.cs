@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using MiNET.Utils;
 
 namespace GroupBMidtermPOS
 {
@@ -10,7 +11,8 @@ namespace GroupBMidtermPOS
             //Bernard test2
             //Jason test
             //sandy test change
-            List<Product> shoppingCart = new List<Product>();
+            var saletransaction = new Dictionary<Product,int>();
+            var shoppingCart = new List<Product>();
             
             Console.WriteLine("WELCOME TO CHUCKY'S TOY KINGDOM!!!");
             Console.WriteLine("**********************************");
