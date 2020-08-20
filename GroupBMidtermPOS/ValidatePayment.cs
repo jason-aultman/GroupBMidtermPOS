@@ -35,7 +35,6 @@ namespace GroupBMidtermPOS
         //validate length 12-digit and that it's parseable to an integer
         public bool ValidateCreditCard(string creditCard)
         {
-
             creditCard.Trim();
             var isPassing = creditCard.All(char.IsDigit);
             //const string regex = @"([0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4})";
