@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Xml.Schema;
 
 namespace GroupBMidtermPOS
 {
@@ -69,6 +69,14 @@ namespace GroupBMidtermPOS
                 var amountOwed = total - userAmountTendered;
                 Console.WriteLine($"You still owe {amountOwed} ");
             }
+            //go back to enter payment type screen
+            if (userAmountTendered >= total)
+            {
+                var changeDue = userAmountTendered - total;
+                Console.WriteLine($"Change due: ${changeDue}");
+            }
+            //
+
          //   register.TakePaymentCash(userAmountTendered, total);
 
         }
