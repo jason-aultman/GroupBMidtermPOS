@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 
 namespace GroupBMidtermPOS
 {
@@ -10,7 +10,8 @@ namespace GroupBMidtermPOS
             //Bernard test2
             //Jason test
             //sandy test change
-
+            List<Product> shoppingCart = new List<Product>();
+            
             Console.WriteLine("WELCOME TO CHUCKY'S TOY KINGDOM!!!");
             Console.WriteLine("**********************************");
             Console.WriteLine("Menu: Choose an Item");
@@ -26,6 +27,7 @@ namespace GroupBMidtermPOS
 
             count = 1;
             var userItem = Console.ReadLine();
+            
 
             Console.WriteLine("Enter Quantity:");
             var takeUserQuantity = int.TryParse(Console.ReadLine(), out int userItemQuantity); // take user user's quantity
