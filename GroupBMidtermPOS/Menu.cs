@@ -14,6 +14,7 @@ namespace GroupBMidtermPOS
         {
             
         }
+        
 
         public static void DisplayReciept()
         {
