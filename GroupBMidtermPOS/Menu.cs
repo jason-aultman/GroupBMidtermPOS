@@ -14,10 +14,27 @@ namespace GroupBMidtermPOS
 
         }
 
+        public static void DisplayOrderSummary(List<KeyValuePair<Product,int>> shoppingCart, Register register)
+        {
+            Console.WriteLine("Order Summary: ");
+            foreach (var product in shoppingCart)
+            {
+                Console.WriteLine($"Quantity {product.Value} Item{product.Key.Name}Price {product.Key.Price}");//quantity-item-price for each item. may need for each statement
+            }
+
+            var subTotal = register.GetSubtotal(shoppingCart);
+            var tax = register.GetTotalSalesTax(register.GetSubtotal(shoppingCart));
+            Console.WriteLine($"Subtotal ${subTotal}");//subtotal
+            Console.WriteLine($"Tax ${tax}");//tax
+            Console.WriteLine($"Total {subTotal+tax} ");//total
+
+        }
+
         public static void AskForPaymentMethodMenu()
         {
             
         }
+        
 
         public static void DisplayReciept()
         {
