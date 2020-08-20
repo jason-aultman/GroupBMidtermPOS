@@ -35,11 +35,11 @@ namespace GroupBMidtermPOS
         //validate length 12-digit and that it's parseable to an integer
         public bool ValidateCreditCard(string creditCard)
         {
-            creditCard.Trim();
-            var isPassing = creditCard.All(char.IsDigit);
+            var userCreditCard = creditCard.Trim();
+            var isPassing = userCreditCard.All(char.IsDigit);
             //const string regex = @"([0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4})";
 
-            if (Regex.IsMatch(creditCard, @"([0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4})"))
+            if (Regex.IsMatch(userCreditCard, @"([0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4})"))
             {
                 return true;
             }
@@ -50,7 +50,7 @@ namespace GroupBMidtermPOS
         //validate date format?  ToDate (parse) -- or take 4-digit input, validate first 2 digits between 1-12; year is greater than 20 (not expired)
         public bool ValidateExpDate(string expDate)
         {
-            expDate.Trim();
+            var cardExpDate = expDate.Trim();
             var isPassing = expDate.All(char.IsDigit);
 
             if (Regex.IsMatch(expDate, @"([0-1]{1}[0-9]{1}[1-2]{1}[0-9]{1})")&& isPassing)
@@ -64,7 +64,7 @@ namespace GroupBMidtermPOS
         //validate 3-digits and an integer
         public bool ValidateCVV(string cvvCode)
         {
-            cvvCode.Trim();
+            var usercvvCode = cvvCode.Trim();
             var isPassing = cvvCode.All(char.IsDigit);
 
             if (Regex.IsMatch(cvvCode, @"([0-1]{1}[0-9]{1}[1-2]{1})"))
@@ -79,7 +79,7 @@ namespace GroupBMidtermPOS
         //combine this method with credit card validation method to economize!
         public bool ValidateAcctNum(string acctNum)
         {
-            acctNum.Trim();
+            var useracctNum = acctNum.Trim();
             var isPassing = acctNum.All(char.IsDigit);
 
             if (Regex.IsMatch(acctNum, @"([0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1})"))
@@ -92,7 +92,7 @@ namespace GroupBMidtermPOS
         //Validate 9 digital routing number length and is an integer
         public bool ValidateRoutingNum(string routingNum)
         {
-            routingNum.Trim();
+            var userroutingNum = routingNum.Trim();
             var isPassing = routingNum.All(char.IsDigit);
 
             if (Regex.IsMatch(routingNum, @"([0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1})"))

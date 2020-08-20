@@ -7,31 +7,22 @@ namespace GroupBMidtermPOS
     static class Program
     {
         static void Main(string[] args)
-        {
-            //Bernard test
-            //Jason test
-            //sandy test change
-           
+        {           
             var shoppingCart = new List<KeyValuePair<Product, int>>();
-            
+            Register register = new Register(); //open a new Register
+
             Console.WriteLine("WELCOME TO CHUCKY'S TOY KINGDOM!!!");
             Console.WriteLine("**********************************");
             Console.WriteLine("Menu: Choose an Item");
 
-            Register register = new Register(); //open a new Register
-           // register.createTemporaryListOfProductsForDemoOnly(); //delete whence Filehandler passes all tests
-           var count = 1;
-            foreach (var product in register.listOfProducts)
-            {
-                Console.WriteLine($"[{product.ProductNumber}] {product.Name} "); //write out the list of products 1 thru end of list
-                count++;
-            }
+            Menu.DisplayMainMenu(register);
 
-            count = 1;
-            var userItem = Console.ReadLine();
+            //call the Validator.cs -- this is a new class that will hold all the user input validation before anything else happens
             
+            var userItem = Console.ReadLine();
 
             Console.WriteLine("Enter Quantity:");
+            //maybe move this to Validator.cs class (new)
             var takeUserQuantity = int.TryParse(Console.ReadLine(), out int userItemQuantity); // take user user's quantity
             if (!takeUserQuantity)
             {
@@ -39,11 +30,14 @@ namespace GroupBMidtermPOS
             }
 
             var kvpUserSelection = new KeyValuePair<Product, int>(register.listOfProducts[1], userItemQuantity);
+
+
             Console.WriteLine($"Subtotal: {register.GetSubtotal(kvpUserSelection)}");
+            shoppingCart.Add(kvpUserSelection);
             //items customer selected
             //price of items * quantity = total
 
-            Console.WriteLine("Would you like to continue? (Y/N)");
+            Console.WriteLine("Would you like to continue to shop? (Y/N)");
             var continueYesNo = Console.ReadLine().ToLower();
 
             Console.WriteLine("Are you ready to check out? (Y/N) ");
