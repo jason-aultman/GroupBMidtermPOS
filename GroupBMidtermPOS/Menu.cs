@@ -5,9 +5,13 @@ namespace GroupBMidtermPOS
 {
     public static class Menu
     {
-        public static void DisplayMainMenu()
+        public static void DisplayMainMenu(Register register)
         {
-            
+            foreach (var product in register.listOfProducts)
+            {
+                Console.WriteLine($"[{product.ProductNumber}] {product.Name} "); //write out the list of products 1 thru end of list
+            }
+
         }
 
         public static void AskForPaymentMethodMenu()
