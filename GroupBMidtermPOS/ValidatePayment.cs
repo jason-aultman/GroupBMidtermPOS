@@ -1,5 +1,4 @@
-﻿/*
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace GroupBMidtermPOS
 {
@@ -60,4 +59,4 @@ namespace GroupBMidtermPOS
         }
     }
 
-}*/
+}
