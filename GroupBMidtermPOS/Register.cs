@@ -25,6 +25,12 @@ namespace GroupBMidtermPOS
             return listOfProducts;
 
         }
+        public double GetGrandTotal (List<KeyValuePair<Product,int>> shoppingCart)
+        {
+            var beforeTax = GetSubtotal(shoppingCart);
+            var calcTax = GetTotalSalesTax(beforeTax);
+            return beforeTax + calcTax;
+        }
 
         public double GetSubtotal(List<Product> shoppingCart)
         {

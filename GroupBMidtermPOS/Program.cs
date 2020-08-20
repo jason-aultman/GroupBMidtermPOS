@@ -55,15 +55,15 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Cash: ");
             Console.WriteLine("Please enter amount tendered");
             double userAmountTendered = double.Parse(Console.ReadLine());
-            if (userAmountTendered < total)
+            if (userAmountTendered < register.GetGrandTotal(shoppingCart))
             {
-                var amountOwed = total - userAmountTendered;
+                double amountOwed = register.GetGrandTotal(shoppingCart) - userAmountTendered;
                 Console.WriteLine($"You still owe ${amountOwed} How would you like to pay?");
             }
             //go back to enter payment type screen if money is owed
-            if (userAmountTendered >= total)
+            if (userAmountTendered >= register.GetGrandTotal(shoppingCart))
             {
-                var changeDue = userAmountTendered - total;
+                var changeDue = userAmountTendered - register.GetGrandTotal(shoppingCart);
                 Console.WriteLine($"Change due: ${changeDue}");
             }
             //credit card payment
