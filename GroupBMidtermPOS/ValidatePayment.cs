@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace GroupBMidtermPOS
 {
-    public class ValidatePayment
+    public class ValidatePayment : PaymentTypeEnum
     {
         //credit card
         public string CreditCard { get; set; }
@@ -37,13 +37,14 @@ namespace GroupBMidtermPOS
         {
 
             creditCard.Trim();
-            creditCard.All(char.IsDigit);
+            var isPassing = creditCard.All(char.IsDigit);
             //const string regex = @"([0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4})";
 
             if (Regex.IsMatch(creditCard, @"([0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4})"))
             {
                 return true;
             }
+            return isPassing;
 
         }
 
@@ -51,12 +52,13 @@ namespace GroupBMidtermPOS
         public bool ValidateExpDate(string expDate)
         {
             expDate.Trim();
-            expDate.All(char.IsDigit);
+            var isPaying = expDate.All(char.IsDigit);
 
-            if (Regex.IsMatch(expDate, @"([0-1]{1}[0-9]{1}[1-2]{1}[0-9]{1})"))
+            if (Regex.IsMatch(expDate, @"([0-1]{1}[0-9]{1}[1-2]{1}[0-9]{1})")&& isPassing)
             {
                 return true;
             }
+            return false;
 
         }
 
@@ -64,12 +66,13 @@ namespace GroupBMidtermPOS
         public bool ValidateCVV(string cvvCode)
         {
             cvvCode.Trim();
-            cvvCode.All(char.IsDigit);
+            var isPassing = cvvCode.All(char.IsDigit);
 
             if (Regex.IsMatch(cvvCode, @"([0-1]{1}[0-9]{1}[1-2]{1})"))
             {
                 return true;
             }
+            return false;
 
         }
 
@@ -78,25 +81,26 @@ namespace GroupBMidtermPOS
         public bool ValidateAcctNum(string acctNum)
         {
             acctNum.Trim();
-            acctNum.All(char.IsDigit);
+            var isPassing = acctNum.All(char.IsDigit);
 
             if (Regex.IsMatch(acctNum, @"([0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1})"))
             {
                 return true;
             }
-
+            return false;
         }
 
         //Validate 9 digital routing number length and is an integer
         public bool ValidateRoutingNum(string routingNum)
         {
             routingNum.Trim();
-            routingNum.All(char.IsDigit);
+            var isPassing = routingNum.All(char.IsDigit);
 
             if (Regex.IsMatch(routingNum, @"([0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1})"))
             {
                 return true;
             }
+            return false;
 
         }
     }
