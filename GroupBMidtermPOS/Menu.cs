@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MiNET.Sounds;
+using System;
 using System.Collections.Generic;
 
 namespace GroupBMidtermPOS
@@ -39,7 +40,14 @@ namespace GroupBMidtermPOS
             var continueYesNo = Console.ReadLine().ToLower();
             if (ValidateInput.CheckYesNo(continueYesNo) )//todo 
             {
-                return true;
+                if (continueYesNo == "y")
+                {
+                    Menu.DisplayMainMenu(register);
+                }
+                if(continueYesNo == "n")
+                {
+                    AskToCheckOut();
+                }
             }
             else 
             {
@@ -49,7 +57,12 @@ namespace GroupBMidtermPOS
 
             return false;
         }
-
+        public static bool AskToCheckOut()
+        {
+            Console.WriteLine("Are you ready to check out? (Y/N) ");
+            var checkOutYesNo = Console.ReadLine().ToLower();
+            return false;
+        }
         public static void AskForPaymentMethodMenu()
         {
             Console.WriteLine("Enter Payment Type: ");// working with the enums
