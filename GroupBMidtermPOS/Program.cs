@@ -16,10 +16,26 @@ namespace GroupBMidtermPOS
             var clearConsole = false;
             do
             {
-                Console.WriteLine("Menu: Choose an Item");
+                Console.WriteLine("Menu: Choose an Item # or : + search term to search");
                 Menu.DisplayMainMenu(register, clearConsole);
                 //call the Validator.cs -- this is a new class that will hold all the user input validation before anything else happens
-                var userItem = int.Parse(Console.ReadLine());
+                var userItem = 0;
+                do
+                {
+                    var userItemAsString = Console.ReadLine();
+                    if (userItemAsString.StartsWith(":"))
+                    {
+                        SearchForProduct(userItemAsString);
+
+                    }
+                    else
+                    {
+                        userItem = int.Parse(userItemAsString)-1;
+                        break;
+                    }
+
+                } while (true);
+               
                 Console.WriteLine("Enter Quantity:");
                 //maybe move this to Validator.cs class (new)
                 var takeUserQuantity =
@@ -93,6 +109,20 @@ namespace GroupBMidtermPOS
                     default:
                         break;
                 }
+            }
+
+            void SearchForProduct(string descriptor)
+            {
+                var results = register.ProductSearch(descriptor, register.listOfProducts);
+                if (results.Count<1)
+                {
+                    Console.WriteLine("No products were found that match the search string.");
+                }
+                else
+                {
+                    Menu.DisplayAllProducts(results);
+                }
+                
             }
             //   register.TakePaymentCash(userAmountTendered, total);
 

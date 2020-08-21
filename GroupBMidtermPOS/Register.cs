@@ -16,7 +16,7 @@ namespace GroupBMidtermPOS
         
          public Register()
          {
-             listOfProducts = FileHandler.ReadInventoryData(FileHandler.currentDirectory+@"\GroupBMidtermPOS\Inventory.txt");
+             listOfProducts = FileHandler.ReadInventoryData(FileHandler.currentDirectory+@"\GroupBMidtermPOS\Inventory.csv");
          }
 
         public double GetGrandTotal (List<KeyValuePair<Product,int>> shoppingCart)
@@ -129,6 +129,7 @@ namespace GroupBMidtermPOS
         //add this later
         public List<Product> ProductSearch(string searchString, List<Product> products)
         {
+            searchString = searchString.Substring(1);
             var results = new List<Product>();
             results=products.FindAll(thing => thing.Description.Contains(searchString));
             
