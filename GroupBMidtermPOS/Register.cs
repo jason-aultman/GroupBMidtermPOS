@@ -16,7 +16,7 @@ namespace GroupBMidtermPOS
         
          public Register()
          {
-            listOfProducts = FileHandler.ReadInventoryData(@"GroupBMidtermPOS\Inventory.csv");
+            listOfProducts = FileHandler.ReadInventoryData(FileHandler.currentDirectory+@"\Inventory.csv");
          }
 
         public double GetGrandTotal (List<KeyValuePair<Product,int>> shoppingCart)
