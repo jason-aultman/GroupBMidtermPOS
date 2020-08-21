@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MiNET;
 
 namespace GroupBMidtermPOS
 {
@@ -10,9 +11,16 @@ namespace GroupBMidtermPOS
         {
             return false;
         }
+
         public static bool CheckYesNo(string userInputCharacter)
         {
+            if (userInputCharacter.ToLower() == "y" || userInputCharacter.ToLower() == "n")
+            {
+                return true;
+            }
+
             return false;
         }
+
     }
 }
