@@ -11,7 +11,7 @@ namespace GroupBMidtermPOS
             if(clearScreenOnCall) System.Console.Clear();
             foreach (var product in register.listOfProducts)
             {
-                Console.WriteLine($"[{product.ProductNumber}] {product.Name} "); //write out the list of products 1 thru end of list
+                Console.WriteLine($"[{product.ProductNumber}] {product.Name}  ${product.Price} "); //write out the list of products 1 thru end of list
             }
 
         }
