@@ -32,6 +32,24 @@ namespace GroupBMidtermPOS
 
         }
 
+        public static bool AskToContinueToShop()
+        {
+            Console.WriteLine("Would you like to continue to shop? (Y/N)");
+            var continueYesNo = Console.ReadLine().ToLower();
+            if (ValidateInput.CheckYesNo(continueYesNo) )//todo 
+            {
+
+            }
+            else 
+            {
+                Console.WriteLine("Please make a valid input");
+                AskToContinueToShop();
+            
+            }
+
+
+        }
+
         public static void AskForPaymentMethodMenu()
         {
             

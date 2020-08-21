@@ -37,8 +37,8 @@ namespace GroupBMidtermPOS
             //items customer selected
             //price of items * quantity = total
 
-            Console.WriteLine("Would you like to continue to shop? (Y/N)");
-            var continueYesNo = Console.ReadLine().ToLower();
+            
+            
 
             Console.WriteLine("Are you ready to check out? (Y/N) ");
             var checkOutYesNo = Console.ReadLine().ToLower();
