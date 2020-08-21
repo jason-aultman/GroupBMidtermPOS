@@ -6,16 +6,15 @@ namespace GroupBMidtermPOS
 {
     public class FileHandler
     {
-        //private static Stream productAddItem;
-        //public static List<Product> ShoppingCart = new List<Product> { };
+       
 
         public static string currentDirectory = Directory.GetCurrentDirectory();
 
         public static DirectoryInfo directory = new DirectoryInfo(currentDirectory);
 
-        public static string fileName = Path.Combine(directory.FullName, "Inventory.csv");
+       
 
-        public static List<Product> fileContents = ReadInventoryData(fileName);
+       
 
 
         public static string ReadFile(string fileName)
@@ -38,25 +37,17 @@ namespace GroupBMidtermPOS
                 string line = "";
                 while ((!reader.EndOfStream))
                 {
-                    Product product;
+                   
                     line = reader.ReadLine();
-                    string[] values = line.Split(',',5);
+                    string[] values = line.Split(',',4);
                     
-                    //REMOVED BECAUSE AS YOU SAID SANDY, IS NOT USED
-                    //product number (I don't have an actual value in the .txt file, just the order they appear in) --Looks great Sandy, just what we need --Jason
-                    
-                    // if (int.TryParse(values[0], out int parseInt))
-                    // {
-                    //     product.ProductNumber = parseInt;
-                    // }
-                    
+                  
                     //name
                     var productName = values[0];  //CHANGED THIS TO 0 INDEX
                     
                     //category
-                    
-                    
-                        var productCategoryEnum = values[1];
+
+                    var productCategoryEnum = values[1];
                     
 
                     //desc
@@ -70,7 +61,7 @@ namespace GroupBMidtermPOS
                     {
                         productPrice = parseDbl;
                     }
-                    product = new Product(productName, productCategoryEnum,productPrice, productDescription);
+                    var product = new Product(productName, productCategoryEnum,productPrice, productDescription);
 
                     InventoryData.Add(product);
                 }

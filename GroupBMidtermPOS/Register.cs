@@ -11,12 +11,12 @@ namespace GroupBMidtermPOS
         
         public const double Taxrate = .06;
         public double NumberOrdered { get; set; }
-        public List<Product> listOfProducts = new List<Product>();
+        public List<Product> listOfProducts;
         public List<Product> CurrentOrder= new List<Product>();
         
          public Register()
          {
-            listOfProducts = FileHandler.ReadInventoryData(FileHandler.currentDirectory+@"\Inventory.csv");
+             listOfProducts = FileHandler.ReadInventoryData(FileHandler.currentDirectory+@"\GroupBMidtermPOS\Inventory.txt");
          }
 
         public double GetGrandTotal (List<KeyValuePair<Product,int>> shoppingCart)
