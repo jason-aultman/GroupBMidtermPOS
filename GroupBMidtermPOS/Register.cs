@@ -40,7 +40,7 @@ namespace GroupBMidtermPOS
         {
             var subTotal = 0.0;
             subTotal = keyValuePair.Key.Price * keyValuePair.Value;
-            return subTotal;
+            return Math.Round(subTotal, 2, MidpointRounding.AwayFromZero);
         }
         public double GetSubtotal(List<KeyValuePair<Product, int>> shoppingCart)
         {
@@ -50,7 +50,7 @@ namespace GroupBMidtermPOS
                 subTotal += product.Key.Price * product.Value;
             }
 
-            return subTotal;
+            return Math.Round(subTotal, 2, MidpointRounding.AwayFromZero);
         }
         public double GetTotalSalesTax(double subTotal)
         {
@@ -66,7 +66,7 @@ namespace GroupBMidtermPOS
             }
 
             var totalTax = Taxrate * subTotal;
-            return totalTax;
+            return Math.Round(totalTax,2,MidpointRounding.AwayFromZero);
         }
 
         public double GetTotalWithSalesTax(List<KeyValuePair<Product,int>> shoppingCart)
@@ -82,22 +82,23 @@ namespace GroupBMidtermPOS
         {
             return cashAmount - saleAmount;
         }
-        public double TakePaymentCash()
+        public double TakePaymentCash(List<KeyValuePair<Product, int>> shoppingCart)
         {
             Console.WriteLine("Cash: ");
             Console.WriteLine("Please enter amount tendered");
             double userAmountTendered = double.Parse(Console.ReadLine());
-            if (userAmountTendered < register.GetGrandTotal(shoppingCart))
+            if (userAmountTendered < GetGrandTotal(shoppingCart))
             {
-                double amountOwed = register.GetGrandTotal(shoppingCart) - userAmountTendered;
-                Console.WriteLine($"You still owe ${amountOwed} How would you like to pay?");
+                double amountOwed = GetGrandTotal(shoppingCart) - userAmountTendered;
+                Console.WriteLine($"You still owe ${amountOwed}");
+                return amountOwed - userAmountTendered;
             }
             //go back to enter payment type screen if money is owed
-            if (userAmountTendered >= register.GetGrandTotal(shoppingCart))
-            {
-                var changeDue = userAmountTendered - register.GetGrandTotal(shoppingCart);
+            
+             var changeDue = userAmountTendered - GetGrandTotal(shoppingCart);
                 Console.WriteLine($"Change due: ${changeDue}");
-            }
+                return changeDue;
+
         }
     
 
