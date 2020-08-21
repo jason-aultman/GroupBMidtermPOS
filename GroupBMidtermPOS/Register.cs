@@ -85,7 +85,7 @@ namespace GroupBMidtermPOS
         public double TakePaymentCash(List<KeyValuePair<Product, int>> shoppingCart)
         {
             Console.WriteLine("Cash: ");
-            Console.WriteLine("Please enter amount tendered");
+            Console.WriteLine("Please enter amount tendered; ");
             double userAmountTendered = double.Parse(Console.ReadLine());
             if (userAmountTendered < GetGrandTotal(shoppingCart))
             {

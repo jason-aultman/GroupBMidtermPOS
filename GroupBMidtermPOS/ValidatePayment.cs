@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using fNbt;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.RegularExpressions;
 
 namespace GroupBMidtermPOS
@@ -47,7 +49,27 @@ namespace GroupBMidtermPOS
 
         }
 
-        //validate date format?  ToDate (parse) -- or take 4-digit input, validate first 2 digits between 1-12; year is greater than 20 (not expired)
+        //validate date format?  
+        //ToDate (parse) -- or take 4-digit input
+        //validate first 2 digits between 1-12
+        //year is greater than 20 (not expired)
+        
+        //new method to determine if the first 2 numbers are between a range
+        public static bool BetweenMoRanges(int a,int b, int number)
+        {
+            a = 1;
+            b = 9;
+            return (a <= number && number <= b);
+        }
+        //new method to determine if the second set of 2 numbers are between a range
+        public static bool BetweenYrRanges(int a,int b, int number)
+        {
+            a = 1;
+            b = 9;
+            return (a <= number && number <= b);
+        }
+        
+        
         public bool ValidateExpDate(string expDate)
         {
             var cardExpDate = expDate.Trim();
