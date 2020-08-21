@@ -16,7 +16,7 @@ namespace GroupBMidtermPOS
         
          public Register()
          {
-             listOfProducts = FileHandler.ReadInventoryData(@"GroupBMidtermPOS\Inventory.csv");
+            listOfProducts = FileHandler.ReadInventoryData(@"C:\Users\bepol\source\repos\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv");
          }
 
         public List<Product> createTemporaryListOfProductsForDemoOnly()
@@ -79,7 +79,9 @@ namespace GroupBMidtermPOS
         {
             var subtotal = GetSubtotal(shoppingCart);
             var tax = GetTotalSalesTax(subtotal);
-            return subtotal+tax;
+            Math.Round(tax, 2, MidpointRounding.AwayFromZero);
+
+            return subtotal +tax;
         }
         
         public double TakePaymentCash(double cashAmount, double saleAmount)
