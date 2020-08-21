@@ -44,36 +44,11 @@ namespace GroupBMidtermPOS
            Menu.AskForPaymentMethodMenu();
 
             //cash payment
-            Console.WriteLine("Cash: ");
-            Console.WriteLine("Please enter amount tendered");
-            double userAmountTendered = double.Parse(Console.ReadLine());
-            if (userAmountTendered < register.GetGrandTotal(shoppingCart))
-            {
-                double amountOwed = register.GetGrandTotal(shoppingCart) - userAmountTendered;
-                Console.WriteLine($"You still owe ${amountOwed} How would you like to pay?");
-            }
-            //go back to enter payment type screen if money is owed
-            if (userAmountTendered >= register.GetGrandTotal(shoppingCart))
-            {
-                var changeDue = userAmountTendered - register.GetGrandTotal(shoppingCart);
-                Console.WriteLine($"Change due: ${changeDue}");
-            }
+           
             //credit card payment
-            Console.WriteLine("Credit/Debit card: ");
-            Console.WriteLine("Please your 12 digit credit card number: ");
-            var userCardNumber = Console.ReadLine();
-            Console.WriteLine("Please your 4 digit expiration date: ");
-            var userExpirationDate = Console.ReadLine();
-            Console.WriteLine("Please your 3 digit CVV number: ");
-            var userCvvNumber = Console.ReadLine();
+            
             //check payment
-            Console.WriteLine("Check: ");
-            Console.WriteLine("Please enter your check number: ");
-            var userCheckNumber = Console.ReadLine();
-            Console.WriteLine("Please enter your routing number: ");
-            var userRoutingNumber = Console.ReadLine();
-            Console.WriteLine("Please enter your checking account number: ");
-            var userCheckingAccountNumber = Console.ReadLine();
+           
 
 
 
