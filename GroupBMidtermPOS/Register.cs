@@ -19,12 +19,6 @@ namespace GroupBMidtermPOS
              listOfProducts = FileHandler.ReadInventoryData(@"GroupBMidtermPOS\Inventory.csv");
          }
 
-        public List<Product> createTemporaryListOfProductsForDemoOnly()
-        {
-            
-            return listOfProducts;
-
-        }
         public double GetGrandTotal (List<KeyValuePair<Product,int>> shoppingCart)
         {
             var beforeTax = GetSubtotal(shoppingCart);
