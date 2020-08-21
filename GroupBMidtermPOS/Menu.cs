@@ -19,7 +19,7 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Order Summary: ");
             foreach (var product in shoppingCart)
             {
-                Console.WriteLine($"Quantity {product.Value} Item{product.Key.Name}Price {product.Key.Price}");//quantity-item-price for each item. may need for each statement
+                Console.WriteLine($"Quantity: {product.Value} Item: {product.Key.Name} Price: {product.Key.Price}");//quantity-item-price for each item. may need for each statement
             }
 
             var subTotal = register.GetSubtotal(shoppingCart);
