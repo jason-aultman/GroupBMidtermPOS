@@ -37,19 +37,14 @@ namespace GroupBMidtermPOS
             //items customer selected
             //price of items * quantity = total
 
+            Menu.AskToContinueToShop();
             
-            
-
             Console.WriteLine("Are you ready to check out? (Y/N) ");
             var checkOutYesNo = Console.ReadLine().ToLower();
 
            Menu.DisplayOrderSummary(shoppingCart, register);
 
-            Console.WriteLine("Enter Payment Type: ");// working with the enums
-            Console.WriteLine("1. Cash");
-            Console.WriteLine("2. Credit/Debit Card");
-            Console.WriteLine("3. Check");
-            var paymentType = Console.ReadLine();
+            
 
             //cash payment
             Console.WriteLine("Cash: ");

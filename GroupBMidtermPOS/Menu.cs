@@ -28,6 +28,7 @@ namespace GroupBMidtermPOS
             var total = Math.Round((subTotal + tax), 2, MidpointRounding.AwayFromZero);
             Console.WriteLine($"Subtotal ${subTotal}");//subtotal
             Console.WriteLine($"Tax ${tax}");//tax
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
             Console.WriteLine($"Total ${total} ");//total
 
         }
@@ -38,21 +39,24 @@ namespace GroupBMidtermPOS
             var continueYesNo = Console.ReadLine().ToLower();
             if (ValidateInput.CheckYesNo(continueYesNo) )//todo 
             {
-
+                return true;
             }
             else 
             {
                 Console.WriteLine("Please make a valid input");
                 AskToContinueToShop();
-            
             }
 
-
+            return false;
         }
 
         public static void AskForPaymentMethodMenu()
         {
-            
+            Console.WriteLine("Enter Payment Type: ");// working with the enums
+            Console.WriteLine("1. Cash");
+            Console.WriteLine("2. Credit/Debit Card");
+            Console.WriteLine("3. Check");
+            var paymentType = Console.ReadLine();
         }
         
 
