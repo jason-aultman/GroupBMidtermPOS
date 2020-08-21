@@ -24,9 +24,11 @@ namespace GroupBMidtermPOS
 
             var subTotal = register.GetSubtotal(shoppingCart);
             var tax = register.GetTotalSalesTax(register.GetSubtotal(shoppingCart));
+            tax = Math.Round(tax, 2, MidpointRounding.AwayFromZero);
+            var total = Math.Round((subTotal + tax), 2, MidpointRounding.AwayFromZero);
             Console.WriteLine($"Subtotal ${subTotal}");//subtotal
             Console.WriteLine($"Tax ${tax}");//tax
-            Console.WriteLine($"Total {subTotal+tax} ");//total
+            Console.WriteLine($"Total ${total} ");//total
 
         }
 
