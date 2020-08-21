@@ -38,13 +38,10 @@ namespace GroupBMidtermPOS
             //price of items * quantity = total
 
             Menu.AskToContinueToShop();
-            
-            Console.WriteLine("Are you ready to check out? (Y/N) ");
-            var checkOutYesNo = Console.ReadLine().ToLower();
-
+           
            Menu.DisplayOrderSummary(shoppingCart, register);
 
-            
+           Menu.AskForPaymentMethodMenu();
 
             //cash payment
             Console.WriteLine("Cash: ");
