@@ -69,9 +69,25 @@ namespace GroupBMidtermPOS
             Console.WriteLine("1. Cash");
             Console.WriteLine("2. Credit/Debit Card");
             Console.WriteLine("3. Check");
-            var paymentType = Console.ReadLine();
+            var paymentType = int.Parse(Console.ReadLine());
+
+            switch ((PaymentTypeEnum)paymentType)
+            {
+                case PaymentTypeEnum.Cash:
+                    register.TakePaymentCash();
+                    break;
+                case PaymentTypeEnum.Check:
+                    register.TakePaymentCheck();
+                    break;
+                case PaymentTypeEnum.Credit_Card:
+                    register.TakePaymentCard();
+                    break;
+            }
+            {
+
+            }
         }
-        
+
 
         public static void DisplayReciept()
         {
@@ -93,6 +109,6 @@ namespace GroupBMidtermPOS
                 Console.WriteLine("No results returned!");
             }
         }
-            
+
     }
 }

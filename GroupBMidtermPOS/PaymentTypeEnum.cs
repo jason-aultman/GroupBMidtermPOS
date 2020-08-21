@@ -6,8 +6,8 @@ namespace GroupBMidtermPOS
 {
     public enum PaymentTypeEnum
     {
-        Cash,
-        Check,
-        Credit_Card
+        Cash = 1,
+        Check = 3,
+        Credit_Card = 2
     }
 }
