@@ -16,13 +16,13 @@ namespace GroupBMidtermPOS
         
          public Register()
          {
-            listOfProducts = FileHandler.ReadInventoryData(@"C:\Users\bepol\source\repos\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv");
+            listOfProducts = FileHandler.ReadInventoryData(@"GroupBMidtermPOS\Inventory.csv");
          }
 
         public double GetGrandTotal (List<KeyValuePair<Product,int>> shoppingCart)
         {
             var beforeTax = GetSubtotal(shoppingCart);
-            var calcTax = GetTotalSalesTax(beforeTax);
+            var calcTax = Math.Round(GetTotalSalesTax(beforeTax), 2, MidpointRounding.AwayFromZero);
             return beforeTax + calcTax;
         }
 

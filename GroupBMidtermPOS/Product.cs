@@ -15,8 +15,6 @@ namespace GroupBMidtermPOS
 
         public Product()
         {
-           // NumberOfProducts++;
-           // ProductNumber = NumberOfProducts;
 
         }
 
