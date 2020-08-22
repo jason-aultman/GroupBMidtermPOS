@@ -10,13 +10,15 @@ namespace GroupBMidtermPOS
         {           
             var shoppingCart = new List<KeyValuePair<Product, int>>();
             Register register = new Register(); //open a new Register
-
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("WELCOME TO CHUCKY'S TOY KINGDOM!!!");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("**********************************");
+            Console.WriteLine();
             var clearConsole = false;
             do
             {
-                Console.WriteLine("Menu: Choose an Item # or : + search term to search");
+                Console.WriteLine($"Menu: Choose an Item # or [: + search term] to search");
                 Menu.DisplayMainMenu(register, clearConsole);
                 //call the Validator.cs -- this is a new class that will hold all the user input validation before anything else happens
                 var userItem = 0;
@@ -35,27 +37,22 @@ namespace GroupBMidtermPOS
                     }
 
                 } while (true);
-               
-                Console.WriteLine("Enter Quantity:");
-                //maybe move this to Validator.cs class (new)
-                var takeUserQuantity =
-                    int.TryParse(Console.ReadLine(), out int userItemQuantity); // take user user's quantity
-                if (!takeUserQuantity)
-                {
-                    Console.WriteLine("Something went wrong");
-                }
-
+                
+                var userItemQuantity = GetUserItemQuantity();
                 var kvpUserSelection =
                     new KeyValuePair<Product, int>(GetProduct(register.listOfProducts, userItem), userItemQuantity);
                 shoppingCart.Add(kvpUserSelection);
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("-------------------------------------------------------------");
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Transaction total: {register.GetSubtotal(kvpUserSelection)}");
                 Console.WriteLine($"Subtotal: {register.GetSubtotal(shoppingCart)}");
                 clearConsole = true;
+                Console.ForegroundColor = ConsoleColor.Gray;
             } while (AskToContinueToShop());
             Menu.DisplayOrderSummary(shoppingCart, register);
             var payment = Menu.AskForPaymentMethodMenu();
-
+            TakePayment(payment);
             //cash payment
            
             //credit card payment
@@ -95,6 +92,7 @@ namespace GroupBMidtermPOS
             
             void TakePayment(PaymentTypeEnum paymentType)
             {
+                
                 switch (paymentType)
                 {
                     case PaymentTypeEnum.Cash:
@@ -124,8 +122,22 @@ namespace GroupBMidtermPOS
                 }
                 
             }
-            //   register.TakePaymentCash(userAmountTendered, total);
 
+        }
+
+        public static int GetUserItemQuantity()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("Enter Quantity:");
+            //maybe move this to Validator.cs class (new)
+            var takeUserQuantity =
+                int.TryParse(Console.ReadLine(), out int userItemQuantity); // take user user's quantity
+            if (!takeUserQuantity)
+            {
+                Console.WriteLine("Something went wrong");
+            }
+
+            return userItemQuantity;
         }
     }
 }
