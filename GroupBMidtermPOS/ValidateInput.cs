@@ -21,6 +21,14 @@ namespace GroupBMidtermPOS
              return false;*/
             return int.TryParse(userInputNumber, out int result);
         }
+        public static bool GetIsGreaterThanZero(int numberToCheck)
+        {
+            if (numberToCheck>0)
+            {
+                return true;
+            }
+            return false;
+        }
 
 
         public static bool CheckYesNo(string userInputCharacter)

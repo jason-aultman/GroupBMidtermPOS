@@ -18,21 +18,19 @@ namespace GroupBMidtermPOS
             {
                 Console.WriteLine($"Menu: Choose an Item # or [: + search term] to search");
                 Menu.DisplayMainMenu(register, clearConsole);
-                //call the Validator.cs -- this is a new class that will hold all the user input validation before anything else happens
-                var userItem = 0;
+                var userItemNumber = 0;
                 do
                 {
                     var userItemAsString = Console.ReadLine();
                     if (userItemAsString.StartsWith(":"))
                     {
                         SearchForProduct(userItemAsString.Substring(1));
-
                     }
                     else
                     {
                         if (ValidateInput.GetIsInteger(userItemAsString))
                         {
-                            userItem = int.Parse(userItemAsString) - 1;
+                            userItemNumber = int.Parse(userItemAsString) - 1;
                             break;
                         }
                         else
@@ -44,16 +42,9 @@ namespace GroupBMidtermPOS
                 } while (true);
 
                 var userItemQuantity = GetUserItemQuantity();
-                var kvpUserSelection =
-                    new KeyValuePair<Product, int>(GetProduct(register.listOfProducts, userItem), userItemQuantity);
+                var kvpUserSelection = new KeyValuePair<Product, int>(GetProduct(register.listOfProducts, userItemNumber), userItemQuantity);
                 shoppingCart.Add(kvpUserSelection);
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.WriteLine("-------------------------------------------------------------");
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Transaction total: {register.GetSubtotal(kvpUserSelection)}");
-                Console.WriteLine($"Subtotal: {register.GetSubtotal(shoppingCart)}");
-                clearConsole = true;
-                Console.ForegroundColor = ConsoleColor.Gray;
+                clearConsole = DisplayTransactionDetails(shoppingCart, register, kvpUserSelection);
             } while (AskToContinueToShop());
 
             Menu.DisplayOrderSummary(shoppingCart, register);
@@ -127,6 +118,19 @@ namespace GroupBMidtermPOS
 
         }
 
+        private static bool DisplayTransactionDetails(List<KeyValuePair<Product, int>> shoppingCart, Register register, KeyValuePair<Product, int> kvpUserSelection)
+        {
+            bool clearConsole;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("-------------------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Transaction total: {register.GetSubtotal(kvpUserSelection)}");
+            Console.WriteLine($"Subtotal: {register.GetSubtotal(shoppingCart)}");
+            clearConsole = true;
+            Console.ForegroundColor = ConsoleColor.Gray;
+            return clearConsole;
+        }
+
         private static void DisplayHeader()
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -140,15 +144,17 @@ namespace GroupBMidtermPOS
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Enter Quantity:");
-            //maybe move this to Validator.cs class (new)
-            var takeUserQuantity =
-                int.TryParse(Console.ReadLine(), out int userItemQuantity); // take user user's quantity
-            if (!takeUserQuantity)
+            var takeUserQuantity = Console.ReadLine();
+           
+            if (ValidateInput.GetIsInteger(takeUserQuantity))
             {
-                Console.WriteLine("Something went wrong");
+                return int.Parse(takeUserQuantity);
             }
+            Console.WriteLine("Something went wrong");
+            return GetUserItemQuantity();
+            
 
-            return userItemQuantity;
+            
         }
     }
 }
