@@ -24,11 +24,9 @@ namespace GroupBMidtermPOS
             } while (AskToContinueToShop());
 
             Menu.DisplayOrderSummary(shoppingCart, register);
+            //why will you not stop??
             var payment = Menu.AskForPaymentMethodMenu();
             TakePayment(payment, register.GetGrandTotal(shoppingCart), register);
-
-           
-
         }
 
         private static int GetItemNumberFromUser(Register register, bool clearConsole)
@@ -93,26 +91,27 @@ namespace GroupBMidtermPOS
 
         public static void TakePayment(PaymentTypeEnum paymentType, double amountDue, Register register)
         {
-            var amount = amountDue;
-            switch (paymentType)
+            
+            if (paymentType == PaymentTypeEnum.Cash)
             {
-
-                case PaymentTypeEnum.Cash:
-                    amount = register.TakePaymentCash(amount);
-                    while (amount < 0.00)
-                    {
-                        var payment = Menu.AskForPaymentMethodMenu();
-                        TakePayment(payment, Math.Abs(amount), register); //1 -20, 
-                    }
-                    break;
-                case PaymentTypeEnum.Check:
-                    register.TakePaymentCheck(amountDue);
-                    break;
-                case PaymentTypeEnum.Credit_Card:
-                    register.TakePaymentCreditCard(amountDue);
-                    break;
-                default:
-                    break;
+                var amountRemainingToPay = register.TakePaymentCash(amountDue);
+                while (amountRemainingToPay < 0.00) //-30
+                {
+                    paymentType = Menu.AskForPaymentMethodMenu();
+                    amountRemainingToPay =Math.Round(Math.Abs(amountRemainingToPay),2, MidpointRounding.AwayFromZero);
+                    TakePayment(paymentType, amountRemainingToPay, register); //1 -20, 
+                }
+            }
+            else if (paymentType == PaymentTypeEnum.Check)
+            {
+                register.TakePaymentCheck(amountDue);
+            }
+            else if (paymentType == PaymentTypeEnum.Credit_Card)
+            {
+                register.TakePaymentCreditCard(amountDue);
+            }
+            else
+            {
             }
         }
 

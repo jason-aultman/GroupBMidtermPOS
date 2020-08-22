@@ -102,15 +102,15 @@ namespace GroupBMidtermPOS
         public double TakePaymentCash(double totalOwed)
         {
             Console.WriteLine("Cash: ");
-            Console.WriteLine("Please enter amount tendered; ");
-            double userAmountTendered = double.Parse(Console.ReadLine());
-            if (userAmountTendered < totalOwed)
+            Console.WriteLine("Please enter amount tendered: ");
+            double userAmountTendered = double.Parse(Console.ReadLine()); //Pay 50
+            if (userAmountTendered < totalOwed)  //totalOwed = 80   (true)
             {
-                double amountOwed = userAmountTendered-totalOwed;
+                double amountOwed = userAmountTendered-totalOwed; //amountOwed = -30
                 Console.WriteLine($"You still owe {amountOwed:C}");
                 
-                TotalSales += userAmountTendered;
-                return amountOwed;
+               // TotalSales += userAmountTendered;
+                return amountOwed;  //-30
             }
             //go back to enter payment type screen if money is owed
 
