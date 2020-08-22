@@ -32,29 +32,16 @@ namespace GroupBMidtermPOS
             var kvpUserSelection = new KeyValuePair<Product, int>(register.listOfProducts[1], userItemQuantity);
 
 
-            Console.WriteLine($"Subtotal: {register.GetSubtotal(kvpUserSelection)}");
+           Console.WriteLine($"Subtotal: {register.GetSubtotal(kvpUserSelection)}");
             shoppingCart.Add(kvpUserSelection);
             //items customer selected
             //price of items * quantity = total
 
-            Menu.AskToContinueToShop();
+           Menu.AskToContinueToShop();
            
            Menu.DisplayOrderSummary(shoppingCart, register);
 
            Menu.AskForPaymentMethodMenu();
-
-            //cash payment
-           
-            //credit card payment
-            
-            //check payment
-           
-
-
-
-
-
-            //   register.TakePaymentCash(userAmountTendered, total);
 
         }
     }
