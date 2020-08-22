@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Xml;
 
 namespace GroupBMidtermPOS
 {
@@ -8,44 +9,78 @@ namespace GroupBMidtermPOS
     {
         public static void DisplayMainMenu(Register register, bool clearScreenOnCall)
         {
+            var consoleColor = ConsoleColor.Gray;
             if(clearScreenOnCall) System.Console.Clear();
             foreach (var product in register.listOfProducts)
             {
-                Console.WriteLine($"[{product.ProductNumber}] {product.Name}  ${product.Price} "); //write out the list of products 1 thru end of list
+                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.Write($"[{product.ProductNumber}] ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write($"{product.Name}  ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"${product.Price} "); //write out the list of products 1 thru end of list
+                Console.ForegroundColor = consoleColor;
             }
 
         }
 
         public static void DisplayOrderSummary(List<KeyValuePair<Product,int>> shoppingCart, Register register)
         {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Order Summary: ");
+            Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            Console.WriteLine();
             foreach (var product in shoppingCart)
             {
-                Console.WriteLine($"Quantity: {product.Value} Item: {product.Key.Name} Price: {product.Key.Price}");//quantity-item-price for each item. may need for each statement
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write($"Item: ");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write($"{product.Key.Name} ");
+                
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"Quantity: {product.Value} ");
+                
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Price: {product.Key.Price}");
             }
 
             var subTotal = register.GetSubtotal(shoppingCart);
             var tax = register.GetTotalSalesTax(register.GetSubtotal(shoppingCart));
             tax = Math.Round(tax, 2, MidpointRounding.AwayFromZero);
             var total = Math.Round((subTotal + tax), 2, MidpointRounding.AwayFromZero);
-            Console.WriteLine($"Subtotal ${subTotal}");//subtotal
-            Console.WriteLine($"Tax ${tax}");//tax
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"Subtotal :");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{subTotal:C}");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"Tax :");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{tax:C}");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            Console.WriteLine($"Total ${total} ");//total
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write($"Total :");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"{total:C} ");
+            Console.WriteLine();
 
         }
 
       
         public static PaymentTypeEnum AskForPaymentMethodMenu()
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Enter Payment Type: ");// working with the enums
+            Console.WriteLine("-----------------------------");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("1. Cash");
             Console.WriteLine("2. Credit/Debit Card");
             Console.WriteLine("3. Check");
-            
+            Console.ForegroundColor = ConsoleColor.Gray;
             var paymentType = int.Parse(Console.ReadLine());
 
-            return (PaymentTypeEnum) paymentType;
+            return (PaymentTypeEnum)paymentType;
 
         }
 
@@ -66,7 +101,9 @@ namespace GroupBMidtermPOS
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("No results returned!");
+                Console.ForegroundColor = ConsoleColor.Gray;
             }
         }
 
