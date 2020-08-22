@@ -15,7 +15,7 @@ namespace GroupBMidtermPOS
              var valid = false;
              while (!valid)
              {
-                // valid = !string.IsNullOrWhiteSpace(userInputNumber) && userInputNumber.All(c => c >= '0' && c <= '9');
+                 valid = !string.IsNullOrWhiteSpace(userInputNumber) && userInputNumber.All(c => c >= '0' && c <= '9');
                  return true;
              }
              return false;*/

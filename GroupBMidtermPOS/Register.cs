@@ -14,7 +14,7 @@ namespace GroupBMidtermPOS
         public List<Product> listOfProducts;
         public List<Product> CurrentOrder= new List<Product>();
         private string filePath = @"C:\Users\jason\source\repos\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv";
-
+        public double TotalSales  { get; set; }
         public Register()
          {
             listOfProducts = FileHandler.ReadInventoryData(filePath);
@@ -79,9 +79,46 @@ namespace GroupBMidtermPOS
             return subtotal +tax;
         }
         
-        public double TakePaymentCash(double cashAmount, double saleAmount)
+        public double TakePaymentCash(double cashAmount, double totalOwed)
         {
-            return cashAmount - saleAmount;
+            Console.WriteLine("Cash: ");
+            var userAmountTendered = cashAmount;
+            if (userAmountTendered < totalOwed)
+            {
+                double amountOwed = totalOwed - cashAmount;
+                Console.WriteLine($"You still owe {amountOwed:C}");
+                var difference = amountOwed - userAmountTendered;
+                TotalSales += userAmountTendered;
+                return difference;
+            }
+            //go back to enter payment type screen if money is owed
+
+            var changeDue = userAmountTendered - totalOwed;
+            Console.WriteLine($"Change due: ${changeDue:C}");
+            TotalSales += totalOwed;
+            return changeDue;
+            
+        }
+        public double TakePaymentCash(double totalOwed)
+        {
+            Console.WriteLine("Cash: ");
+            Console.WriteLine("Please enter amount tendered; ");
+            double userAmountTendered = double.Parse(Console.ReadLine());
+            if (userAmountTendered < totalOwed)
+            {
+                double amountOwed = userAmountTendered-totalOwed;
+                Console.WriteLine($"You still owe {amountOwed:C}");
+                
+                TotalSales += userAmountTendered;
+                return amountOwed;
+            }
+            //go back to enter payment type screen if money is owed
+
+            var changeDue = userAmountTendered - totalOwed;
+            Console.WriteLine($"Change due: {changeDue:C}");
+            TotalSales += totalOwed;
+            return changeDue;
+           
         }
         public double TakePaymentCash(List<KeyValuePair<Product, int>> shoppingCart)
         {
@@ -91,19 +128,23 @@ namespace GroupBMidtermPOS
             if (userAmountTendered < GetGrandTotal(shoppingCart))
             {
                 double amountOwed = GetGrandTotal(shoppingCart) - userAmountTendered;
-                Console.WriteLine($"You still owe ${amountOwed}");
-                return amountOwed - userAmountTendered;
+                Console.WriteLine($"You still owe {amountOwed:C}");
+                var difference = amountOwed - userAmountTendered;
+                TotalSales += userAmountTendered;
+                return difference;
+                
             }
             //go back to enter payment type screen if money is owed
             
              var changeDue = userAmountTendered - GetGrandTotal(shoppingCart);
-                Console.WriteLine($"Change due: ${changeDue}");
-                return changeDue;
+             Console.WriteLine($"Change due: {changeDue:C}");
+             TotalSales += GetGrandTotal(shoppingCart);
+             return changeDue;
 
         }
     
 
-        public void TakePaymentCreditCard()
+        public void TakePaymentCreditCard(double totalOwed)
         {
             //Menu.cs  Ask user for cc number, expiry date, and  cvv number 
             Console.WriteLine("Credit/Debit card: ");
@@ -113,9 +154,10 @@ namespace GroupBMidtermPOS
             var userExpirationDate = Console.ReadLine();
             Console.WriteLine("Please your 3 digit CVV number: ");
             var userCvvNumber = Console.ReadLine();
+            TotalSales += totalOwed;
         }
 
-        public void TakePaymentCheck()
+        public void TakePaymentCheck(double totalOwed)
         {
             //Menu.cs Ask user for check number
             Console.WriteLine("Check: ");
@@ -125,6 +167,7 @@ namespace GroupBMidtermPOS
             var userRoutingNumber = Console.ReadLine();
             Console.WriteLine("Please enter your checking account number: ");
             var userCheckingAccountNumber = Console.ReadLine();
+            TotalSales += totalOwed;
         }
 
         //add this later
