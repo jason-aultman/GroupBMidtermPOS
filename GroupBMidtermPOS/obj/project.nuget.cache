@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FwtBqhm8jaOwI/me4LKePHwVGdSTBKP/EjAwR2QVMubb1IDaIpcCF9mnL4ZrcLkStXQ5XawSq1egzXYlgB88xg==",
+  "dgSpecHash": "oYRhA/TeMA32iHUWWknTQK+c4YIsWt5J3W+hzZAAFrSUGJAH2fQ1fUi5euQPQg5Ec6LCG2rpr9tH2ydpRB/jlQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jason\\RiderProjects\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj",
+  "projectFilePath": "C:\\Users\\jason\\source\\repos\\GroupBMidtermPOS\\GroupBMidtermPOS\\GroupBMidtermPOS.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jason\\.nuget\\packages\\crc32.net\\1.2.0\\crc32.net.1.2.0.nupkg.sha512",
     "C:\\Users\\jason\\.nuget\\packages\\jose-jwt\\2.5.0\\jose-jwt.2.5.0.nupkg.sha512",

@@ -7,15 +7,13 @@ namespace GroupBMidtermPOS
     static class Program
     {
         static void Main(string[] args)
-        {           
+        {
             var shoppingCart = new List<KeyValuePair<Product, int>>();
             Register register = new Register(); //open a new Register
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("WELCOME TO CHUCKY'S TOY KINGDOM!!!");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("**********************************");
-            Console.WriteLine();
             var clearConsole = false;
+
+            DisplayHeader();
+
             do
             {
                 Console.WriteLine($"Menu: Choose an Item # or [: + search term] to search");
@@ -27,17 +25,24 @@ namespace GroupBMidtermPOS
                     var userItemAsString = Console.ReadLine();
                     if (userItemAsString.StartsWith(":"))
                     {
-                        SearchForProduct(userItemAsString);
+                        SearchForProduct(userItemAsString.Substring(1));
 
                     }
                     else
                     {
-                        userItem = int.Parse(userItemAsString)-1;
-                        break;
+                        if (ValidateInput.GetIsInteger(userItemAsString))
+                        {
+                            userItem = int.Parse(userItemAsString) - 1;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please input a valid integer.");
+                        }
                     }
 
                 } while (true);
-                
+
                 var userItemQuantity = GetUserItemQuantity();
                 var kvpUserSelection =
                     new KeyValuePair<Product, int>(GetProduct(register.listOfProducts, userItem), userItemQuantity);
@@ -50,26 +55,23 @@ namespace GroupBMidtermPOS
                 clearConsole = true;
                 Console.ForegroundColor = ConsoleColor.Gray;
             } while (AskToContinueToShop());
+
             Menu.DisplayOrderSummary(shoppingCart, register);
             var payment = Menu.AskForPaymentMethodMenu();
             TakePayment(payment);
-            //cash payment
-           
-            //credit card payment
-            
-            //check payment
+
             static bool AskToContinueToShop()
             {
                 Console.WriteLine("Would you like to continue to shop? (Y/N)");
                 var continueYesNo = Console.ReadLine().ToLower();
-                if (ValidateInput.CheckYesNo(continueYesNo) )//todo 
+                if (ValidateInput.CheckYesNo(continueYesNo))//todo 
                 {
                     if (continueYesNo == "y")
                     {
                         return true;
                     }
                 }
-                else 
+                else
                 {
                     Console.WriteLine("Please make a valid input");
                     AskToContinueToShop();
@@ -89,10 +91,10 @@ namespace GroupBMidtermPOS
                 Product choice = productList[userChoice];
                 return choice;
             }
-            
+
             void TakePayment(PaymentTypeEnum paymentType)
             {
-                
+
                 switch (paymentType)
                 {
                     case PaymentTypeEnum.Cash:
@@ -112,7 +114,7 @@ namespace GroupBMidtermPOS
             void SearchForProduct(string descriptor)
             {
                 var results = register.ProductSearch(descriptor, register.listOfProducts);
-                if (results.Count<1)
+                if (results.Count < 1)
                 {
                     Console.WriteLine("No products were found that match the search string.");
                 }
@@ -120,9 +122,18 @@ namespace GroupBMidtermPOS
                 {
                     Menu.DisplayAllProducts(results);
                 }
-                
+
             }
 
+        }
+
+        private static void DisplayHeader()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("WELCOME TO CHUCKY'S TOY KINGDOM!!!");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("**********************************");
+            Console.WriteLine();
         }
 
         public static int GetUserItemQuantity()

@@ -13,10 +13,11 @@ namespace GroupBMidtermPOS
         public double NumberOrdered { get; set; }
         public List<Product> listOfProducts;
         public List<Product> CurrentOrder= new List<Product>();
-        
-         public Register()
+        private string filePath = @"C:\Users\jason\source\repos\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv";
+
+        public Register()
          {
-            listOfProducts = FileHandler.ReadInventoryData(@"\Users\bepol\source\repos\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv");
+            listOfProducts = FileHandler.ReadInventoryData(filePath);
          }
 
         public double GetGrandTotal (List<KeyValuePair<Product,int>> shoppingCart)
@@ -129,7 +130,7 @@ namespace GroupBMidtermPOS
         //add this later
         public List<Product> ProductSearch(string searchString, List<Product> products)
         {
-            searchString = searchString.Substring(1);
+           
             var results = new List<Product>();
             results=products.FindAll(thing => thing.Description.Contains(searchString));
             
