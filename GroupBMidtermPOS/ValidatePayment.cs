@@ -1,4 +1,5 @@
 ﻿//
+using MiNET.Blocks;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
@@ -6,47 +7,22 @@ using System.Text.RegularExpressions;
 
 namespace GroupBMidtermPOS
 {
-    public class ValidatePayment
+    public static class ValidatePayment
     {
-        //credit card
-        public string CreditCard { get; set; }
-        public string ExpDate { get; set; }
-        public string CVVCode { get; set; }
-        
-        //check
-        public string RoutingNum { get; set; }
-        public string AcctNum { get; set; }
+       
 
-
-        public ValidatePayment()
-        {
-
-        }
-        public ValidatePayment(string creditCard, string expDate, string cvvCode, string routingNum, string acctNum)
-        {
-            //credit card
-            CreditCard = creditCard;
-            ExpDate = expDate;
-            CVVCode = cvvCode;
-            //check
-            RoutingNum = routingNum;
-            AcctNum = acctNum;
-
-        }
+       
 
         //validate length 12-digit and that it's parseable to an integer
-        public bool ValidateCreditCard(string creditCard)
+        public static bool ValidateCreditCardAccountNumberIsLongEnough(string creditCard)
         {
-            var userCreditCard = creditCard.Trim();
-            var isPassing = userCreditCard.All(char.IsDigit);
-            //const string regex = @"([0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4})";
-
-            if (Regex.IsMatch(userCreditCard, @"([0-9]{4}[0-9]{4}[0-9]{4}[0-9]{4})"))
+            creditCard = creditCard.Trim();  //changed this line to eliminate initializing another variable
+            if (creditCard.Length==12)
             {
                 return true;
             }
-            return isPassing;
-
+            return false;
+           
         }
 
         //validate date format?  
@@ -58,8 +34,8 @@ namespace GroupBMidtermPOS
         public static bool BetweenMoRanges(int a,int b, int number)
         {
             a = 1;
-            b = 9;
-            return (a <= number && number <= b);
+            b = 12;
+            return (a >= number && number <= b);
         }
         //new method to determine if the second set of 2 numbers are between a range
         public static bool BetweenYrRanges(int a,int b, int number)
@@ -70,7 +46,7 @@ namespace GroupBMidtermPOS
         }
         
         
-        public bool ValidateExpDate(string expDate)
+        public static bool ValidateExpDate(string expDate)
         {
             var cardExpDate = expDate.Trim();
             var isPassing = expDate.All(char.IsDigit);
@@ -84,7 +60,7 @@ namespace GroupBMidtermPOS
         }
 
         //validate 3-digits and an integer
-        public bool ValidateCVV(string cvvCode)
+        public static bool ValidateCVV(string cvvCode)
         {
             var usercvvCode = cvvCode.Trim();
             var isPassing = cvvCode.All(char.IsDigit);
@@ -99,7 +75,7 @@ namespace GroupBMidtermPOS
 
         //validate 12 digit account number length and is an integer
         //combine this method with credit card validation method to economize!
-        public bool ValidateAcctNum(string acctNum)
+        public static bool ValidateAcctNum(string acctNum)
         {
             var useracctNum = acctNum.Trim();
             var isPassing = acctNum.All(char.IsDigit);
@@ -112,7 +88,7 @@ namespace GroupBMidtermPOS
         }
 
         //Validate 9 digital routing number length and is an integer
-        public bool ValidateRoutingNum(string routingNum)
+        public static bool ValidateRoutingNum(string routingNum)
         {
             var userroutingNum = routingNum.Trim();
             var isPassing = routingNum.All(char.IsDigit);
