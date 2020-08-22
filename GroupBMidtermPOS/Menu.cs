@@ -1,4 +1,4 @@
-﻿using MiNET.Sounds;
+﻿
 using System;
 using System.Collections.Generic;
 
@@ -6,11 +6,12 @@ namespace GroupBMidtermPOS
 {
     public static class Menu
     {
-        public static void DisplayMainMenu(Register register)
+        public static void DisplayMainMenu(Register register, bool clearScreenOnCall)
         {
+            if(clearScreenOnCall) System.Console.Clear();
             foreach (var product in register.listOfProducts)
             {
-                Console.WriteLine($"[{product.ProductNumber}] {product.Name} "); //write out the list of products 1 thru end of list
+                Console.WriteLine($"[{product.ProductNumber}] {product.Name}  ${product.Price} "); //write out the list of products 1 thru end of list
             }
 
         }
@@ -34,60 +35,19 @@ namespace GroupBMidtermPOS
 
         }
 
-        public static bool AskToContinueToShop()
-        {
-            Console.WriteLine("Would you like to continue to shop? (Y/N)");
-            var continueYesNo = Console.ReadLine().ToLower();
-            if (ValidateInput.CheckYesNo(continueYesNo) )//todo 
-            {
-                if (continueYesNo == "y")
-                {
-                    Menu.DisplayMainMenu(register);
-                }
-                if(continueYesNo == "n")
-                {
-                    AskToCheckOut();
-                }
-            }
-            else 
-            {
-                Console.WriteLine("Please make a valid input");
-                AskToContinueToShop();
-            }
-
-            return false;
-        }
-        public static bool AskToCheckOut()
-        {
-            Console.WriteLine("Are you ready to check out? (Y/N) ");
-            var checkOutYesNo = Console.ReadLine().ToLower();
-            return false;
-        }
-        public static void AskForPaymentMethodMenu()
+      
+        public static PaymentTypeEnum AskForPaymentMethodMenu()
         {
             Console.WriteLine("Enter Payment Type: ");// working with the enums
             Console.WriteLine("1. Cash");
             Console.WriteLine("2. Credit/Debit Card");
             Console.WriteLine("3. Check");
+            
             var paymentType = int.Parse(Console.ReadLine());
 
-            switch ((PaymentTypeEnum)paymentType)
-            {
-                case PaymentTypeEnum.Cash:
-                    register.TakePaymentCash();
-                    break;
-                case PaymentTypeEnum.Check:
-                    register.TakePaymentCheck();
-                    break;
-                case PaymentTypeEnum.Credit_Card:
-                    register.TakePaymentCard();
-                    break;
-            }
-            {
+            return (PaymentTypeEnum) paymentType;
 
-            }
         }
-
 
         public static void DisplayReciept()
         {

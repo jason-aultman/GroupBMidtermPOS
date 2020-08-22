@@ -11,18 +11,18 @@ namespace GroupBMidtermPOS
         
         public const double Taxrate = .06;
         public double NumberOrdered { get; set; }
-        public List<Product> listOfProducts = new List<Product>();
+        public List<Product> listOfProducts;
         public List<Product> CurrentOrder= new List<Product>();
         
          public Register()
          {
-            listOfProducts = FileHandler.ReadInventoryData(@"C:\Users\bepol\source\repos\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv");
+             listOfProducts = FileHandler.ReadInventoryData(FileHandler.currentDirectory+@"\GroupBMidtermPOS\Inventory.csv");
          }
 
         public double GetGrandTotal (List<KeyValuePair<Product,int>> shoppingCart)
         {
             var beforeTax = GetSubtotal(shoppingCart);
-            var calcTax = GetTotalSalesTax(beforeTax);
+            var calcTax = Math.Round(GetTotalSalesTax(beforeTax), 2, MidpointRounding.AwayFromZero);
             return beforeTax + calcTax;
         }
 
@@ -40,7 +40,7 @@ namespace GroupBMidtermPOS
         {
             var subTotal = 0.0;
             subTotal = keyValuePair.Key.Price * keyValuePair.Value;
-            return subTotal;
+            return Math.Round(subTotal, 2, MidpointRounding.AwayFromZero);
         }
         public double GetSubtotal(List<KeyValuePair<Product, int>> shoppingCart)
         {
@@ -50,7 +50,7 @@ namespace GroupBMidtermPOS
                 subTotal += product.Key.Price * product.Value;
             }
 
-            return subTotal;
+            return Math.Round(subTotal, 2, MidpointRounding.AwayFromZero);
         }
         public double GetTotalSalesTax(double subTotal)
         {
@@ -66,7 +66,7 @@ namespace GroupBMidtermPOS
             }
 
             var totalTax = Taxrate * subTotal;
-            return totalTax;
+            return Math.Round(totalTax,2,MidpointRounding.AwayFromZero);
         }
 
         public double GetTotalWithSalesTax(List<KeyValuePair<Product,int>> shoppingCart)
@@ -82,22 +82,23 @@ namespace GroupBMidtermPOS
         {
             return cashAmount - saleAmount;
         }
-        public double TakePaymentCash()
+        public double TakePaymentCash(List<KeyValuePair<Product, int>> shoppingCart)
         {
             Console.WriteLine("Cash: ");
-            Console.WriteLine("Please enter amount tendered");
+            Console.WriteLine("Please enter amount tendered; ");
             double userAmountTendered = double.Parse(Console.ReadLine());
-            if (userAmountTendered < register.GetGrandTotal(shoppingCart))
+            if (userAmountTendered < GetGrandTotal(shoppingCart))
             {
-                double amountOwed = register.GetGrandTotal(shoppingCart) - userAmountTendered;
-                Console.WriteLine($"You still owe ${amountOwed} How would you like to pay?");
+                double amountOwed = GetGrandTotal(shoppingCart) - userAmountTendered;
+                Console.WriteLine($"You still owe ${amountOwed}");
+                return amountOwed - userAmountTendered;
             }
             //go back to enter payment type screen if money is owed
-            if (userAmountTendered >= register.GetGrandTotal(shoppingCart))
-            {
-                var changeDue = userAmountTendered - register.GetGrandTotal(shoppingCart);
+            
+             var changeDue = userAmountTendered - GetGrandTotal(shoppingCart);
                 Console.WriteLine($"Change due: ${changeDue}");
-            }
+                return changeDue;
+
         }
     
 
@@ -128,6 +129,7 @@ namespace GroupBMidtermPOS
         //add this later
         public List<Product> ProductSearch(string searchString, List<Product> products)
         {
+            searchString = searchString.Substring(1);
             var results = new List<Product>();
             results=products.FindAll(thing => thing.Description.Contains(searchString));
             
