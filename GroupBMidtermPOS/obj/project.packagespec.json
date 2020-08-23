@@ -30,12 +30,6 @@
   },
   "frameworks": {
     "netcoreapp3.1": {
-      "dependencies": {
-        "MiNET": {
-          "target": "Package",
-          "version": "[1.0.2148, )"
-        }
-      },
       "imports": [
         "net461",
         "net462",
