@@ -18,6 +18,7 @@ namespace GroupBMidtermPOS
             {
                 var userItemNumber = GetItemNumberFromUser(register, clearConsole);
                 var userItemQuantity = GetUserItemQuantity();
+                Printreceipt(receiptWriterPath);
                 var kvpUserSelection = new KeyValuePair<Product, int>(GetProduct(register.listOfProducts, userItemNumber), userItemQuantity);
                 shoppingCart.Add(kvpUserSelection);
                 clearConsole = DisplayTransactionDetails(shoppingCart, register, kvpUserSelection);
@@ -164,9 +165,17 @@ namespace GroupBMidtermPOS
             return GetUserItemQuantity();
         }
 
-        public static void Printreceipt(List<object> receiptObjects)
+        public static void Printreceipt(string path)
         {
-            
+          FileHandler.Writereceipt(path,$"{DateTime.Now.ToString()}", false);
+          var businessNameAndAddress = new string[]
+          {
+              "Chucky's Toy Kingdom", "40 Pearl St NW #200", "Grand Rapids, MI 49503", "555-555-1234", "-------------------------------------------"
+          };
+          foreach (var VARIABLE in businessNameAndAddress)
+          {
+              FileHandler.Writereceipt(path,VARIABLE,true);
+          }
         }
     }
 }

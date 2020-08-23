@@ -108,19 +108,16 @@ namespace GroupBMidtermPOS
             {
                 double amountOwed = userAmountTendered-totalOwed; 
                 Console.WriteLine($"You still owe {amountOwed:C}");
-                FileHandler.Writereceipt("Receipt.txt", $"                      Owed   {totalOwed:C}");
-                FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:        Amount {userAmountTendered:C}");
-                FileHandler.Writereceipt("Receipt.txt", $"Remaining Bal:        Amount {amountOwed:C}");
-                
+                FileHandler.Writereceipt("Receipt.txt", $"                                                 Owed   {totalOwed:C}",true);
+                FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                   Amount {userAmountTendered:C}",true);
+                FileHandler.Writereceipt("Receipt.txt", $"Remaining Bal:                                   Amount {amountOwed:C}",true);
                 return amountOwed;  
             }
-           
-
             var changeDue = userAmountTendered - totalOwed;
             Console.WriteLine($"Change due: {changeDue:C}");
-            FileHandler.Writereceipt("Receipt.txt", $"                      Owed   {totalOwed:C}");
-            FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:        Amount {userAmountTendered:C}");
-            FileHandler.Writereceipt("Receipt.txt", $"Change Due:           Amount {changeDue:C}");
+            FileHandler.Writereceipt("Receipt.txt", $"                                                     Owed   {totalOwed:C}",true);
+            FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                       Amount {userAmountTendered:C}",true);
+            FileHandler.Writereceipt("Receipt.txt", $"Change Due:                                          Amount {changeDue:C}", true);
             return changeDue;
            
         }
