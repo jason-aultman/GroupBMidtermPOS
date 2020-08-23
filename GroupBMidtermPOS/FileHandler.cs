@@ -69,5 +69,13 @@ namespace GroupBMidtermPOS
                 return InventoryData;
             }
         }
+
+        public static void Writereceipt(string filePath, string words)
+        {
+            using (StreamWriter writer = new StreamWriter(filePath, true))
+            { 
+                writer.WriteLine(words);
+            }
+        }
     }
 }

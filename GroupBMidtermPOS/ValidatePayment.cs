@@ -35,14 +35,14 @@ namespace GroupBMidtermPOS
         {
             a = 1;
             b = 12;
-            return (a >= number && number <= b);
+            return (number >=a && number <= b);
         }
         //new method to determine if the second set of 2 numbers are between a range
         public static bool BetweenYrRanges(int a,int b, int number)
         {
-            a = 1;
-            b = 9;
-            return (a <= number && number <= b);
+            a = 20;
+            b = 30;
+            return (number>=a && number <= b);
         }
         
         
@@ -90,9 +90,10 @@ namespace GroupBMidtermPOS
         //Validate 9 digital routing number length and is an integer
         public static bool ValidateRoutingNum(string routingNum)
         {
-            var userroutingNum = routingNum.Trim();
+            var userRoutingNum = routingNum.Trim();
             var isPassing = routingNum.All(char.IsDigit);
-
+            var routingLength = userRoutingNum.Length;
+        
             if (Regex.IsMatch(routingNum, @"([0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1})"))
             {
                 return true;

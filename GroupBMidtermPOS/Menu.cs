@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 
 namespace GroupBMidtermPOS
@@ -43,6 +44,7 @@ namespace GroupBMidtermPOS
                 
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Price: {product.Key.Price}");
+                FileHandler.Writereceipt("receipt.txt", $"Item: {product.Key.Name} x {product.Value}         {product.Key.Price*product.Value}");
             }
 
             var subTotal = register.GetSubtotal(shoppingCart);
@@ -84,7 +86,7 @@ namespace GroupBMidtermPOS
 
         }
 
-        public static void DisplayReciept()
+        public static void Displayreceipt()
         {
             
             

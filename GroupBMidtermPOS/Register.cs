@@ -13,7 +13,7 @@ namespace GroupBMidtermPOS
         public double NumberOrdered { get; set; }
         public List<Product> listOfProducts;
         public List<Product> CurrentOrder= new List<Product>();
-        private string filePath = @"C:\Users\jason\source\repos\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv";
+        private string filePath = @"C:\Users\jason\RiderProjects\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv";
         public double TotalSales  { get; set; }
         public Register()
          {
@@ -103,20 +103,24 @@ namespace GroupBMidtermPOS
         {
             Console.WriteLine("Cash: ");
             Console.WriteLine("Please enter amount tendered: ");
-            double userAmountTendered = double.Parse(Console.ReadLine()); //Pay 50
-            if (userAmountTendered < totalOwed)  //totalOwed = 80   (true)
+            double userAmountTendered = double.Parse(Console.ReadLine()); 
+            if (userAmountTendered < totalOwed)  
             {
-                double amountOwed = userAmountTendered-totalOwed; //amountOwed = -30
+                double amountOwed = userAmountTendered-totalOwed; 
                 Console.WriteLine($"You still owe {amountOwed:C}");
+                FileHandler.Writereceipt("Receipt.txt", $"                      Owed   {totalOwed:C}");
+                FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:        Amount {userAmountTendered:C}");
+                FileHandler.Writereceipt("Receipt.txt", $"Remaining Bal:        Amount {amountOwed:C}");
                 
-               // TotalSales += userAmountTendered;
-                return amountOwed;  //-30
+                return amountOwed;  
             }
-            //go back to enter payment type screen if money is owed
+           
 
             var changeDue = userAmountTendered - totalOwed;
             Console.WriteLine($"Change due: {changeDue:C}");
-            TotalSales += totalOwed;
+            FileHandler.Writereceipt("Receipt.txt", $"                      Owed   {totalOwed:C}");
+            FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:        Amount {userAmountTendered:C}");
+            FileHandler.Writereceipt("Receipt.txt", $"Change Due:           Amount {changeDue:C}");
             return changeDue;
            
         }

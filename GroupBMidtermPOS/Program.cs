@@ -11,7 +11,7 @@ namespace GroupBMidtermPOS
             var shoppingCart = new List<KeyValuePair<Product, int>>();
             Register register = new Register(); //open a new Register
             var clearConsole = false;
-
+            string receiptWriterPath = "receipt.txt";
             DisplayHeader();
 
             do
@@ -24,7 +24,7 @@ namespace GroupBMidtermPOS
             } while (AskToContinueToShop());
 
             Menu.DisplayOrderSummary(shoppingCart, register);
-            //why will you not stop??
+          
             var payment = Menu.AskForPaymentMethodMenu();
             TakePayment(payment, register.GetGrandTotal(shoppingCart), register);
         }
@@ -162,6 +162,11 @@ namespace GroupBMidtermPOS
             }
             Console.WriteLine("Something went wrong");
             return GetUserItemQuantity();
+        }
+
+        public static void Printreceipt(List<object> receiptObjects)
+        {
+            
         }
     }
 }
