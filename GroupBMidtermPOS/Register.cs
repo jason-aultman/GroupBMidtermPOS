@@ -151,11 +151,27 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Credit/Debit card: ");
             Console.WriteLine("Please your 12 digit credit card number: ");
             var userCardNumber = Console.ReadLine();
+            if (!(ValidatePayment.ValidateCreditCardAccountNumberIsLongEnough(userCardNumber) &&
+                ValidatePayment.ValidateAcctNum(userCardNumber)))
+            {
+                Console.WriteLine("Sorry, that number is not a valid CC number.");
+                TakePaymentCreditCard(totalOwed);
+            }
             Console.WriteLine("Please your 4 digit expiration date: ");
             var userExpirationDate = Console.ReadLine();
+                 if(!(ValidatePayment.ValidateExpDate(userExpirationDate)))
+                 {
+                     Console.WriteLine("Sorry, that number is not a valid experation date.");
+                     TakePaymentCreditCard(totalOwed);
+                 }
             Console.WriteLine("Please your 3 digit CVV number: ");
             var userCvvNumber = Console.ReadLine();
-            TotalSales += totalOwed;
+            if (!(ValidatePayment.ValidateCVV(userCvvNumber)))
+            {
+                Console.WriteLine("Sorry, that number is not a valid CVV number.");
+                    TakePaymentCreditCard(totalOwed);
+            }
+
         }
 
         public void TakePaymentCheck(double totalOwed)
