@@ -11,11 +11,20 @@ namespace GroupBMidtermPOS
         public static bool GetIsInteger(string userInputNumber)
 
         {
-            //I just added this validation today 8/21 -sj
-            var valid = false;
-            while (!valid)
+            /* //I just added this validation today 8/21 -sj
+             var valid = false;
+             while (!valid)
+             {
+                 valid = !string.IsNullOrWhiteSpace(userInputNumber) && userInputNumber.All(c => c >= '0' && c <= '9');
+                 return true;
+             }
+             return false;*/
+            return int.TryParse(userInputNumber, out int result);
+        }
+        public static bool GetIsGreaterThanZero(int numberToCheck)
+        {
+            if (numberToCheck>0)
             {
-                valid = !string.IsNullOrWhiteSpace(userInputNumber) && userInputNumber.All(c => c >= '0' && c <= '9');
                 return true;
             }
             return false;
