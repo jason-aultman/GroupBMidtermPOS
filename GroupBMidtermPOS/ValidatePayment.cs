@@ -32,15 +32,11 @@ namespace GroupBMidtermPOS
         //new method to determine if the first 2 numbers are between a range
         public static bool BetweenMoRanges(int a,int b, int number)
         {
-            a = 1;
-            b = 12;
             return (number >=a && number <= b);
         }
         //new method to determine if the second set of 2 numbers are between a range
         public static bool BetweenYrRanges(int a,int b, int number)
         {
-            a = 20;
-            b = 30;
             return (number>=a && number <= b);
         }
         
@@ -48,9 +44,10 @@ namespace GroupBMidtermPOS
         public static bool ValidateExpDate(string expDate)
         {
             var cardExpDate = expDate.Trim();
+            var isCorrectLength = (expDate.Length == 4);
             var isPassing = expDate.All(char.IsDigit);
 
-            if (Regex.IsMatch(expDate, @"([0-1]{1}[0-9]{1}[1-2]{1}[0-9]{1})")&& isPassing)
+            if (Regex.IsMatch(expDate, @"([0-1]{1}[0-9]{1}[2]{1}[0-9]{1})")&& isPassing && isCorrectLength)
             {
                 return true;
             }
@@ -63,8 +60,8 @@ namespace GroupBMidtermPOS
         {
             var usercvvCode = cvvCode.Trim();
             var isPassing = cvvCode.All(char.IsDigit);
-
-            if (Regex.IsMatch(cvvCode, @"([0-1]{1}[0-9]{1}[1-2]{1})"))
+            var isCorrectLength = (cvvCode.Length == 3);
+            if (Regex.IsMatch(usercvvCode, @"([0-9]{1}[0-9]{1}[0-9]{1})") && isCorrectLength && isPassing)
             {
                 return true;
             }
@@ -79,7 +76,7 @@ namespace GroupBMidtermPOS
             var useracctNum = acctNum.Trim();
             var isPassing = acctNum.All(char.IsDigit);
 
-            if (Regex.IsMatch(acctNum, @"([0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1})"))
+            if (Regex.IsMatch(acctNum, @"([0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1})"))
             {
                 return true;
             }
