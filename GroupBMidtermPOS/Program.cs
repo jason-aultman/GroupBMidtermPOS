@@ -8,58 +8,60 @@ namespace GroupBMidtermPOS
     {
         static void Main(string[] args)
         {
-            var shoppingCart = new List<KeyValuePair<Product, int>>();
+            var shoppingCart = new List<KeyValuePair<Product, int>>();  //initialize a "shopping cart" as a List of KeyValuePairs Key = Product Type, Value being an int representing the amount of  Products
             Register register = new Register(); //open a new Register
-            var clearConsole = false;
-            string receiptWriterPath = "receipt.txt";
-            DisplayHeader();
+            var clearConsole = false;  //a variable representing whether or not to clear the Console screen between screens
+            string receiptWriterPath = "receipt.txt";  //The path file to send to FileHandler.ReceiptWriter() which is what will write to the reciept file
+            
+            DisplayHeader(); //simple call to display the header on screen.   ie Store name, possible welcome or address or telephone #, etc...
 
             do
             {
-                var userItemNumber = GetItemNumberFromUser(register, clearConsole);
-                var userItemQuantity = GetUserItemQuantity();
-                Printreceipt(receiptWriterPath);
-                var kvpUserSelection = new KeyValuePair<Product, int>(GetProduct(register.listOfProducts, userItemNumber), userItemQuantity);
-                shoppingCart.Add(kvpUserSelection);
-                clearConsole = DisplayTransactionDetails(shoppingCart, register, kvpUserSelection);
-            } while (AskToContinueToShop());
+                var userItemNumber = GetItemNumberFromUser(register, clearConsole); //requests an Item Number from the user, which sends in a register parameter and whether or not to clear the console.  False for the 1st run because we want the header to be displayed when the program is first run, but not necessarily any time after.
+                var userItemQuantity = GetUserItemQuantity();  //ask the user for a quantity of whichever item was selected above.
+                Printreceipt(receiptWriterPath);  //initialize the methodology for printing  a reciept.  "Prints" a header to a .txt file.
+                var kvpUserSelection = new KeyValuePair<Product, int>(GetProduct(register.listOfProducts, userItemNumber), userItemQuantity); //gets selected product # and quantity and makes a new KeyValuePair containing said info
+                shoppingCart.Add(kvpUserSelection);  //adds previously made KeyValuePair to the users shopping cart
+                clearConsole = DisplayTransactionDetails(shoppingCart, register, kvpUserSelection); //displays transaction details for users selected items and quantity, showing price each  and subtotal
+            } while (AskToContinueToShop());  //ask user  if they would like to continue to shop, if yes, goes back to the beginning of the do, if not, onto the next line.
 
-            Menu.DisplayOrderSummary(shoppingCart, register);
+            Menu.DisplayOrderSummary(shoppingCart, register); //displays a summary of everything in the users shopping cart, including tax and grand total
           
-            var payment = Menu.AskForPaymentMethodMenu();
-            TakePayment(payment, register.GetGrandTotal(shoppingCart), register);
+            var payment = Menu.AskForPaymentMethodMenu();  //gets an enum for which type of payment will they be paying with, Cash, Credit, or Check
+            TakePayment(payment, register.GetGrandTotal(shoppingCart), register); //take payment based on which method the  user chose above.
         }
 
         private static int GetItemNumberFromUser(Register register, bool clearConsole)
         {
-            Console.WriteLine($"Menu: Choose an Item # or [: + search term] to search");
-            Menu.DisplayMainMenu(register, clearConsole);
+            Console.WriteLine($"Menu: Choose an Item # or [: + search term] to search");  //ask user to choose an item number from the list
+            Menu.DisplayMainMenu(register, clearConsole);  //displays the list of items in the register
             var userItemNumber = 0;
             do
             {
-                var userItemAsString = Console.ReadLine();
-                if (userItemAsString.StartsWith(":"))
+                var userItemAsString = Console.ReadLine();  //get users input as a string
+                if (userItemAsString.StartsWith(":"))  //parses out user input, if it starts with a : then send the string to the search function instead
                 {
                     SearchForProduct(userItemAsString.Substring(1), register);
                 }
-                else
+                else // otherwise, it must be a integer...try parsing it to an int, and hopefully  dont break anything...
                 {
-                    if (ValidateInput.GetIsInteger(userItemAsString))
+                    if (ValidateInput.GetIsInteger(userItemAsString))  //check, is it an integer??  yes?  
                     {
-                        userItemNumber = int.Parse(userItemAsString) - 1;
-                        break;
+                        userItemNumber = int.Parse(userItemAsString) - 1;  //parse that to an integer then
+                        break;  //no need to check anything else, leave the if statement
                     }
                     else
                     {
-                        Console.WriteLine("Please input a valid integer.");
+                        Console.WriteLine("Please input a valid integer.");  //otherwise, you done messed up sir, let them know.
                     }
                 }
 
-            } while (true);
-            return userItemNumber;
+            } while (true);  //keep asking until they get really annoyed or they put in the correct input
+
+            return userItemNumber;  //should never, ever get here, but the compiler seems to think I need to  return  something  just  in case.
         }
 
-        public static bool AskToContinueToShop()
+        public static bool AskToContinueToShop()  //Think we've done this a bazillion times in class, Continue?  Yes or no?
         {
             Console.WriteLine("Would you like to continue to shop? (Y/N)");
             var continueYesNo = Console.ReadLine().ToLower();
@@ -78,22 +80,22 @@ namespace GroupBMidtermPOS
 
             return false;
         }
-        static bool AskToCheckOut()
+        static bool AskToCheckOut()  //not even part of the codebase that we are using, leftover from a  previous rendition, not ready to part way with it just in case we refactor things and it becomes a thing
         {
             Console.WriteLine("Are you ready to check out? (Y/N) ");
             var checkOutYesNo = Console.ReadLine().ToLower();
             return false;
         }
-        static Product GetProduct(List<Product> productList, int userChoice)
+        static Product GetProduct(List<Product> productList, int userChoice) //returns a product based on an index that the user selects...aka their choice.
         {
-            Product choice = productList[userChoice];
+            Product choice = productList[userChoice];  //see above
             return choice;
         }
 
-        public static void TakePayment(PaymentTypeEnum paymentType, double amountDue, Register register)
+        public static void TakePayment(PaymentTypeEnum paymentType, double amountDue, Register register)  //Take payment from user, really should be in the register class probably, since that is pretty much what they are for
         {
             
-            if (paymentType == PaymentTypeEnum.Cash)
+            if (paymentType == PaymentTypeEnum.Cash)  
             {
                 var amountRemainingToPay = register.TakePaymentCash(amountDue);
                 while (amountRemainingToPay < 0.00) //-30
@@ -116,7 +118,7 @@ namespace GroupBMidtermPOS
             }
         }
 
-        public static void SearchForProduct(string descriptor, Register register)
+        public static void SearchForProduct(string descriptor, Register register) //performs a product search based on user input string
         {
             var results = register.ProductSearch(descriptor, register.listOfProducts);
             if (results.Count < 1)
