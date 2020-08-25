@@ -52,6 +52,7 @@ namespace GroupBMidtermPOS
           
             var payment = Menu.AskForPaymentMethodMenu();  //gets an enum for which type of payment will they be paying with, Cash, Credit, or Check
             TakePayment(payment, register.GetGrandTotal(shoppingCart), register); //take payment based on which method the  user chose above.
+            
         }
 
         private static int GetItemNumberFromUser(Register register, bool clearConsole)
