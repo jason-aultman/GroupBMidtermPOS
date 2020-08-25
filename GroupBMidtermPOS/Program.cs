@@ -8,6 +8,9 @@ namespace GroupBMidtermPOS
     {
         static void Main(string[] args)
         {
+            do
+            {
+
             var shoppingCart = new List<KeyValuePair<Product, int>>();
             //initialize a "shopping cart" as a List of KeyValuePairs Key = Product Type, 
             //Value being an int representing the amount of  Products
@@ -56,6 +59,8 @@ namespace GroupBMidtermPOS
             Console.WriteLine();
             Console.WriteLine("YOUR RECEIPT:");
             DisplayReceipt(receiptWriterPath);
+                register.Close();
+            } while (true);
 
             //take payment based on which method the  user chose above.
         }
@@ -118,7 +123,7 @@ namespace GroupBMidtermPOS
             return choice;
         }
 
-        public static void TakePayment(PaymentTypeEnum paymentType, double amountDue, Register register)  //Take payment from user, really should be in the register class probably, since that is pretty much what they are for
+        public static void TakePayment(PaymentTypeEnum paymentType, double amountDue, Register register, List<KeyValuePair<Product, int >> shoppingCart)  //Take payment from user, really should be in the register class probably, since that is pretty much what they are for
         {
             
             if (paymentType == PaymentTypeEnum.Cash)  
@@ -135,10 +140,13 @@ namespace GroupBMidtermPOS
             else if (paymentType == PaymentTypeEnum.Check)
             {
                 register.TakePaymentCheck(amountDue);
+                Menu.DisplayOrderSummary(shoppingCart, register);
+                //confirmation
             }
             else if (paymentType == PaymentTypeEnum.Credit_Card)
             {
                 register.TakePaymentCreditCard(amountDue);
+                //confirmation
             }
             else
             {

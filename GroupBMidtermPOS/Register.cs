@@ -198,7 +198,13 @@ namespace GroupBMidtermPOS
             return results;
         }
         
-        
+        public void Close()
+        {
+            listOfProducts = null;
+            filePath = "";
+            Product.NumberOfProducts = 0;
+
+        }
         
         
     }
