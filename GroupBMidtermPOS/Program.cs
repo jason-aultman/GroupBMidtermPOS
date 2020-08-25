@@ -59,7 +59,7 @@ namespace GroupBMidtermPOS
 
             //take payment based on which method the  user chose above.
         }
-        //END OF MAIN
+        //END OF MAIN -- 
 
         private static int GetItemNumberFromUser(Register register, bool clearConsole)
         {
