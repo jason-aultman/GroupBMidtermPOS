@@ -104,12 +104,7 @@ namespace GroupBMidtermPOS
 
             return false;
         }
-        static bool AskToCheckOut()  //not even part of the codebase that we are using, leftover from a  previous rendition, not ready to part way with it just in case we refactor things and it becomes a thing
-        {
-            Console.WriteLine("Are you ready to check out? (Y/N) ");
-            var checkOutYesNo = Console.ReadLine().ToLower();
-            return false;
-        }
+        
         static Product GetProduct(List<Product> productList, int userChoice) //returns a product based on an index that the user selects...aka their choice.
         {
             Product choice = productList[userChoice];  //see above
