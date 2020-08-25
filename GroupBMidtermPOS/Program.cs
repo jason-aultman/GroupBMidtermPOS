@@ -8,24 +8,47 @@ namespace GroupBMidtermPOS
     {
         static void Main(string[] args)
         {
-            var shoppingCart = new List<KeyValuePair<Product, int>>();  //initialize a "shopping cart" as a List of KeyValuePairs Key = Product Type, Value being an int representing the amount of  Products
-            Register register = new Register(); //open a new Register
-            var clearConsole = false;  //a variable representing whether or not to clear the Console screen between screens
-            string receiptWriterPath = "receipt.txt";  //The path file to send to FileHandler.ReceiptWriter() which is what will write to the reciept file
+            var shoppingCart = new List<KeyValuePair<Product, int>>();
+            //initialize a "shopping cart" as a List of KeyValuePairs Key = Product Type, 
+            //Value being an int representing the amount of  Products
+
+            Register register = new Register();
+            //open a new Register
+
+            var clearConsole = false;  
+            //a variable representing whether or not to clear the Console screen between screens
+
+            string receiptWriterPath = "receipt.txt";  
+            //The path file to send to FileHandler.ReceiptWriter() which is what will write to the reciept file
             
-            DisplayHeader(); //simple call to display the header on screen.   ie Store name, possible welcome or address or telephone #, etc...
+            DisplayHeader(); 
+            //simple call to display the header on screen. ie Store name, possible welcome or address or telephone #, etc...
 
             do
             {
-                var userItemNumber = GetItemNumberFromUser(register, clearConsole); //requests an Item Number from the user, which sends in a register parameter and whether or not to clear the console.  False for the 1st run because we want the header to be displayed when the program is first run, but not necessarily any time after.
-                var userItemQuantity = GetUserItemQuantity();  //ask the user for a quantity of whichever item was selected above.
-                Printreceipt(receiptWriterPath);  //initialize the methodology for printing  a reciept.  "Prints" a header to a .txt file.
-                var kvpUserSelection = new KeyValuePair<Product, int>(GetProduct(register.listOfProducts, userItemNumber), userItemQuantity); //gets selected product # and quantity and makes a new KeyValuePair containing said info
-                shoppingCart.Add(kvpUserSelection);  //adds previously made KeyValuePair to the users shopping cart
-                clearConsole = DisplayTransactionDetails(shoppingCart, register, kvpUserSelection); //displays transaction details for users selected items and quantity, showing price each  and subtotal
-            } while (AskToContinueToShop());  //ask user  if they would like to continue to shop, if yes, goes back to the beginning of the do, if not, onto the next line.
+                var userItemNumber = GetItemNumberFromUser(register, clearConsole); 
+                //requests an Item Number from the user, which sends in a register parameter and whether or not to clear the console.  False for the 1st run because we want the header to be displayed when the program is first run, but not necessarily any time after.
+               
+                var userItemQuantity = GetUserItemQuantity();  
+                //ask the user for a quantity of whichever item was selected above.
+                
+                Printreceipt(receiptWriterPath);  
+                //initialize the methodology for printing  a reciept.  "Prints" a header to a .txt file.
 
-            Menu.DisplayOrderSummary(shoppingCart, register); //displays a summary of everything in the users shopping cart, including tax and grand total
+                var kvpUserSelection = new KeyValuePair<Product, int>(GetProduct(register.listOfProducts, userItemNumber), userItemQuantity); 
+                //gets selected product # and quantity and makes a new KeyValuePair containing said info
+
+                shoppingCart.Add(kvpUserSelection);  
+                //adds previously made KeyValuePair to the users shopping cart
+                
+                clearConsole = DisplayTransactionDetails(shoppingCart, register, kvpUserSelection); 
+                //displays transaction details for users selected items and quantity, showing price each  and subtotal
+
+            } while (AskToContinueToShop());  
+            //ask user  if they would like to continue to shop, if yes, goes back to the beginning of the do, if not, onto the next line.
+
+            Menu.DisplayOrderSummary(shoppingCart, register); 
+            //displays a summary of everything in the users shopping cart, including tax and grand total
           
             var payment = Menu.AskForPaymentMethodMenu();  //gets an enum for which type of payment will they be paying with, Cash, Credit, or Check
             TakePayment(payment, register.GetGrandTotal(shoppingCart), register); //take payment based on which method the  user chose above.
@@ -48,6 +71,7 @@ namespace GroupBMidtermPOS
                     if (ValidateInput.GetIsInteger(userItemAsString))  //check, is it an integer??  yes?  
                     {
                         userItemNumber = int.Parse(userItemAsString) - 1;  //parse that to an integer then
+                        //move to validation class?
                         break;  //no need to check anything else, leave the if statement
                     }
                     else
@@ -98,11 +122,11 @@ namespace GroupBMidtermPOS
             if (paymentType == PaymentTypeEnum.Cash)  
             {
                 var amountRemainingToPay = register.TakePaymentCash(amountDue);
-                while (amountRemainingToPay < 0.00) //-30
+                while (amountRemainingToPay < 0.00) 
                 {
                     paymentType = Menu.AskForPaymentMethodMenu();
-                    amountRemainingToPay =Math.Round(Math.Abs(amountRemainingToPay),2, MidpointRounding.AwayFromZero);
-                    TakePayment(paymentType, amountRemainingToPay, register); //1 -20, 
+                    amountRemainingToPay = Math.Round(Math.Abs(amountRemainingToPay),2, MidpointRounding.AwayFromZero);
+                    TakePayment(paymentType, amountRemainingToPay, register);
                 }
             }
             else if (paymentType == PaymentTypeEnum.Check)
@@ -168,15 +192,16 @@ namespace GroupBMidtermPOS
         }
 
         public static void Printreceipt(string path)
+            //We need to display this to the screen
         {
           FileHandler.Writereceipt(path,$"{DateTime.Now.ToString()}", false);
           var businessNameAndAddress = new string[]
           {
               "Chucky's Toy Kingdom", "40 Pearl St NW #200", "Grand Rapids, MI 49503", "555-555-1234", "-------------------------------------------"
           };
-          foreach (var VARIABLE in businessNameAndAddress)
+          foreach (var addressLine in businessNameAndAddress)
           {
-              FileHandler.Writereceipt(path,VARIABLE,true);
+              FileHandler.Writereceipt(path,addressLine,true);
           }
         }
     }
