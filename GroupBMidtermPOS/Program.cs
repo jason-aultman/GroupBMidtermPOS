@@ -51,8 +51,15 @@ namespace GroupBMidtermPOS
             //displays a summary of everything in the users shopping cart, including tax and grand total
           
             var payment = Menu.AskForPaymentMethodMenu();  //gets an enum for which type of payment will they be paying with, Cash, Credit, or Check
-            TakePayment(payment, register.GetGrandTotal(shoppingCart), register); //take payment based on which method the  user chose above.
+            TakePayment(payment, register.GetGrandTotal(shoppingCart), register);
+
+            Console.WriteLine();
+            Console.WriteLine("YOUR RECEIPT:");
+            DisplayReceipt(receiptWriterPath);
+
+            //take payment based on which method the  user chose above.
         }
+        //END OF MAIN
 
         private static int GetItemNumberFromUser(Register register, bool clearConsole)
         {
@@ -104,12 +111,7 @@ namespace GroupBMidtermPOS
 
             return false;
         }
-        static bool AskToCheckOut()  //not even part of the codebase that we are using, leftover from a  previous rendition, not ready to part way with it just in case we refactor things and it becomes a thing
-        {
-            Console.WriteLine("Are you ready to check out? (Y/N) ");
-            var checkOutYesNo = Console.ReadLine().ToLower();
-            return false;
-        }
+        
         static Product GetProduct(List<Product> productList, int userChoice) //returns a product based on an index that the user selects...aka their choice.
         {
             Product choice = productList[userChoice];  //see above
@@ -128,6 +130,7 @@ namespace GroupBMidtermPOS
                     amountRemainingToPay = Math.Round(Math.Abs(amountRemainingToPay),2, MidpointRounding.AwayFromZero);
                     TakePayment(paymentType, amountRemainingToPay, register);
                 }
+                //add call to receipt display method here
             }
             else if (paymentType == PaymentTypeEnum.Check)
             {
@@ -189,6 +192,17 @@ namespace GroupBMidtermPOS
             }
             Console.WriteLine("Something went wrong");
             return GetUserItemQuantity();
+        }
+
+        public static void DisplayReceipt(string path)
+        {
+            var paidDisplayReceipt = new List<string>();
+            //go to file handler file
+            //var receiptWriterPath = path;
+            //call file reader
+
+            string displayReceipt = FileHandler.ReadFile(path);
+            Console.WriteLine(displayReceipt);
         }
 
         public static void Printreceipt(string path)
