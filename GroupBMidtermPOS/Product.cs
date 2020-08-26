@@ -5,7 +5,7 @@ namespace GroupBMidtermPOS
 {
     public class Product
     {
-        private static int NumberOfProducts { get; set; }
+        public static int NumberOfProducts { get; set; }
         public string Name { get; set; }
         public ProductCategoryEnum ProductCategory { get; set; }
         public string Description { get; set; }
@@ -51,5 +51,6 @@ namespace GroupBMidtermPOS
             }
             else return GroupBMidtermPOS.ProductCategoryEnum.Games;
         }
+
     }
 }
