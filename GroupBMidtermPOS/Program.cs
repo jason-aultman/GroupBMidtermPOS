@@ -54,7 +54,7 @@ namespace GroupBMidtermPOS
             //displays a summary of everything in the users shopping cart, including tax and grand total
           
             var payment = Menu.AskForPaymentMethodMenu();  //gets an enum for which type of payment will they be paying with, Cash, Credit, or Check
-            TakePayment(payment, register.GetGrandTotal(shoppingCart), register);
+            TakePayment(payment, register.GetGrandTotal(shoppingCart), register, shoppingCart);
 
             Console.WriteLine();
             Console.WriteLine("YOUR RECEIPT:");
@@ -133,7 +133,7 @@ namespace GroupBMidtermPOS
                 {
                     paymentType = Menu.AskForPaymentMethodMenu();
                     amountRemainingToPay = Math.Round(Math.Abs(amountRemainingToPay),2, MidpointRounding.AwayFromZero);
-                    TakePayment(paymentType, amountRemainingToPay, register);
+                    TakePayment(paymentType, amountRemainingToPay, register, shoppingCart);
                 }
                 //add call to receipt display method here
             }
