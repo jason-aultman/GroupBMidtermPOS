@@ -13,7 +13,9 @@ namespace GroupBMidtermPOS
         public double NumberOrdered { get; set; }
         public List<Product> listOfProducts;
         public List<Product> CurrentOrder= new List<Product>();
-        private string filePath = @"C:\Users\bepol\source\repos\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv";
+        private string filePath = @"/inventory.csv";
+
+// C:\Users\bepol\source\repos\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv";
         
         public double TotalSales  { get; set; }
         public Register()
