@@ -44,7 +44,7 @@ namespace GroupBMidtermPOS
                 
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"Price: {product.Key.Price:C}");
-                FileHandler.Writereceipt("receipt.txt", $"Item: {product.Key.Name.PadRight(30)} x {product.Value.ToString().PadRight(10)}         {(product.Key.Price*product.Value)}");
+                FileHandler.Writereceipt("receipt.txt", $"Item: {product.Key.Name.PadRight(30)} x {product.Value.ToString().PadRight(10)}         {(product.Key.Price*product.Value):C}");
             }
 
             var subTotal = register.GetSubtotal(shoppingCart);
