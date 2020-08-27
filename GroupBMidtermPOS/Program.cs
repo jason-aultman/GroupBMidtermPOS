@@ -29,16 +29,20 @@ namespace GroupBMidtermPOS
 
             do
             {
-                var userItemNumber = GetItemNumberFromUser(register, clearConsole); 
-                //requests an Item Number from the user, which sends in a register parameter and whether or not to clear the console.  False for the 1st run because we want the header to be displayed when the program is first run, but not necessarily any time after.
-               
-                var userItemQuantity = GetUserItemQuantity();  
+                var userItemNumber = GetItemNumberFromUser(register, clearConsole);
+                    //requests an Item Number from the user, which sends in a register parameter and whether or not to clear the console.  False for the 1st run because we want the header to be displayed when the program is first run, but not necessarily any time after.
+                    //show item detail with item number
+                    var selectedProduct = register.GetProduct(register.listOfProducts, userItemNumber);
+                    
+                    Menu.GetItemDetail(selectedProduct);
+                
+                    var userItemQuantity = GetUserItemQuantity();  
                 //ask the user for a quantity of whichever item was selected above.
                 
                 Menu.Printreceipt(receiptWriterPath);  
                 //initialize the methodology for printing  a reciept.  "Prints" a header to a .txt file.
 
-                var kvpUserSelection = new KeyValuePair<Product, int>(register.GetProduct(register.listOfProducts, userItemNumber), userItemQuantity); 
+                var kvpUserSelection = new KeyValuePair<Product, int>(selectedProduct, userItemQuantity); 
                 //gets selected product # and quantity and makes a new KeyValuePair containing said info
 
                 shoppingCart.Add(kvpUserSelection);  

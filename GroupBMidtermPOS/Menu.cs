@@ -32,6 +32,12 @@ namespace GroupBMidtermPOS
             }
 
         }
+
+        public static void GetItemDetail (Product product)
+        {
+            Console.WriteLine($"{product.Name} - {product.Price:C} - {product.ProductCategory} - {product.Description} ");
+        }
+
         public static bool DisplayTransactionDetails(List<KeyValuePair<Product, int>> shoppingCart, Register register, KeyValuePair<Product, int> kvpUserSelection)
         {
             bool clearConsole;
