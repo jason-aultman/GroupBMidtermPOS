@@ -25,7 +25,13 @@ namespace GroupBMidtermPOS
             }
         }
 
-
+        public static void WriteFile(string fileName, string inventoryContent)
+        {
+            using (var writer = new StreamWriter(fileName, true))
+            {
+                writer.Write(inventoryContent);
+            }
+        }
 
         public static List<Product> ReadInventoryData(string fileName)
         {

@@ -275,6 +275,12 @@ namespace GroupBMidtermPOS
             
             return results;
         }
+
+        public void WriteToInventoryProductList (string filePath, string lineForEntryIntoFile)
+        {
+            var parsedLineForEntryIntoFile = lineForEntryIntoFile.Substring(1);
+            FileHandler.
+        }
         public Product GetProduct(List<Product> productList, int userChoice) //returns a product based on an index that the user selects...aka their choice.
         {
             Product choice = productList[userChoice];  //see above

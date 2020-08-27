@@ -92,6 +92,10 @@ namespace GroupBMidtermPOS
                 {
                     register.SearchForProduct(userItemAsString.Substring(1), register);
                 }
+                else if (userItemAsString.StartsWith("~")) //add call to method later TO DO!!
+                {
+
+                }
                 else // otherwise, it must be a integer...try parsing it to an int, and hopefully  dont break anything...
                 {
                     if (ValidateInput.GetIsInteger(userItemAsString))  //check, is it an integer??  yes?  
