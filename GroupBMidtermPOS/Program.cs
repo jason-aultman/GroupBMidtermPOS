@@ -60,8 +60,11 @@ namespace GroupBMidtermPOS
             Console.WriteLine("YOUR RECEIPT:");
             DisplayReceipt(receiptWriterPath);
                 register.Close();
+                Console.WriteLine("Press ENTER to return to main menu");
+                Console.ReadLine();
+                Console.Clear();
             } while (true);
-
+          
             //take payment based on which method the  user chose above.
         }
         //END OF MAIN -- 

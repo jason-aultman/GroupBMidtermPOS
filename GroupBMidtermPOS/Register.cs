@@ -79,7 +79,7 @@ namespace GroupBMidtermPOS
             var tax = GetTotalSalesTax(subtotal);
             Math.Round(tax, 2, MidpointRounding.AwayFromZero);
 
-            return subtotal +tax;
+            return subtotal + tax;
         }
         
         public double TakePaymentCash(double cashAmount, double totalOwed)
