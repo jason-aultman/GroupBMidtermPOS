@@ -172,8 +172,8 @@ namespace GroupBMidtermPOS
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("-------------------------------------------------------------");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Transaction total: {register.GetSubtotal(kvpUserSelection)}");
-            Console.WriteLine($"Subtotal: {register.GetSubtotal(shoppingCart)}");
+            Console.WriteLine($"Transaction total: {register.GetSubtotal(kvpUserSelection):C}");
+            Console.WriteLine($"Subtotal: {register.GetSubtotal(shoppingCart):C}");
             clearConsole = true;
             Console.ForegroundColor = ConsoleColor.Gray;
             return clearConsole;
