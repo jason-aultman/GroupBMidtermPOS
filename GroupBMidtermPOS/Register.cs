@@ -88,7 +88,7 @@ namespace GroupBMidtermPOS
             if (userAmountTendered < totalOwed)
             {
                 double amountOwed = totalOwed - cashAmount;
-                Console.WriteLine($"You still owe {amountOwed:C}");
+                Console.WriteLine($"You still owe ${amountOwed:C}");
                 var difference = amountOwed - userAmountTendered;
                 TotalSales += userAmountTendered;
                 return difference;
@@ -109,7 +109,7 @@ namespace GroupBMidtermPOS
             if (userAmountTendered < totalOwed)  
             {
                 double amountOwed = userAmountTendered-totalOwed; 
-                Console.WriteLine($"You still owe {amountOwed:C}");
+                Console.WriteLine($"You still owe ${amountOwed:C}");
                 FileHandler.Writereceipt("Receipt.txt", $"                                                 Owed   {totalOwed:C}",true);
                 FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                   Amount {userAmountTendered:C}",true);
                 FileHandler.Writereceipt("Receipt.txt", $"Remaining Bal:                                   Amount {amountOwed:C}",true);

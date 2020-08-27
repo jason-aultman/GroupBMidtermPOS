@@ -43,7 +43,7 @@ namespace GroupBMidtermPOS
                 Console.Write($"Quantity: {product.Value} ");
                 
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"Price: {product.Key.Price}");
+                Console.WriteLine($"Price: {product.Key.Price:C}");
                 FileHandler.Writereceipt("receipt.txt", $"Item: {product.Key.Name.PadRight(30)} x {product.Value.ToString().PadRight(10)}         {(product.Key.Price*product.Value)}");
             }
 
