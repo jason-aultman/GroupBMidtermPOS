@@ -204,9 +204,19 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Check: ");
             Console.WriteLine("Please enter your 4 digit check number: ");
             var userCheckNumber = Console.ReadLine();
-            Console.WriteLine("Please enter your 9 digit routing number: ");
-            var userRoutingNumber = Console.ReadLine();
-            var userRoutingNumberValidation = (!(ValidatePayment.ValidateRoutingNum(userRoutingNumber)));
+            bool userRoutingNumberValidation;
+            do
+            {
+                Console.WriteLine("Please enter your 9 digit routing number: ");
+                var userRoutingNumber = Console.ReadLine();
+                userRoutingNumberValidation = (!(ValidatePayment.ValidateRoutingNum(userRoutingNumber)));
+                if (userRoutingNumberValidation)
+                {
+                    Console.WriteLine("Incorrect routing number, please enter a valid 9 digit number");
+                }
+            } while (userRoutingNumberValidation);
+
+
             Console.WriteLine("Please enter your checking 9 digit account number: ");
             var userCheckingAccountNumber = Console.ReadLine();
             var checkingAccountValidation = (!(ValidatePayment.ValidaCheckingAccountNum(userCheckingAccountNumber)));
