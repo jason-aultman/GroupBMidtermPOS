@@ -14,7 +14,7 @@ namespace GroupBMidtermPOS
             if(clearScreenOnCall) System.Console.Clear();
             foreach (var product in register.listOfProducts)
             {
-                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write($"[{product.ProductNumber}] ");
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.Write($"{product.Name}  ");
