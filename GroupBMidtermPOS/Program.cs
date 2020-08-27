@@ -14,17 +14,17 @@ namespace GroupBMidtermPOS
             var shoppingCart = new List<KeyValuePair<Product, int>>();
                 //initialize a "shopping cart" as a List of KeyValuePairs Key = Product Type, 
                 //Value being an int representing the amount of  Products
-                string receiptWriterPath = "receipt.txt";
+            string receiptWriterPath = "receipt.txt";
 
-                Register register = new Register(receiptWriterPath);
+            Register register = new Register(receiptWriterPath);
             //open a new Register
             
             var clearConsole = false;  
             //a variable representing whether or not to clear the Console screen between screens
 
-            //The path file to send to FileHandler.ReceiptWriter() which is what will write to the reciept file
             
-            DisplayHeader(); 
+            
+            Menu.DisplayHeader(); 
             //simple call to display the header on screen. ie Store name, possible welcome or address or telephone #, etc...
 
             do
@@ -35,16 +35,16 @@ namespace GroupBMidtermPOS
                 var userItemQuantity = GetUserItemQuantity();  
                 //ask the user for a quantity of whichever item was selected above.
                 
-                Printreceipt(receiptWriterPath);  
+                Menu.Printreceipt(receiptWriterPath);  
                 //initialize the methodology for printing  a reciept.  "Prints" a header to a .txt file.
 
-                var kvpUserSelection = new KeyValuePair<Product, int>(GetProduct(register.listOfProducts, userItemNumber), userItemQuantity); 
+                var kvpUserSelection = new KeyValuePair<Product, int>(register.GetProduct(register.listOfProducts, userItemNumber), userItemQuantity); 
                 //gets selected product # and quantity and makes a new KeyValuePair containing said info
 
                 shoppingCart.Add(kvpUserSelection);  
                 //adds previously made KeyValuePair to the users shopping cart
                 
-                clearConsole = DisplayTransactionDetails(shoppingCart, register, kvpUserSelection); 
+                clearConsole = Menu.DisplayTransactionDetails(shoppingCart, register, kvpUserSelection); 
                 //displays transaction details for users selected items and quantity, showing price each  and subtotal
 
             } while (AskToContinueToShop());  
@@ -54,15 +54,22 @@ namespace GroupBMidtermPOS
             //displays a summary of everything in the users shopping cart, including tax and grand total
           
             var payment = Menu.AskForPaymentMethodMenu();  //gets an enum for which type of payment will they be paying with, Cash, Credit, or Check
-            TakePayment(payment, register.GetGrandTotal(shoppingCart), register, shoppingCart);
+            register.TakePayment(payment, register.GetGrandTotal(shoppingCart), register, shoppingCart);
 
             Console.WriteLine();
             Console.WriteLine("YOUR RECEIPT:");
-            DisplayReceipt(receiptWriterPath);
-                register.Close();
-                Console.WriteLine("Press ENTER to return to main menu");
-                Console.ReadLine();
-                Console.Clear();
+            Menu.DisplayReceipt(receiptWriterPath);
+
+            register.Close();
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write("Press ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("ENTER");
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine(" to return to main menu");
+                Console.ResetColor();
+            Console.ReadLine();
+            Console.Clear();
             } while (true);
           
             //take payment based on which method the  user chose above.
@@ -79,7 +86,7 @@ namespace GroupBMidtermPOS
                 var userItemAsString = Console.ReadLine();  //get users input as a string
                 if (userItemAsString.StartsWith(":"))  //parses out user input, if it starts with a : then send the string to the search function instead
                 {
-                    SearchForProduct(userItemAsString.Substring(1), register);
+                    register.SearchForProduct(userItemAsString.Substring(1), register);
                 }
                 else // otherwise, it must be a integer...try parsing it to an int, and hopefully  dont break anything...
                 {
@@ -119,78 +126,6 @@ namespace GroupBMidtermPOS
 
             return false;
         }
-        
-        static Product GetProduct(List<Product> productList, int userChoice) //returns a product based on an index that the user selects...aka their choice.
-        {
-            Product choice = productList[userChoice];  //see above
-            return choice;
-        }
-
-        public static void TakePayment(PaymentTypeEnum paymentType, double amountDue, Register register, List<KeyValuePair<Product, int >> shoppingCart)  //Take payment from user, really should be in the register class probably, since that is pretty much what they are for
-        {
-            
-            if (paymentType == PaymentTypeEnum.Cash)  
-            {
-                var amountRemainingToPay = register.TakePaymentCash(amountDue);
-                while (amountRemainingToPay < 0.00) 
-                {
-                    paymentType = Menu.AskForPaymentMethodMenu();
-                    amountRemainingToPay = Math.Round(Math.Abs(amountRemainingToPay),2, MidpointRounding.AwayFromZero);
-                    TakePayment(paymentType, amountRemainingToPay, register, shoppingCart);
-                }
-                //add call to receipt display method here
-            }
-            else if (paymentType == PaymentTypeEnum.Check)
-            {
-                register.TakePaymentCheck(amountDue);
-                //Menu.DisplayOrderSummary(shoppingCart, register);
-                //confirmation
-            }
-            else if (paymentType == PaymentTypeEnum.Credit_Card)
-            {
-                register.TakePaymentCreditCard(amountDue);
-                //confirmation
-            }
-            else
-            {
-            }
-        }
-
-        public static void SearchForProduct(string descriptor, Register register) //performs a product search based on user input string
-        {
-            var results = register.ProductSearch(descriptor, register.listOfProducts);
-            if (results.Count < 1)
-            {
-                Console.WriteLine("No products were found that match the search string.");
-            }
-            else
-            {
-                Menu.DisplayAllProducts(results);
-            }
-
-        }
-        private static bool DisplayTransactionDetails(List<KeyValuePair<Product, int>> shoppingCart, Register register, KeyValuePair<Product, int> kvpUserSelection)
-        {
-            bool clearConsole;
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("-------------------------------------------------------------");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Transaction total: {register.GetSubtotal(kvpUserSelection):C}");
-            Console.WriteLine($"Subtotal: {register.GetSubtotal(shoppingCart):C}");
-            clearConsole = true;
-            Console.ForegroundColor = ConsoleColor.Gray;
-            return clearConsole;
-        }
-
-        private static void DisplayHeader()
-        {
-            Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("WELCOME TO CHUCKY'S TOY KINGDOM!!!");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("**********************************");
-            Console.WriteLine();
-        }
-
         public static int GetUserItemQuantity()
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -205,29 +140,6 @@ namespace GroupBMidtermPOS
             return GetUserItemQuantity();
         }
 
-        public static void DisplayReceipt(string path)
-        {
-            var paidDisplayReceipt = new List<string>();
-            //go to file handler file
-            //var receiptWriterPath = path;
-            //call file reader
 
-            string displayReceipt = FileHandler.ReadFile(path);
-            Console.WriteLine(displayReceipt);
-        }
-
-        public static void Printreceipt(string path)
-            //We need to display this to the screen
-        {
-          FileHandler.Writereceipt(path,$"{DateTime.Now.ToString()}", false);
-          var businessNameAndAddress = new string[]
-          {
-              "Chucky's Toy Kingdom", "40 Pearl St NW #200", "Grand Rapids, MI 49503", "555-555-1234", "-------------------------------------------"
-          };
-          foreach (var addressLine in businessNameAndAddress)
-          {
-              FileHandler.Writereceipt(path,addressLine,true);
-          }
-        }
     }
 }
