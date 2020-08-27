@@ -90,7 +90,22 @@ namespace GroupBMidtermPOS
             var isPassing = routingNum.All(char.IsDigit);
             var routingLength = userRoutingNum.Length;
         
-            if (Regex.IsMatch(routingNum, @"([0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1}[0-9]{1}[0-9]{1}[1-9]{1})"))
+            if (Regex.IsMatch(routingNum, @"([0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1})"))
+            {
+                return true;
+            }
+            return false;
+
+        }
+
+        //Validate 9 digital checking account number length and is an integer
+        public static bool ValidaCheckingAccountNum(string checkingNum)
+        {
+            var userCheckingNum = checkingNum.Trim();
+            var isPassing = checkingNum.All(char.IsDigit);
+            var checkingLength = userCheckingNum.Length;
+
+            if (Regex.IsMatch(checkingNum, @"([0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1}[0-9]{1})"))
             {
                 return true;
             }

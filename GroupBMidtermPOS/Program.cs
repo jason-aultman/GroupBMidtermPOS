@@ -12,16 +12,16 @@ namespace GroupBMidtermPOS
             {
 
             var shoppingCart = new List<KeyValuePair<Product, int>>();
-            //initialize a "shopping cart" as a List of KeyValuePairs Key = Product Type, 
-            //Value being an int representing the amount of  Products
+                //initialize a "shopping cart" as a List of KeyValuePairs Key = Product Type, 
+                //Value being an int representing the amount of  Products
+                string receiptWriterPath = "receipt.txt";
 
-            Register register = new Register();
+                Register register = new Register(receiptWriterPath);
             //open a new Register
-
+            
             var clearConsole = false;  
             //a variable representing whether or not to clear the Console screen between screens
 
-            string receiptWriterPath = "receipt.txt";  
             //The path file to send to FileHandler.ReceiptWriter() which is what will write to the reciept file
             
             DisplayHeader(); 
@@ -140,7 +140,7 @@ namespace GroupBMidtermPOS
             else if (paymentType == PaymentTypeEnum.Check)
             {
                 register.TakePaymentCheck(amountDue);
-                Menu.DisplayOrderSummary(shoppingCart, register);
+                //Menu.DisplayOrderSummary(shoppingCart, register);
                 //confirmation
             }
             else if (paymentType == PaymentTypeEnum.Credit_Card)
@@ -172,8 +172,8 @@ namespace GroupBMidtermPOS
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("-------------------------------------------------------------");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Transaction total: {register.GetSubtotal(kvpUserSelection)}");
-            Console.WriteLine($"Subtotal: {register.GetSubtotal(shoppingCart)}");
+            Console.WriteLine($"Transaction total: {register.GetSubtotal(kvpUserSelection):C}");
+            Console.WriteLine($"Subtotal: {register.GetSubtotal(shoppingCart):C}");
             clearConsole = true;
             Console.ForegroundColor = ConsoleColor.Gray;
             return clearConsole;

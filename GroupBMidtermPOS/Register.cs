@@ -15,10 +15,11 @@ namespace GroupBMidtermPOS
         public List<Product> CurrentOrder= new List<Product>();
         //C:\Users\bepol\Source\Repos\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv
         private string filePath = FileHandler.currentDirectory + @"\Inventory.csv";
-        
+        public string ReceiptWriterPath { get; set; }
         public double TotalSales  { get; set; }
-        public Register()
+        public Register(string receiptWriterPath)
          {
+            ReceiptWriterPath = receiptWriterPath;
             listOfProducts = FileHandler.ReadInventoryData(filePath);
          }
 
@@ -88,7 +89,7 @@ namespace GroupBMidtermPOS
             if (userAmountTendered < totalOwed)
             {
                 double amountOwed = totalOwed - cashAmount;
-                Console.WriteLine($"You still owe {amountOwed:C}");
+                Console.WriteLine($"You still owe ${amountOwed:C}");
                 var difference = amountOwed - userAmountTendered;
                 TotalSales += userAmountTendered;
                 return difference;
@@ -109,7 +110,7 @@ namespace GroupBMidtermPOS
             if (userAmountTendered < totalOwed)  
             {
                 double amountOwed = userAmountTendered-totalOwed; 
-                Console.WriteLine($"You still owe {amountOwed:C}");
+                Console.WriteLine($"You still owe ${amountOwed:C}");
                 FileHandler.Writereceipt("Receipt.txt", $"                                                 Owed   {totalOwed:C}",true);
                 FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                   Amount {userAmountTendered:C}",true);
                 FileHandler.Writereceipt("Receipt.txt", $"Remaining Bal:                                   Amount {amountOwed:C}",true);
@@ -148,31 +149,52 @@ namespace GroupBMidtermPOS
     
 
         public void TakePaymentCreditCard(double totalOwed)
-        {
-            //Menu.cs  Ask user for cc number, expiry date, and  cvv number 
+        {//Menu.cs  Ask user for cc number, expiry date, and  cvv number 
+            bool validatedUserInput;
+            do
+            {
             Console.WriteLine("Credit/Debit card: ");
-            Console.WriteLine("Please your 12 digit credit card number: ");
+            Console.WriteLine("Please enter your 12 digit credit card number: ");
             var userCardNumber = Console.ReadLine();
-            if (!(ValidatePayment.ValidateCreditCardAccountNumberIsLongEnough(userCardNumber) &&
-                ValidatePayment.ValidateAcctNum(userCardNumber)))
-            {
-                Console.WriteLine("Sorry, that number is not a valid CC number.");
-                TakePaymentCreditCard(totalOwed);
+                validatedUserInput = (!(ValidatePayment.ValidateCreditCardAccountNumberIsLongEnough(userCardNumber) &&
+                ValidatePayment.ValidateAcctNum(userCardNumber)));
+                if (validatedUserInput)
+                {
+                    Console.WriteLine("Sorry, that number is not a valid credit card number.");
+                    //TakePaymentCreditCard(totalOwed);
+
+                }
+
             }
-            Console.WriteLine("Please your 4 digit expiration date: ");
-            var userExpirationDate = Console.ReadLine();
-                 if(!(ValidatePayment.ValidateExpDate(userExpirationDate)))
-                 {
-                     Console.WriteLine("Sorry, that number is not a valid experation date.");
-                     TakePaymentCreditCard(totalOwed);
-                 }
-            Console.WriteLine("Please your 3 digit CVV number: ");
-            var userCvvNumber = Console.ReadLine();
-            if (!(ValidatePayment.ValidateCVV(userCvvNumber)))
+
+            while (validatedUserInput);
+            bool validateUserExpiration;
+            do
             {
-                Console.WriteLine("Sorry, that number is not a valid CVV number.");
-                    TakePaymentCreditCard(totalOwed);
+                Console.WriteLine("Please enter your 4 digit expiration date (MMYY): ");
+                var userExpirationDate = Console.ReadLine();
+                validateUserExpiration = !(ValidatePayment.ValidateExpDate(userExpirationDate));
+                if (validateUserExpiration)
+                {
+                    Console.WriteLine("Sorry, that number is not a valid expiration date (MMYY)");
+                    //TakePaymentCreditCard(totalOwed);
+                }
             }
+            while (validateUserExpiration);
+            bool cvvUserValidation;
+            do
+            {
+                Console.WriteLine("Please enter your 3 digit CVV number: ");
+                var userCvvNumber = Console.ReadLine();
+                cvvUserValidation = !(ValidatePayment.ValidateCVV(userCvvNumber));
+                if (cvvUserValidation)
+                {
+                    Console.WriteLine("Sorry, that number is not a valid CVV number.");
+                    //TakePaymentCreditCard(totalOwed);
+                }
+            }
+            while (cvvUserValidation);
+            FileHandler.Writereceipt(ReceiptWriterPath, "Method of payment credit/debit card");
 
         }
 
@@ -180,12 +202,15 @@ namespace GroupBMidtermPOS
         {
             //Menu.cs Ask user for check number
             Console.WriteLine("Check: ");
-            Console.WriteLine("Please enter your check number: ");
+            Console.WriteLine("Please enter your 4 digit check number: ");
             var userCheckNumber = Console.ReadLine();
-            Console.WriteLine("Please enter your routing number: ");
+            Console.WriteLine("Please enter your 9 digit routing number: ");
             var userRoutingNumber = Console.ReadLine();
-            Console.WriteLine("Please enter your checking account number: ");
+            var userRoutingNumberValidation = (!(ValidatePayment.ValidateRoutingNum(userRoutingNumber)));
+            Console.WriteLine("Please enter your checking 9 digit account number: ");
             var userCheckingAccountNumber = Console.ReadLine();
+            var checkingAccountValidation = (!(ValidatePayment.ValidaCheckingAccountNum(userCheckingAccountNumber)));
+
             TotalSales += totalOwed;
         }
 
