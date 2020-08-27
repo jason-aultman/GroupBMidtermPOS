@@ -79,9 +79,38 @@ namespace GroupBMidtermPOS
             var tax = GetTotalSalesTax(subtotal);
             Math.Round(tax, 2, MidpointRounding.AwayFromZero);
 
-            return subtotal +tax;
+            return subtotal + tax;
         }
-        
+        public void TakePayment(PaymentTypeEnum paymentType, double amountDue, Register register, List<KeyValuePair<Product, int>> shoppingCart)  //Take payment from user, really should be in the register class probably, since that is pretty much what they are for
+        {
+
+            if (paymentType == PaymentTypeEnum.Cash)
+            {
+                var amountRemainingToPay = register.TakePaymentCash(amountDue);
+                while (amountRemainingToPay < 0.00)
+                {
+                    paymentType = Menu.AskForPaymentMethodMenu();
+                    amountRemainingToPay = Math.Round(Math.Abs(amountRemainingToPay), 2, MidpointRounding.AwayFromZero);
+                    TakePayment(paymentType, amountRemainingToPay, register, shoppingCart);
+                }
+                //add call to receipt display method here
+            }
+            else if (paymentType == PaymentTypeEnum.Check)
+            {
+                register.TakePaymentCheck(amountDue);
+                //Menu.DisplayOrderSummary(shoppingCart, register);
+                //confirmation
+            }
+            else if (paymentType == PaymentTypeEnum.Credit_Card)
+            {
+                register.TakePaymentCreditCard(amountDue);
+                //confirmation
+            }
+            else
+            {
+            }
+        }
+
         public double TakePaymentCash(double cashAmount, double totalOwed)
         {
             Console.WriteLine("Cash: ");
@@ -223,6 +252,19 @@ namespace GroupBMidtermPOS
 
             TotalSales += totalOwed;
         }
+        public void SearchForProduct(string descriptor, Register register) //performs a product search based on user input string
+        {
+            var results = register.ProductSearch(descriptor, register.listOfProducts);
+            if (results.Count < 1)
+            {
+                Console.WriteLine("No products were found that match the search string.");
+            }
+            else
+            {
+                Menu.DisplayAllProducts(results);
+            }
+
+        }
 
         //add this later
         public List<Product> ProductSearch(string searchString, List<Product> products)
@@ -233,7 +275,13 @@ namespace GroupBMidtermPOS
             
             return results;
         }
-        
+        public Product GetProduct(List<Product> productList, int userChoice) //returns a product based on an index that the user selects...aka their choice.
+        {
+            Product choice = productList[userChoice];  //see above
+            return choice;
+        }
+
+
         public void Close()
         {
             listOfProducts = null;

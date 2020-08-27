@@ -8,6 +8,14 @@ namespace GroupBMidtermPOS
 {
     public static class Menu
     {
+        public static void DisplayHeader()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("WELCOME TO CHUCKY'S TOY KINGDOM!!!");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("**********************************");
+            Console.WriteLine();
+        }
         public static void DisplayMainMenu(Register register, bool clearScreenOnCall)
         {
             var consoleColor = ConsoleColor.Gray;
@@ -24,6 +32,19 @@ namespace GroupBMidtermPOS
             }
 
         }
+        public static bool DisplayTransactionDetails(List<KeyValuePair<Product, int>> shoppingCart, Register register, KeyValuePair<Product, int> kvpUserSelection)
+        {
+            bool clearConsole;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("-------------------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Transaction total: {register.GetSubtotal(kvpUserSelection):C}");
+            Console.WriteLine($"Subtotal: {register.GetSubtotal(shoppingCart):C}");
+            clearConsole = true;
+            Console.ForegroundColor = ConsoleColor.Gray;
+            return clearConsole;
+        }
+
 
         public static void DisplayOrderSummary(List<KeyValuePair<Product,int>> shoppingCart, Register register)
         {
@@ -106,6 +127,30 @@ namespace GroupBMidtermPOS
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("No results returned!");
                 Console.ForegroundColor = ConsoleColor.Gray;
+            }
+        }
+        public static void DisplayReceipt(string path)
+        {
+            var paidDisplayReceipt = new List<string>();
+            //go to file handler file
+            //var receiptWriterPath = path;
+            //call file reader
+
+            string displayReceipt = FileHandler.ReadFile(path);
+            Console.WriteLine(displayReceipt);
+        }
+
+        public static void Printreceipt(string path)
+        //We need to display this to the screen
+        {
+            FileHandler.Writereceipt(path, $"{DateTime.Now.ToString()}", false);
+            var businessNameAndAddress = new string[]
+            {
+              "Chucky's Toy Kingdom", "40 Pearl St NW #200", "Grand Rapids, MI 49503", "555-555-1234", "-------------------------------------------"
+            };
+            foreach (var addressLine in businessNameAndAddress)
+            {
+                FileHandler.Writereceipt(path, addressLine, true);
             }
         }
 
