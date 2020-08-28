@@ -133,6 +133,7 @@ namespace GroupBMidtermPOS
         }
         public double TakePaymentCash(double totalOwed)
         {
+            var grandTotalOwed = (totalOwed + (totalOwed * Taxrate));
             Console.WriteLine("Cash: ");
             Console.WriteLine("Please enter amount tendered: ");
             double userAmountTendered = double.Parse(Console.ReadLine()); 
@@ -140,14 +141,18 @@ namespace GroupBMidtermPOS
             {
                 double amountOwed = userAmountTendered-totalOwed; 
                 Console.WriteLine($"You still owe ${amountOwed:C}");
+                //FileHandler.Writereceipt("Receipt.txt", $"                                                 Tax   {:C}", true);
                 FileHandler.Writereceipt("Receipt.txt", $"                                                 Owed   {totalOwed:C}",true);
+
                 FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                   Amount {userAmountTendered:C}",true);
                 FileHandler.Writereceipt("Receipt.txt", $"Remaining Bal:                                   Amount {amountOwed:C}",true);
                 return amountOwed;  
             }
             var changeDue = userAmountTendered - totalOwed;
             Console.WriteLine($"Change due: {changeDue:C}");
-            FileHandler.Writereceipt("Receipt.txt", $"                                                     Owed   {totalOwed:C}",true);
+            FileHandler.Writereceipt("Receipt.txt", $"                                                     Tax   {(Taxrate * totalOwed):C}", true);
+            FileHandler.Writereceipt("Receipt.txt", $"                                                     Owed   {grandTotalOwed:C}",true);
+
             FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                       Amount {userAmountTendered:C}",true);
             FileHandler.Writereceipt("Receipt.txt", $"Change Due:                                          Amount {changeDue:C}", true);
             return changeDue;
@@ -224,7 +229,7 @@ namespace GroupBMidtermPOS
             }
             while (cvvUserValidation);
             FileHandler.Writereceipt(ReceiptWriterPath, "Method of payment credit/debit card");
-
+            //to do receipt writer
         }
 
         public void TakePaymentCheck(double totalOwed)
@@ -249,8 +254,10 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Please enter your checking 9 digit account number: ");
             var userCheckingAccountNumber = Console.ReadLine();
             var checkingAccountValidation = (!(ValidatePayment.ValidaCheckingAccountNum(userCheckingAccountNumber)));
+            
+            FileHandler.Writereceipt(ReceiptWriterPath, $"Method of payment check: in the amount of {totalOwed}");
 
-            TotalSales += totalOwed;
+
         }
         public void SearchForProduct(string descriptor, Register register) //performs a product search based on user input string
         {
@@ -284,7 +291,7 @@ namespace GroupBMidtermPOS
         }
         public Product GetProduct(List<Product> productList, int userChoice) //returns a product based on an index that the user selects...aka their choice.
         {
-            if (userChoice == 0 || userChoice == null)
+            if (userChoice == null)
             {
                 return null;
             }

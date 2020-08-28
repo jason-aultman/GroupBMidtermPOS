@@ -62,7 +62,7 @@ namespace GroupBMidtermPOS
             //displays a summary of everything in the users shopping cart, including tax and grand total
           
             var payment = Menu.AskForPaymentMethodMenu();  //gets an enum for which type of payment will they be paying with, Cash, Credit, or Check
-            register.TakePayment(payment, register.GetGrandTotal(shoppingCart), register, shoppingCart);
+            register.TakePayment(payment, register.GetSubtotal(shoppingCart), register, shoppingCart);
 
             Console.WriteLine();
             Console.WriteLine("YOUR RECEIPT:");
