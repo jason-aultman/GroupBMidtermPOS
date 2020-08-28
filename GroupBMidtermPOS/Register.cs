@@ -14,7 +14,7 @@ namespace GroupBMidtermPOS
         public List<Product> listOfProducts;
         public List<Product> CurrentOrder= new List<Product>();
         //C:\Users\bepol\Source\Repos\GroupBMidtermPOS\GroupBMidtermPOS\Inventory.csv
-        private string filePath = FileHandler.currentDirectory + @"\Inventory.csv";
+        public string filePath = FileHandler.currentDirectory + @"\Inventory.csv";
         public string ReceiptWriterPath { get; set; }
         public double TotalSales  { get; set; }
         public Register(string receiptWriterPath)
@@ -279,10 +279,15 @@ namespace GroupBMidtermPOS
         public void WriteToInventoryProductList (string filePath, string lineForEntryIntoFile)
         {
             var parsedLineForEntryIntoFile = lineForEntryIntoFile.Substring(1);
-            FileHandler.
+            parsedLineForEntryIntoFile = "\n" + parsedLineForEntryIntoFile;
+            FileHandler.WriteFile(filePath, parsedLineForEntryIntoFile);
         }
         public Product GetProduct(List<Product> productList, int userChoice) //returns a product based on an index that the user selects...aka their choice.
         {
+            if (userChoice == 0 || userChoice == null)
+            {
+                return null;
+            }
             Product choice = productList[userChoice];  //see above
             return choice;
         }

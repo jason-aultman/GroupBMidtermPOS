@@ -33,7 +33,11 @@ namespace GroupBMidtermPOS
                     //requests an Item Number from the user, which sends in a register parameter and whether or not to clear the console.  False for the 1st run because we want the header to be displayed when the program is first run, but not necessarily any time after.
                     //show item detail with item number
                     var selectedProduct = register.GetProduct(register.listOfProducts, userItemNumber);
-                    
+                    //if (selectedProduct == null)
+                    //{
+                    //    break;
+                    //}
+
                     Menu.GetItemDetail(selectedProduct);
                 
                     var userItemQuantity = GetUserItemQuantity();  
@@ -51,9 +55,9 @@ namespace GroupBMidtermPOS
                 clearConsole = Menu.DisplayTransactionDetails(shoppingCart, register, kvpUserSelection); 
                 //displays transaction details for users selected items and quantity, showing price each  and subtotal
 
-            } while (AskToContinueToShop());  
-            //ask user  if they would like to continue to shop, if yes, goes back to the beginning of the do, if not, onto the next line.
-
+            } while (AskToContinueToShop());
+                //ask user  if they would like to continue to shop, if yes, goes back to the beginning of the do, if not, onto the next line.
+                
             Menu.DisplayOrderSummary(shoppingCart, register); 
             //displays a summary of everything in the users shopping cart, including tax and grand total
           
@@ -94,7 +98,8 @@ namespace GroupBMidtermPOS
                 }
                 else if (userItemAsString.StartsWith("~")) //add call to method later TO DO!!
                 {
-
+                    register.WriteToInventoryProductList(register.filePath, userItemAsString);
+                    break;
                 }
                 else // otherwise, it must be a integer...try parsing it to an int, and hopefully  dont break anything...
                 {
