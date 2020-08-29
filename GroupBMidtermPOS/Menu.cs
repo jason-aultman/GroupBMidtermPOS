@@ -152,7 +152,7 @@ namespace GroupBMidtermPOS
             FileHandler.Writereceipt(path, $"{DateTime.Now.ToString()}", false);
             var businessNameAndAddress = new string[]
             {
-              "Chucky's Toy Kingdom", "40 Pearl St NW #200", "Grand Rapids, MI 49503", "555-555-1234", "-------------------------------------------"
+              "Chucky's Toy Kingdom", "40 Pearl St NW #200", "Grand Rapids, MI 49503", "555-555-1234", "-----------------------------------------------------------","\n"
             };
             foreach (var addressLine in businessNameAndAddress)
             {
@@ -160,21 +160,6 @@ namespace GroupBMidtermPOS
             }
         }
 
-        public static string[] ReceiptFormatter(string[] unformattedStrings)
-        {
-            var columns = unformattedStrings.Length;
-            var columnWidth = 20;
-            var totalWidth = columns * columnWidth;
-            var copyOfInputArray = new string[unformattedStrings.Length];
-            unformattedStrings.CopyTo(copyOfInputArray, 0);
-            for (int i = 0; i < unformattedStrings.Length; i++)
-            {
-                copyOfInputArray[i] = unformattedStrings[0].PadRight(columnWidth);
-            }
-
-            return copyOfInputArray;
-
-
-        }
+       
     }
 }

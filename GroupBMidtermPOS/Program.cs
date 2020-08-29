@@ -32,11 +32,14 @@ namespace GroupBMidtermPOS
                 var userItemNumber = GetItemNumberFromUser(register, clearConsole);
                     //requests an Item Number from the user, which sends in a register parameter and whether or not to clear the console.  False for the 1st run because we want the header to be displayed when the program is first run, but not necessarily any time after.
                     //show item detail with item number
-                    var selectedProduct = register.GetProduct(register.listOfProducts, userItemNumber);
-                    //if (selectedProduct == null)
-                    //{
-                    //    break;
-                    //}
+                    var selectedProduct = register.GetProduct(register.listOfProducts, userItemNumber); //gets product at index selected by user --returns null if nan
+                    if (selectedProduct == null)  
+                    {
+                        register.Close(); //resets register reference
+                        Console.Clear(); //clears console window
+                        Program.Close(); //does nothing atm
+                        Main(new string[1]); //recursively calls Main() to effectively restart program
+                    }
 
                     Menu.GetItemDetail(selectedProduct);
                 
@@ -62,13 +65,14 @@ namespace GroupBMidtermPOS
             //displays a summary of everything in the users shopping cart, including tax and grand total
           
             var payment = Menu.AskForPaymentMethodMenu();  //gets an enum for which type of payment will they be paying with, Cash, Credit, or Check
-            register.TakePayment(payment, register.GetSubtotal(shoppingCart), register, shoppingCart);
+            register.TakePayment(payment, register.GetGrandTotal(shoppingCart),shoppingCart);
 
             Console.WriteLine();
             Console.WriteLine("YOUR RECEIPT:");
             Menu.DisplayReceipt(receiptWriterPath);
 
-            register.Close();
+            register.Close(); //reset the register to its initial state
+            //Formatted Press ENTER to continue
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.Write("Press ");
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -76,11 +80,11 @@ namespace GroupBMidtermPOS
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine(" to return to main menu");
                 Console.ResetColor();
-            Console.ReadLine();
-            Console.Clear();
-            } while (true);
+            Console.ReadLine(); //get user input ie ENTER
+            Console.Clear(); //clear screen
+            } while (true); //start over
           
-            //take payment based on which method the  user chose above.
+            
         }
         //END OF MAIN -- 
 
@@ -88,7 +92,7 @@ namespace GroupBMidtermPOS
         {
             Console.WriteLine($"Menu: Choose an Item # or [: + search term] to search");  //ask user to choose an item number from the list
             Menu.DisplayMainMenu(register, clearConsole);  //displays the list of items in the register
-            var userItemNumber = 0;
+            var userItemNumber = -1;
             do
             {
                 var userItemAsString = Console.ReadLine();  //get users input as a string
@@ -96,7 +100,7 @@ namespace GroupBMidtermPOS
                 {
                     register.SearchForProduct(userItemAsString.Substring(1), register);
                 }
-                else if (userItemAsString.StartsWith("~")) //add call to method later TO DO!!
+                else if (userItemAsString.StartsWith("~")) 
                 {
                     register.WriteToInventoryProductList(register.filePath, userItemAsString);
                     break;
@@ -116,7 +120,7 @@ namespace GroupBMidtermPOS
                 }
 
             } while (true);  //keep asking until they get really annoyed or they put in the correct input
-
+           
             return userItemNumber;  //should never, ever get here, but the compiler seems to think I need to  return  something  just  in case.
         }
 
@@ -152,7 +156,10 @@ namespace GroupBMidtermPOS
             Console.WriteLine("Something went wrong");
             return GetUserItemQuantity();
         }
-
+        public static void Close()
+        {
+            
+        }
 
     }
 }
