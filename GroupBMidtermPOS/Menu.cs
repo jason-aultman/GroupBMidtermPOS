@@ -169,7 +169,7 @@ namespace GroupBMidtermPOS
             FileHandler.Writereceipt(path, $"{DateTime.Now.ToString()}", false);
             var businessNameAndAddress = new string[]
             {
-              "Chucky's Toy Kingdom", "40 Pearl St NW #200", "Grand Rapids, MI 49503", "555-555-1234", "-----------------------------------------------------------","\n"
+              "Chucky's Toy Kingdom", "40 Pearl St NW #200", "Grand Rapids, MI 49503", "616-867-5309", "-----------------------------------------------------------","\n"
             };
             foreach (var addressLine in businessNameAndAddress)
             {

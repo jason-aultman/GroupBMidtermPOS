@@ -74,13 +74,13 @@ namespace GroupBMidtermPOS
             }
             else if (paymentType == PaymentTypeEnum.Check)
             {
-                TakePaymentCheck(amountDue);
+                TakePaymentCheck(amountDue, GetTotalSalesTax(GetSubtotal(shoppingCart)));
                 //Menu.DisplayOrderSummary(shoppingCart, register);
                 //confirmation
             }
             else if (paymentType == PaymentTypeEnum.Credit_Card)
             {
-                TakePaymentCreditCard(amountDue);
+                TakePaymentCreditCard(amountDue, GetTotalSalesTax(GetSubtotal(shoppingCart)));
                 //confirmation
             }
             else
@@ -126,7 +126,7 @@ namespace GroupBMidtermPOS
         }
     
 
-        public void TakePaymentCreditCard(double totalOwed)
+        public void TakePaymentCreditCard(double grandTotalOwed, double tax)
         {//Menu.cs  Ask user for cc number, expiry date, and  cvv number 
             bool validatedUserInput;
             do
@@ -172,11 +172,19 @@ namespace GroupBMidtermPOS
                 }
             }
             while (cvvUserValidation);
-            FileHandler.Writereceipt(ReceiptWriterPath, "Method of payment credit/debit card");
+
+
+            FileHandler.Writereceipt("Receipt.txt", "\n");
+            FileHandler.Writereceipt("Receipt.txt", $"                                                          Subtotal   {grandTotalOwed - tax:C}", true);
+            FileHandler.Writereceipt("Receipt.txt", $"                                                          Tax        {tax:C}", true);
+            FileHandler.Writereceipt(ReceiptWriterPath, "                                                      ----------------------------");
+            FileHandler.Writereceipt("Receipt.txt", $"                                                          Total:     {grandTotalOwed:C}");
+
+            FileHandler.Writereceipt(ReceiptWriterPath, $"Credit/Debit card charged in the amount of: {grandTotalOwed:C}");
             //to do receipt writer
         }
 
-        public void TakePaymentCheck(double totalOwed)
+        public void TakePaymentCheck(double grandTotalOwed, double tax)
         {
             //Menu.cs Ask user for check number
             Console.WriteLine("Check: ");
@@ -199,7 +207,13 @@ namespace GroupBMidtermPOS
             var userCheckingAccountNumber = Console.ReadLine();
             var checkingAccountValidation = (!(ValidatePayment.ValidaCheckingAccountNum(userCheckingAccountNumber)));
             
-            FileHandler.Writereceipt(ReceiptWriterPath, $"Method of payment check: in the amount of {totalOwed}");
+            FileHandler.Writereceipt("Receipt.txt", "\n");
+            FileHandler.Writereceipt("Receipt.txt", $"                                                          Subtotal   {grandTotalOwed - tax:C}", true);
+            FileHandler.Writereceipt("Receipt.txt", $"                                                          Tax        {tax:C}", true);
+            FileHandler.Writereceipt(ReceiptWriterPath, "                                                      ----------------------------");
+            FileHandler.Writereceipt("Receipt.txt", $"                                                          Total:     {grandTotalOwed:C}");
+            
+            FileHandler.Writereceipt(ReceiptWriterPath, $"Method of payment check in the amount of:                            {grandTotalOwed:C}");
 
 
         }
