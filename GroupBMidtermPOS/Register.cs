@@ -29,17 +29,6 @@ namespace GroupBMidtermPOS
             var calcTax = Math.Round(GetTotalSalesTax(beforeTax), 2, MidpointRounding.AwayFromZero);
             return beforeTax + calcTax;
         }
-
-        public double GetSubtotal(List<Product> shoppingCart)
-        {
-            var subTotal = 0.0;
-            foreach (var product in shoppingCart)
-            {
-                subTotal += product.Price;
-            }
-
-            return subTotal;
-        }
         public double GetSubtotal(KeyValuePair<Product, int> keyValuePair)
         {
             var subTotal = 0.0;
@@ -56,54 +45,42 @@ namespace GroupBMidtermPOS
 
             return Math.Round(subTotal, 2, MidpointRounding.AwayFromZero);
         }
-        public double GetTotalSalesTax(double subTotal)
+        public double GetTotalSalesTax(double total)
         {
-            return subTotal * Taxrate;
-        }
-
-        public double GetTotalSalesTax(List<Product> shoppingCart)
-        {
-            var subTotal = 0.0;
-            foreach (var products in shoppingCart)
-            {
-                subTotal += products.Price;
-            }
-
-            var totalTax = Taxrate * subTotal;
-            return Math.Round(totalTax,2,MidpointRounding.AwayFromZero);
+            return total * Taxrate;
         }
 
         public double GetTotalWithSalesTax(List<KeyValuePair<Product,int>> shoppingCart)
         {
             var subtotal = GetSubtotal(shoppingCart);
             var tax = GetTotalSalesTax(subtotal);
-            Math.Round(tax, 2, MidpointRounding.AwayFromZero);
+            tax = Math.Round(tax, 2, MidpointRounding.AwayFromZero);
 
             return subtotal + tax;
         }
-        public void TakePayment(PaymentTypeEnum paymentType, double amountDue, Register register, List<KeyValuePair<Product, int>> shoppingCart)  //Take payment from user, really should be in the register class probably, since that is pretty much what they are for
+        public void TakePayment(PaymentTypeEnum paymentType, double amountDue ,List<KeyValuePair<Product, int>> shoppingCart)  //Take payment from user
         {
-
+            
             if (paymentType == PaymentTypeEnum.Cash)
             {
-                var amountRemainingToPay = register.TakePaymentCash(amountDue);
+                var amountRemainingToPay = TakePaymentCash(amountDue, GetTotalSalesTax(GetSubtotal(shoppingCart)));
                 while (amountRemainingToPay < 0.00)
                 {
-                    paymentType = Menu.AskForPaymentMethodMenu();
-                    amountRemainingToPay = Math.Round(Math.Abs(amountRemainingToPay), 2, MidpointRounding.AwayFromZero);
-                    TakePayment(paymentType, amountRemainingToPay, register, shoppingCart);
+                    paymentType = Menu.AskForPaymentMethodMenu(); //ask user for how they would like to pay
+                    amountRemainingToPay = Math.Round(Math.Abs(amountRemainingToPay), 2, MidpointRounding.AwayFromZero); //return formatted absolute value of amount remaining to pay
+                    TakePayment(paymentType, amountRemainingToPay, shoppingCart); 
                 }
                 //add call to receipt display method here
             }
             else if (paymentType == PaymentTypeEnum.Check)
             {
-                register.TakePaymentCheck(amountDue);
+                TakePaymentCheck(amountDue);
                 //Menu.DisplayOrderSummary(shoppingCart, register);
                 //confirmation
             }
             else if (paymentType == PaymentTypeEnum.Credit_Card)
             {
-                register.TakePaymentCreditCard(amountDue);
+                TakePaymentCreditCard(amountDue);
                 //confirmation
             }
             else
@@ -111,74 +88,41 @@ namespace GroupBMidtermPOS
             }
         }
 
-        public double TakePaymentCash(double cashAmount, double totalOwed)
+  
+        public double TakePaymentCash(double grandTotalOwed, double tax) // 8-29 Jason - Fixed broken method after adding tax from 8/27
         {
-            Console.WriteLine("Cash: ");
-            var userAmountTendered = cashAmount;
-            if (userAmountTendered < totalOwed)
-            {
-                double amountOwed = totalOwed - cashAmount;
-                Console.WriteLine($"You still owe ${amountOwed:C}");
-                var difference = amountOwed - userAmountTendered;
-                TotalSales += userAmountTendered;
-                return difference;
-            }
-            //go back to enter payment type screen if money is owed
-
-            var changeDue = userAmountTendered - totalOwed;
-            Console.WriteLine($"Change due: ${changeDue:C}");
-            TotalSales += totalOwed;
-            return changeDue;
-            
-        }
-        public double TakePaymentCash(double totalOwed)
-        {
-            var grandTotalOwed = (totalOwed + (totalOwed * Taxrate));
             Console.WriteLine("Cash: ");
             Console.WriteLine("Please enter amount tendered: ");
             double userAmountTendered = double.Parse(Console.ReadLine()); 
-            if (userAmountTendered < totalOwed)  
+            if (userAmountTendered < grandTotalOwed)  
             {
-                double amountOwed = userAmountTendered-totalOwed; 
-                Console.WriteLine($"You still owe ${amountOwed:C}");
-                //FileHandler.Writereceipt("Receipt.txt", $"                                                 Tax   {:C}", true);
-                FileHandler.Writereceipt("Receipt.txt", $"                                                 Owed   {totalOwed:C}",true);
+                double grandTotal = userAmountTendered-grandTotalOwed; 
+                Console.WriteLine($"You still owe ${grandTotal:C}");
+                //FileHandler.Writereceipt("Receipt.txt", $"                                                 Total  {grandTotal:C}",true);
+                // FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                   Amount {userAmountTendered:C}", true);
+                //  FileHandler.Writereceipt("Receipt.txt", $"Remaining Bal:                                   Amount {grandTotalOwed:C}",true);
+                FileHandler.Writereceipt("Receipt.txt", "\n");
+                FileHandler.Writereceipt("Receipt.txt", $"                                                          Subtotal   {grandTotalOwed - tax:C}", true);
+                FileHandler.Writereceipt("Receipt.txt", $"                                                          Tax        {tax:C}", true);
+                FileHandler.Writereceipt("Receipt.txt", $"                                                          Total:     {grandTotalOwed:C}", true);
+                FileHandler.Writereceipt(ReceiptWriterPath, "                                                      ----------------------------");
+                FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                            Amount:    {userAmountTendered:C}", true);
+                FileHandler.Writereceipt("Receipt.txt", $"Change Due:                                               Amount:    {grandTotal:C}", true);
 
-                FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                   Amount {userAmountTendered:C}",true);
-                FileHandler.Writereceipt("Receipt.txt", $"Remaining Bal:                                   Amount {amountOwed:C}",true);
-                return amountOwed;  
+                return grandTotal;  
             }
-            var changeDue = userAmountTendered - totalOwed;
-            Console.WriteLine($"Change due: {changeDue:C}");
-            FileHandler.Writereceipt("Receipt.txt", $"                                                     Tax   {(Taxrate * totalOwed):C}", true);
-            FileHandler.Writereceipt("Receipt.txt", $"                                                     Owed   {grandTotalOwed:C}",true);
 
-            FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                       Amount {userAmountTendered:C}",true);
-            FileHandler.Writereceipt("Receipt.txt", $"Change Due:                                          Amount {changeDue:C}", true);
+            var changeDue = userAmountTendered - grandTotalOwed;
+            Console.WriteLine($"Change due: {changeDue:C}");
+            FileHandler.Writereceipt("Receipt.txt", "\n");
+            FileHandler.Writereceipt("Receipt.txt", $"                                                          Subtotal   {grandTotalOwed-tax:C}", true);
+            FileHandler.Writereceipt("Receipt.txt", $"                                                          Tax        {tax:C}", true);
+            FileHandler.Writereceipt("Receipt.txt", $"                                                          Total:     {grandTotalOwed:C}");
+            FileHandler.Writereceipt(ReceiptWriterPath, "                                                      ----------------------------");
+            FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                            Amount:    {userAmountTendered:C}",true);
+            FileHandler.Writereceipt("Receipt.txt", $"Change Due:                                               Amount:    {changeDue:C}", true);
             return changeDue;
            
-        }
-        public double TakePaymentCash(List<KeyValuePair<Product, int>> shoppingCart)
-        {
-            Console.WriteLine("Cash: ");
-            Console.WriteLine("Please enter amount tendered; ");
-            double userAmountTendered = double.Parse(Console.ReadLine());
-            if (userAmountTendered < GetGrandTotal(shoppingCart))
-            {
-                double amountOwed = GetGrandTotal(shoppingCart) - userAmountTendered;
-                Console.WriteLine($"You still owe {amountOwed:C}");
-                var difference = amountOwed - userAmountTendered;
-                TotalSales += userAmountTendered;
-                return difference;
-                
-            }
-            //go back to enter payment type screen if money is owed
-            
-             var changeDue = userAmountTendered - GetGrandTotal(shoppingCart);
-             Console.WriteLine($"Change due: {changeDue:C}");
-             TotalSales += GetGrandTotal(shoppingCart);
-             return changeDue;
-
         }
     
 
@@ -272,8 +216,7 @@ namespace GroupBMidtermPOS
             }
 
         }
-
-        //add this later
+ 
         public List<Product> ProductSearch(string searchString, List<Product> products)
         {
            
@@ -291,7 +234,7 @@ namespace GroupBMidtermPOS
         }
         public Product GetProduct(List<Product> productList, int userChoice) //returns a product based on an index that the user selects...aka their choice.
         {
-            if (userChoice == null)
+            if (userChoice == -1)
             {
                 return null;
             }
