@@ -29,7 +29,15 @@ namespace GroupBMidtermPOS
             }
             return false;
         }
-
+        public static bool IsAnInteger(string userPaymentMethod)
+        {
+            if (int.TryParse(userPaymentMethod, out int userPaymentMethodInteger)) //check to see if parseable to integer
+            {
+                var isWithinRange = ValidatePayment.BetweenMoRanges(1, 3, userPaymentMethodInteger); //check to see if within 1-3
+                return isWithinRange; //within range and parselable to integer
+            }
+            return false; //not int or withing 1-3
+        }
 
         public static bool CheckYesNo(string userInputCharacter)
         {

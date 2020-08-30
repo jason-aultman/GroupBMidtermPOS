@@ -107,9 +107,26 @@ namespace GroupBMidtermPOS
             Console.WriteLine("2. Credit/Debit Card");
             Console.WriteLine("3. Check");
             Console.ForegroundColor = ConsoleColor.Gray;
-            var paymentType = int.Parse(Console.ReadLine());
+            
+            string paymentType;
+            var paymentTypeParsed = 0;
+            do
+            {
+                paymentType = Console.ReadLine();
 
-            return (PaymentTypeEnum)paymentType;
+                if (ValidateInput.IsAnInteger(paymentType))
+                {
+                    paymentTypeParsed = int.Parse(paymentType);
+                }
+                else
+                {
+                    Console.WriteLine("Please input valid payment type 1. Cash, 2. Credit/Debit Card, or 3. Check:");
+                }
+                            
+            } 
+            while (!ValidateInput.IsAnInteger(paymentType));
+
+            return (PaymentTypeEnum)paymentTypeParsed;
 
         }
 
