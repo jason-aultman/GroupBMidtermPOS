@@ -97,7 +97,7 @@ namespace GroupBMidtermPOS
             if (userAmountTendered < grandTotalOwed)  
             {
                 double grandTotal = userAmountTendered-grandTotalOwed; 
-                Console.WriteLine($"You still owe ${grandTotal:C}");
+                Console.WriteLine($"You still owe {grandTotal:C}");
                 //FileHandler.Writereceipt("Receipt.txt", $"                                                 Total  {grandTotal:C}",true);
                 // FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                   Amount {userAmountTendered:C}", true);
                 //  FileHandler.Writereceipt("Receipt.txt", $"Remaining Bal:                                   Amount {grandTotalOwed:C}",true);
