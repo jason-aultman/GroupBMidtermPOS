@@ -17,6 +17,7 @@ namespace GroupBMidtermPOS
         public string filePath = FileHandler.currentDirectory + @"\Inventory.csv";
         public string ReceiptWriterPath { get; set; }
         public double TotalSales  { get; set; }
+        private bool first = true;
         public Register(string receiptWriterPath)
          {
             ReceiptWriterPath = receiptWriterPath;
@@ -58,12 +59,14 @@ namespace GroupBMidtermPOS
 
             return subtotal + tax;
         }
+
         public void TakePayment(PaymentTypeEnum paymentType, double amountDue ,List<KeyValuePair<Product, int>> shoppingCart)  //Take payment from user
         {
-            
+             
             if (paymentType == PaymentTypeEnum.Cash)
             {
-                var amountRemainingToPay = TakePaymentCash(amountDue, GetTotalSalesTax(GetSubtotal(shoppingCart)));
+                var amountRemainingToPay = TakePaymentCash(amountDue, GetTotalSalesTax(GetSubtotal(shoppingCart)), first);
+                first = false;
                 while (amountRemainingToPay < 0.00)
                 {
                     paymentType = Menu.AskForPaymentMethodMenu(); //ask user for how they would like to pay
@@ -88,39 +91,47 @@ namespace GroupBMidtermPOS
             }
         }
 
-  
-        public double TakePaymentCash(double grandTotalOwed, double tax) // 8-29 Jason - Fixed broken method after adding tax from 8/27
+        
+        public double TakePaymentCash(double grandTotalOwed, double tax, bool first) // 8-29 Jason - Fixed broken method after adding tax from 8/27
         {
-            Console.WriteLine("Cash: ");
-            Console.WriteLine("Please enter amount tendered: ");
-            double userAmountTendered = double.Parse(Console.ReadLine()); 
+           
+                Console.WriteLine("Cash: ");
+                Console.WriteLine("Please enter amount tendered: ");
+                double userAmountTendered = double.Parse(Console.ReadLine());
+            if (first)
+            { 
+                FileHandler.Writereceipt(ReceiptWriterPath, "\n");
+                FileHandler.Writereceipt(ReceiptWriterPath, $"                                                          Subtotal   {grandTotalOwed - tax:C}", true);
+                FileHandler.Writereceipt(ReceiptWriterPath, $"                                                          Tax        {tax:C}", true);
+                FileHandler.Writereceipt(ReceiptWriterPath, $"                                                          Total:     {grandTotalOwed:C}", true);
+                FileHandler.Writereceipt(ReceiptWriterPath, "                                                      ----------------------------");
+            }
+            FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                            Amount:    {userAmountTendered:C}", true);
+
             if (userAmountTendered < grandTotalOwed)  
             {
                 double grandTotal = userAmountTendered-grandTotalOwed; 
                 Console.WriteLine($"You still owe {grandTotal:C}");
-                //FileHandler.Writereceipt("Receipt.txt", $"                                                 Total  {grandTotal:C}",true);
-                // FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                   Amount {userAmountTendered:C}", true);
-                //  FileHandler.Writereceipt("Receipt.txt", $"Remaining Bal:                                   Amount {grandTotalOwed:C}",true);
-                FileHandler.Writereceipt("Receipt.txt", "\n");
-                FileHandler.Writereceipt("Receipt.txt", $"                                                          Subtotal   {grandTotalOwed - tax:C}", true);
-                FileHandler.Writereceipt("Receipt.txt", $"                                                          Tax        {tax:C}", true);
-                FileHandler.Writereceipt("Receipt.txt", $"                                                          Total:     {grandTotalOwed:C}", true);
+               // FileHandler.Writereceipt(ReceiptWriterPath, "\n");
+            //    FileHandler.Writereceipt("Receipt.txt", $"                                                          Subtotal   {grandTotalOwed - tax:C}", true);
+            //    FileHandler.Writereceipt("Receipt.txt", $"                                                          Tax        {tax:C}", true);
+            //    FileHandler.Writereceipt("Receipt.txt", $"                                                          Total:     {grandTotalOwed:C}", true);
                 FileHandler.Writereceipt(ReceiptWriterPath, "                                                      ----------------------------");
-                FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                            Amount:    {userAmountTendered:C}", true);
-                FileHandler.Writereceipt("Receipt.txt", $"Change Due:                                               Amount:    {grandTotal:C}", true);
+            //    FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                            Amount:    {userAmountTendered:C}", true);
+                FileHandler.Writereceipt(ReceiptWriterPath, $"Amount still owed:                                        Amount:    {grandTotal:C}", true);
 
                 return grandTotal;  
             }
 
             var changeDue = userAmountTendered - grandTotalOwed;
             Console.WriteLine($"Change due: {changeDue:C}");
-            FileHandler.Writereceipt("Receipt.txt", "\n");
-            FileHandler.Writereceipt("Receipt.txt", $"                                                          Subtotal   {grandTotalOwed-tax:C}", true);
-            FileHandler.Writereceipt("Receipt.txt", $"                                                          Tax        {tax:C}", true);
-            FileHandler.Writereceipt("Receipt.txt", $"                                                          Total:     {grandTotalOwed:C}");
-            FileHandler.Writereceipt(ReceiptWriterPath, "                                                      ----------------------------");
-            FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                            Amount:    {userAmountTendered:C}",true);
-            FileHandler.Writereceipt("Receipt.txt", $"Change Due:                                               Amount:    {changeDue:C}", true);
+         //   FileHandler.Writereceipt("Receipt.txt", "\n");
+           // FileHandler.Writereceipt("Receipt.txt", $"                                                          Subtotal   {grandTotalOwed-tax:C}", true);
+         //   FileHandler.Writereceipt("Receipt.txt", $"                                                          Tax        {tax:C}", true);
+          //  FileHandler.Writereceipt("Receipt.txt", $"                                                          Total:     {grandTotalOwed:C}");
+          //  FileHandler.Writereceipt(ReceiptWriterPath, "                                                      ----------------------------");
+          //  FileHandler.Writereceipt("Receipt.txt", $"Tendered-Cash:                                            Amount:    {userAmountTendered:C}",true);
+            FileHandler.Writereceipt(ReceiptWriterPath, $"Change Due:                                               Amount:    {changeDue:C}", true);
             return changeDue;
            
         }
@@ -174,11 +185,11 @@ namespace GroupBMidtermPOS
             while (cvvUserValidation);
 
 
-            FileHandler.Writereceipt("Receipt.txt", "\n");
-            FileHandler.Writereceipt("Receipt.txt", $"                                                          Subtotal   {grandTotalOwed - tax:C}", true);
-            FileHandler.Writereceipt("Receipt.txt", $"                                                          Tax        {tax:C}", true);
+            FileHandler.Writereceipt(ReceiptWriterPath, "\n");
+            FileHandler.Writereceipt(ReceiptWriterPath, $"                                                          Subtotal   {grandTotalOwed - tax:C}", true);
+            FileHandler.Writereceipt(ReceiptWriterPath, $"                                                          Tax        {tax:C}", true);
             FileHandler.Writereceipt(ReceiptWriterPath, "                                                      ----------------------------");
-            FileHandler.Writereceipt("Receipt.txt", $"                                                          Total:     {grandTotalOwed:C}");
+            FileHandler.Writereceipt(ReceiptWriterPath, $"                                                          Total:     {grandTotalOwed:C}");
 
             FileHandler.Writereceipt(ReceiptWriterPath, $"Credit/Debit card charged in the amount of: {grandTotalOwed:C}");
             //to do receipt writer
@@ -207,11 +218,11 @@ namespace GroupBMidtermPOS
             var userCheckingAccountNumber = Console.ReadLine();
             var checkingAccountValidation = (!(ValidatePayment.ValidaCheckingAccountNum(userCheckingAccountNumber)));
             
-            FileHandler.Writereceipt("Receipt.txt", "\n");
-            FileHandler.Writereceipt("Receipt.txt", $"                                                          Subtotal   {grandTotalOwed - tax:C}", true);
-            FileHandler.Writereceipt("Receipt.txt", $"                                                          Tax        {tax:C}", true);
+            FileHandler.Writereceipt(ReceiptWriterPath, "\n");
+            FileHandler.Writereceipt(ReceiptWriterPath, $"                                                          Subtotal   {grandTotalOwed - tax:C}", true);
+            FileHandler.Writereceipt(ReceiptWriterPath, $"                                                          Tax        {tax:C}", true);
             FileHandler.Writereceipt(ReceiptWriterPath, "                                                      ----------------------------");
-            FileHandler.Writereceipt("Receipt.txt", $"                                                          Total:     {grandTotalOwed:C}");
+            FileHandler.Writereceipt(ReceiptWriterPath, $"                                                          Total:     {grandTotalOwed:C}");
             
             FileHandler.Writereceipt(ReceiptWriterPath, $"Method of payment check in the amount of:                            {grandTotalOwed:C}");
 
